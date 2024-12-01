@@ -9,7 +9,7 @@
 Subtotal: $118.84
 
 ## User Interface Components
-- 2+ Industrial Bluetooth Scanners [$64.59](https://www.amazon.com/dp/B0C6JPWVNV)
+- 2 Industrial Bluetooth Scanners [$64.59](https://www.amazon.com/dp/B0C6JPWVNV) each
 - Rugged Tablet [$175.99](https://www.amazon.com/dp/B0CQ1KW4C6)
 - Tablet Wall Mount [$19.99](https://www.amazon.com/dp/B0CSD2X9H9)
 - RS232 Adapter [$9.59](https://www.amazon.com/dp/B0769DVQM1)
