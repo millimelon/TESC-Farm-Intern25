@@ -1,0 +1,21 @@
+[Unit]
+Description=TESC Farm API Service
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+WorkingDirectory=/home/shawn/code/TESC-Farm/api
+ExecStart=/usr/local/bin/sops exec-env secrets.yaml ./api
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=farmapi
+User=shawn
+Group=www-data
+EnvironmentFile=/etc/environment
+Environment="GOROOT=/home/shawn/go"
+Environment="GIN_MODE=release"
+
+[Install]
+WantedBy=multi-user.target
