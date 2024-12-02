@@ -9,16 +9,15 @@ import (
 	"net/http"
 )
 
-var db *gorm.DB
-var conf util.Config
-
 func main() {
 	// Initialize the router and static routes
 	r := gin.Default()
+    conf := util.Config
 	conf.Load()
-	db = connectDB()
+    db := connectDB(conf.DBConn)
 
 	// Labor endpoints
+    labor.DB = db
 	r.GET("/hours", labor.AllHours)
 	r.GET("/hours/:worker", labor.WorkerHours)
 	r.POST("/hours/:worker/update", labor.AdjustHours)
@@ -29,6 +28,7 @@ func main() {
 	r.POST("/worker/new", labor.AddWorker)
 
 	// Harvest endpoints
+    harvest.DB = db
 	r.GET("/products", harvest.AllProducts)
 	r.GET("/product/:product", harvest.GetProduct)
 	r.POST("/product/:product/update", harvest.UpdateProduct)
@@ -39,6 +39,7 @@ func main() {
 	r.POST("/harvest/new", harvest.AddHarvest)
 
 	// Sales Endpoints
+    sales.DB = db
 	r.GET("/sales", sales.AllSales)
 	r.GET("/sale/:sale", sales.GetSale)
 	r.POST("/sale/:sale/update", sales.UpdateSale)
