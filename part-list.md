@@ -1,4 +1,5 @@
 # Fall Quarter Part List
+Sections listed in order of necessity.
 
 ## Server Components
 - Raspberry Pi 4 8gb [$75](https://www.pishop.us/product/raspberry-pi-4-model-b-8gb/)

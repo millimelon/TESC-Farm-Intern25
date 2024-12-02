@@ -1,23 +1,22 @@
 package main
 
 import (
+	"github.com/absentbird/TESC-Farm/internal/harvest"
+	"github.com/absentbird/TESC-Farm/internal/labor"
+	"github.com/absentbird/TESC-Farm/internal/sales"
+	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/gin-gonic/gin"
-	"internal/harvest"
-	"internal/labor"
-	"internal/sales"
-	"internal/util"
 	"net/http"
 )
 
 func main() {
-	// Initialize the router and static routes
-	r := gin.Default()
-    conf := util.Config
+	// Initialize the config, database, and router
+	conf := util.Config
 	conf.Load()
-    db := connectDB(conf.DBConn)
+	util.ConnectDB(conf.DBConn)
+	r := gin.Default()
 
 	// Labor endpoints
-    labor.DB = db
 	r.GET("/hours", labor.AllHours)
 	r.GET("/hours/:worker", labor.WorkerHours)
 	r.POST("/hours/:worker/update", labor.AdjustHours)
@@ -28,7 +27,6 @@ func main() {
 	r.POST("/worker/new", labor.AddWorker)
 
 	// Harvest endpoints
-    harvest.DB = db
 	r.GET("/products", harvest.AllProducts)
 	r.GET("/product/:product", harvest.GetProduct)
 	r.POST("/product/:product/update", harvest.UpdateProduct)
@@ -39,7 +37,6 @@ func main() {
 	r.POST("/harvest/new", harvest.AddHarvest)
 
 	// Sales Endpoints
-    sales.DB = db
 	r.GET("/sales", sales.AllSales)
 	r.GET("/sale/:sale", sales.GetSale)
 	r.POST("/sale/:sale/update", sales.UpdateSale)
