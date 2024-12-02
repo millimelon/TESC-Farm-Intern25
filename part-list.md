@@ -37,11 +37,10 @@ Subtotal: $116.51
 Subtotal: $132.51
 
 ## Sensor Components
-- 8 ESP32 Modules [$39.99](https://www.amazon.com/dp/B08MFCC4SR)
 - 5 Soil Moisture Sensors [$9.99](https://www.amazon.com/dp/B07SYBSHGX)
 - 5 Temperature Sensors [$9.99](https://www.amazon.com/dp/B0CGT4LJYK)
 - 4 Light Sensors [$6.99](https://www.amazon.com/dp/B0BXKJPV67)
 - 4 3000mAh Batteries [$19.75](https://www.amazon.com/dp/B0D5R1MTZ1)
 - 6 Channel Battery Charger [$9.99](https://www.amazon.com/dp/B074M77J5M)
 
-Subtotal: $96.70
+Subtotal: $56.71
