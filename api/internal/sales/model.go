@@ -6,24 +6,24 @@ import (
 
 type Product struct {
 	gorm.Model
-	Name     string
-	Type     string
-	Unit     string
-	Price    int
-	Quantity int
-	Weight   int
-	Length   int
-	Width    int
-	Height   int
+    Name     string `json:"name"`
+	Type     string `json:"type"`
+	Unit     string `json:"unit"`
+	Price    int    `json:"price"`
+	Quantity int    `json:"quantity"`
+	Weight   int    `json:"weight"`
+	Length   int    `json:"length"`
+	Width    int    `json:"width"`
+	Height   int    `json:"height"`
 }
 
 type Sale struct {
 	gorm.Model
-	Type      string
-	Quantity  int
-	Price     int
-	Tax       int
-	Total     int
-	Product   Product
-	ProductID uint
+	Type      string  `json:"type"`
+	Quantity  int     `json:"quantity"`
+	Price     int     `json:"price"`
+	Tax       int     `json:"tax"`
+	Total     int     `json:"total"`
+	Product   Product `json:"product"`
+	ProductID uint    `json:"product_id"`
 }

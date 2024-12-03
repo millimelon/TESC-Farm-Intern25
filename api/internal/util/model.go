@@ -28,5 +28,4 @@ func (s *Config) Load(prodconf string, devconf string) {
 	content = []byte(os.ExpandEnv(string(content)))
 	err = yaml.Unmarshal(content, &s)
 	Check(err, "Error parsing configuration")
-	log.Println(*s)
 }

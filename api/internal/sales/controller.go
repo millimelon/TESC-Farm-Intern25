@@ -26,6 +26,20 @@ func GetProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, record)
 }
 
+func GetProductSales(c *gin.Context) {
+	p := Product{}
+	if err := util.DB.First(&p, c.Param("id")).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	records := []Sale{}
+    if err := util.DB.Find(&records, Sale{ProductID: p.ID}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+
 func AddProduct(c *gin.Context) {
 	record := Product{}
 	if err := c.ShouldBindJSON(&record); err != nil {

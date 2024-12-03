@@ -3,36 +3,33 @@ package harvest
 import (
 	"github.com/absentbird/TESC-Farm/internal/sales"
 	"gorm.io/gorm"
-	"time"
 )
 
 type Crop struct {
 	gorm.Model
-	Name   string
-	Season string
-	Type   string
+    Name   string `json:"name"`
+	Season string `json:"season"`
+	Type   string `json:"type"`
 }
 
 type Harvest struct {
 	gorm.Model
-	Weight   float64
-	Bin      string
-	Start    time.Time
-	Duration time.Duration
-	Crop     Crop
-	CropID   uint
+    Weight   float64       `json:"weight"`
+    Bin      string        `json:"bin"`
+    Crop     Crop          `json:"crop"`
+    CropID   uint          `json:"crop_id"`
 }
 
 type Process struct {
 	gorm.Model
-	Unit       string
-	Quantity   int
-	Weight     float64
-	Cull       float64
-	StudentUse float64
-	ValueAdded float64
-	Harvest    Harvest
-	HarvestID  uint
-	Product    sales.Product
-	ProductID  uint
+    Unit       string        `json:"unit"`
+    Quantity   int           `json:"qty"`
+    Weight     float64       `json:"weight"`
+    Cull       float64       `json:"cull"`
+    StudentUse float64       `json:"student_use"`
+    ValueAdded float64       `json:"value_added"`
+    Harvest    Harvest       `json:"harvest"`
+    HarvestID  uint          `json:"harvest_id"`
+    Product    sales.Product `json:"product"`
+    ProductID  uint          `json:"product_id"`
 }

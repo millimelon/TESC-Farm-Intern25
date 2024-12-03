@@ -7,12 +7,10 @@ import (
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"log"
 )
 
 func ConnectDB(dbconn string) *gorm.DB {
 	database, err := gorm.Open(sqlite.Open(dbconn), &gorm.Config{})
-	log.Println("Database connected: " + dbconn)
 	util.Check(err, "Database connection error")
 
 	err = database.AutoMigrate(&labor.Hours{})
