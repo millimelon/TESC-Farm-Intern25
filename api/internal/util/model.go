@@ -7,21 +7,16 @@ import (
 	"io/ioutil"
 )
 
-const (
-	PRODCONFIG = "configs/config.yaml"
-	DEVCONFIG  = "configs/config-dev.yaml"
-)
-
 type Config struct {
 	Mode   string
 	Port   string `yaml:"Internal_Port"`
 	DBConn string `yaml:"Database_Connection"`
 }
 
-func (s *Config) Load() {
-	configfile := DEVCONFIG
+func (s *Config) Load(prodconf string, devconf string) {
+	configfile := devconf
 	if dev, _ := os.LookupEnv("PRODUCTION"); dev != "" {
-		configfile = PRODCONFIG
+		configfile = prodconf
 		s.Mode = "production"
 		log.Println("Running in production mode.")
 	} else {
@@ -33,4 +28,5 @@ func (s *Config) Load() {
 	content = []byte(os.ExpandEnv(string(content)))
 	err = yaml.Unmarshal(content, &s)
 	Check(err, "Error parsing configuration")
+    log.Println(*s)
 }

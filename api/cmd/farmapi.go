@@ -9,10 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	PRODCONFIG = "configs/config.yaml"
+	DEVCONFIG  = "configs/config-dev.yaml"
+)
+
 func main() {
 	// Initialize the config, database, and router
 	conf := util.Config{}
-	conf.Load()
+	conf.Load(PRODCONFIG, DEVCONFIG)
 	util.DB = db.ConnectDB(conf.DBConn)
 	r := gin.Default()
 

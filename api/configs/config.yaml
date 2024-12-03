@@ -1,2 +1,2 @@
 Internal_Port: "8078"
-Database_Connection: "$DB_CONN"
+Database_Connection: "$PRODDBCONN"
