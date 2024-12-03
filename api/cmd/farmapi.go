@@ -5,21 +5,22 @@ import (
 	"github.com/absentbird/TESC-Farm/internal/labor"
 	"github.com/absentbird/TESC-Farm/internal/sales"
 	"github.com/absentbird/TESC-Farm/internal/util"
+	"github.com/absentbird/TESC-Farm/internal/util/db"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 func main() {
 	// Initialize the config, database, and router
-	conf := util.Config
+	conf := util.Config{}
 	conf.Load()
-	util.ConnectDB(conf.DBConn)
+	util.DB = db.ConnectDB(conf.DBConn)
 	r := gin.Default()
 
 	// Labor endpoints
 	r.GET("/hours", labor.AllHours)
-	r.GET("/hours/:id", labor.WorkerHours)
-	r.POST("/hours/:id/update", labor.AdjustHours)
+	r.GET("/hours/:id", labor.GetHours)
+	r.POST("/hours/:id/update", labor.UpdateHours)
 	r.POST("/hours/new", labor.AddHours)
 	r.GET("/workers", labor.AllWorkers)
 	r.GET("/worker/:id", labor.GetWorker)

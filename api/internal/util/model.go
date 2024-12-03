@@ -1,6 +1,9 @@
 package util
 
 import (
+	"gopkg.in/yaml.v3"
+    "os"
+    "log"
 	"io/ioutil"
 )
 
@@ -26,8 +29,8 @@ func (s *Config) Load() {
 		log.Println("Running in development mode.")
 	}
 	content, err := ioutil.ReadFile(configfile)
-	check(err, "Error reading config file")
+	Check(err, "Error reading config file")
 	content = []byte(os.ExpandEnv(string(content)))
 	err = yaml.Unmarshal(content, &s)
-	check(err, "Error parsing configuration")
+	Check(err, "Error parsing configuration")
 }

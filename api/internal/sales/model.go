@@ -2,7 +2,6 @@ package sales
 
 import (
 	"gorm.io/gorm"
-    "time"
 )
 
 type Product struct {
