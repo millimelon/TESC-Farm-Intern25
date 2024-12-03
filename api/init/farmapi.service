@@ -15,7 +15,6 @@ User=shawn
 Group=www-data
 EnvironmentFile=/etc/environment
 Environment="GOROOT=/home/shawn/go"
-Environment="GIN_MODE=release"
 
 [Install]
 WantedBy=multi-user.target

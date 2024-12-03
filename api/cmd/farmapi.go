@@ -19,6 +19,9 @@ func main() {
 	conf := util.Config{}
 	conf.Load(PRODCONFIG, DEVCONFIG)
 	util.DB = db.ConnectDB(conf.DBConn)
+    if conf.Mode == "production" {
+        gin.SetMode(gin.ReleaseMode)
+    }
 	r := gin.Default()
 
 	// Labor endpoints
