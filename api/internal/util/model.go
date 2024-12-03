@@ -2,9 +2,9 @@ package util
 
 import (
 	"gopkg.in/yaml.v3"
-    "os"
-    "log"
 	"io/ioutil"
+	"log"
+	"os"
 )
 
 type Config struct {
@@ -28,5 +28,5 @@ func (s *Config) Load(prodconf string, devconf string) {
 	content = []byte(os.ExpandEnv(string(content)))
 	err = yaml.Unmarshal(content, &s)
 	Check(err, "Error parsing configuration")
-    log.Println(*s)
+	log.Println(*s)
 }

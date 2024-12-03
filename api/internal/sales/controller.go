@@ -4,12 +4,12 @@ import (
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/gin-gonic/gin"
 	"net/http"
-    "strconv"
+	"strconv"
 )
 
 // Products
 func AllProducts(c *gin.Context) {
-    records := []Product{}
+	records := []Product{}
 	if err := util.DB.Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -18,7 +18,7 @@ func AllProducts(c *gin.Context) {
 }
 
 func GetProduct(c *gin.Context) {
-    record := Product{}
+	record := Product{}
 	if err := util.DB.First(&record, c.Param("id")).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -27,7 +27,7 @@ func GetProduct(c *gin.Context) {
 }
 
 func AddProduct(c *gin.Context) {
-    record := Product{}
+	record := Product{}
 	if err := c.ShouldBindJSON(&record); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -37,36 +37,36 @@ func AddProduct(c *gin.Context) {
 }
 
 func UpdateProduct(c *gin.Context) {
-    record := Product{}
+	record := Product{}
 	if err := c.ShouldBindJSON(&record); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-    id, err := strconv.Atoi(c.Param("id"))
-    if err != nil {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-    }
-    record.ID = uint(id)
+	}
+	record.ID = uint(id)
 	util.DB.Save(&record)
 	c.JSON(http.StatusOK, record)
 }
 
 func DeleteProduct(c *gin.Context) {
-    record := Product{}
-    id, err := strconv.Atoi(c.Param("id"))
-    if err != nil {
+	record := Product{}
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-    }
-    record.ID = uint(id)
+	}
+	record.ID = uint(id)
 	util.DB.Delete(&record)
 	c.JSON(http.StatusOK, record)
 }
 
 // Sales
 func AllSales(c *gin.Context) {
-    records := []Sale{}
+	records := []Sale{}
 	if err := util.DB.Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -75,7 +75,7 @@ func AllSales(c *gin.Context) {
 }
 
 func GetSale(c *gin.Context) {
-    record := Sale{}
+	record := Sale{}
 	if err := util.DB.First(&record, c.Param("id")).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -84,7 +84,7 @@ func GetSale(c *gin.Context) {
 }
 
 func AddSale(c *gin.Context) {
-    record := Sale{}
+	record := Sale{}
 	if err := c.ShouldBindJSON(&record); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -94,29 +94,29 @@ func AddSale(c *gin.Context) {
 }
 
 func UpdateSale(c *gin.Context) {
-    record := Sale{}
+	record := Sale{}
 	if err := c.ShouldBindJSON(&record); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-    id, err := strconv.Atoi(c.Param("id"))
-    if err != nil {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-    }
-    record.ID = uint(id)
+	}
+	record.ID = uint(id)
 	util.DB.Save(&record)
 	c.JSON(http.StatusOK, record)
 }
 
 func DeleteSale(c *gin.Context) {
-    record := Sale{}
-    id, err := strconv.Atoi(c.Param("id"))
-    if err != nil {
+	record := Sale{}
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-    }
-    record.ID = uint(id)
+	}
+	record.ID = uint(id)
 	util.DB.Delete(&record)
 	c.JSON(http.StatusOK, record)
 }
