@@ -7,7 +7,6 @@ import (
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/absentbird/TESC-Farm/internal/util/db"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func main() {
@@ -20,36 +19,43 @@ func main() {
 	// Labor endpoints
 	r.GET("/hours", labor.AllHours)
 	r.GET("/hours/:id", labor.GetHours)
-	r.POST("/hours/:id/update", labor.UpdateHours)
 	r.POST("/hours/new", labor.AddHours)
+	r.POST("/hours/:id/update", labor.UpdateHours)
+	r.POST("/hours/:id/delete", labor.DeleteHours)
 	r.GET("/workers", labor.AllWorkers)
 	r.GET("/worker/:id", labor.GetWorker)
-	r.POST("/worker/:id/update", labor.UpdateWorker)
 	r.POST("/worker/new", labor.AddWorker)
+	r.POST("/worker/:id/update", labor.UpdateWorker)
+	r.POST("/worker/:id/delete", labor.DeleteWorker)
 
 	// Harvest endpoints
 	r.GET("/crops", harvest.AllCrops)
 	r.GET("/crop/:id", harvest.GetCrop)
+	r.POST("/crop/new", harvest.AddCrop)
 	r.POST("/crop/:id/update", harvest.UpdateCrop)
-	r.POST("/crop/new", harvest.NewCrop)
+	r.POST("/crop/:id/delete", harvest.DeleteCrop)
 	r.GET("/harvests", harvest.AllHarvests)
 	r.GET("/harvest/:id", harvest.GetHarvest)
-	r.POST("/harvest/:id/update", harvest.UpdateHarvest)
 	r.POST("/harvest/new", harvest.AddHarvest)
+	r.POST("/harvest/:id/update", harvest.UpdateHarvest)
+	r.POST("/harvest/:id/delete", harvest.DeleteHarvest)
 	r.GET("/processing", harvest.AllProcessing)
 	r.GET("/process/:id", harvest.GetProcessing)
-	r.POST("/process/:id/update", harvest.UpdateProcessing)
 	r.POST("/process/new", harvest.AddProcessing)
+	r.POST("/process/:id/update", harvest.UpdateProcessing)
+	r.POST("/process/:id/delete", harvest.DeleteProcessing)
 
 	// Sales Endpoints
 	r.GET("/products", sales.AllProducts)
 	r.GET("/product/:id", sales.GetProduct)
+	r.POST("/product/new", sales.AddProduct)
 	r.POST("/product/:id/update", sales.UpdateProduct)
-	r.POST("/product/new", sales.NewProduct)
+	r.POST("/product/:id/delete", sales.DeleteProduct)
 	r.GET("/sales", sales.AllSales)
 	r.GET("/sale/:id", sales.GetSale)
-	r.POST("/sale/:id/update", sales.UpdateSale)
 	r.POST("/sale/new", sales.AddSale)
+	r.POST("/sale/:id/update", sales.UpdateSale)
+	r.POST("/sale/:id/delete", sales.DeleteSale)
 
 	err := r.Run("127.0.0.1:" + conf.Port)
 	util.Check(err, "Error starting API")

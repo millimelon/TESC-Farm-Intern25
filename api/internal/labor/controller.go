@@ -7,71 +7,38 @@ import (
     "strconv"
 )
 
+// Hours
 func AllHours(c *gin.Context) {
-    hours := []Hours{}
-	if err := util.DB.Find(&hours).Error; err != nil {
+    records := []Hours{}
+	if err := util.DB.Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, hours)
+	c.JSON(http.StatusOK, records)
 }
 
 func GetHours(c *gin.Context) {
-    hours := Hours{}
-	if err := util.DB.First(&hours, c.Param("id")).Error; err != nil {
+    record := Hours{}
+	if err := util.DB.First(&record, c.Param("id")).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, hours)
-}
-
-func UpdateHours(c *gin.Context) {
-    hours := Hours{}
-	if err := c.ShouldBindJSON(&hours); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-    id, err := strconv.Atoi(c.Param("id"))
-    if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-    }
-    hours.ID = uint(id)
-	util.DB.Save(&hours)
-	c.JSON(http.StatusOK, gin.H{"data": hours})
+	c.JSON(http.StatusOK, record)
 }
 
 func AddHours(c *gin.Context) {
-    hours := Hours{}
-	if err := c.ShouldBindJSON(&hours); err != nil {
+    record := Hours{}
+	if err := c.ShouldBindJSON(&record); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	util.DB.Create(&hours)
-	c.JSON(http.StatusOK, gin.H{"data": hours})
+	util.DB.Create(&record)
+	c.JSON(http.StatusOK, record)
 }
 
-func AllWorkers(c *gin.Context) {
-    workers := []Worker{}
-	if err := util.DB.Find(&workers).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, workers)
-}
-
-func GetWorker(c *gin.Context) {
-    worker := Worker{}
-	if err := util.DB.First(&worker, c.Param("id")).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, worker)
-}
-
-func UpdateWorker(c *gin.Context) {
-    worker := Worker{}
-	if err := c.ShouldBindJSON(&worker); err != nil {
+func UpdateHours(c *gin.Context) {
+    record := Hours{}
+	if err := c.ShouldBindJSON(&record); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -80,17 +47,76 @@ func UpdateWorker(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
     }
-    worker.ID = uint(id)
-	util.DB.Save(&worker)
-	c.JSON(http.StatusOK, gin.H{"data": worker})
+    record.ID = uint(id)
+	util.DB.Save(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+func DeleteHours(c *gin.Context) {
+    record := Hours{}
+    id, err := strconv.Atoi(c.Param("id"))
+    if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+    }
+    record.ID = uint(id)
+	util.DB.Delete(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+// Workers
+func AllWorkers(c *gin.Context) {
+    records := []Worker{}
+	if err := util.DB.Find(&records).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+
+func GetWorker(c *gin.Context) {
+    record := Worker{}
+	if err := util.DB.First(&record, c.Param("id")).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, record)
 }
 
 func AddWorker(c *gin.Context) {
-    worker := Worker{}
-	if err := c.ShouldBindJSON(&worker); err != nil {
+    record := Worker{}
+	if err := c.ShouldBindJSON(&record); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	util.DB.Create(&worker)
-	c.JSON(http.StatusOK, gin.H{"data": worker})
+	util.DB.Create(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+func UpdateWorker(c *gin.Context) {
+    record := Worker{}
+	if err := c.ShouldBindJSON(&record); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+    id, err := strconv.Atoi(c.Param("id"))
+    if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+    }
+    record.ID = uint(id)
+	util.DB.Save(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+func DeleteWorker(c *gin.Context) {
+    record := Worker{}
+    id, err := strconv.Atoi(c.Param("id"))
+    if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+    }
+    record.ID = uint(id)
+	util.DB.Delete(&record)
+	c.JSON(http.StatusOK, record)
 }
