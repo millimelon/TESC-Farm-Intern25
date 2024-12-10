@@ -33,7 +33,7 @@ func GetProductSales(c *gin.Context) {
 		return
 	}
 	records := []Sale{}
-    if err := util.DB.Find(&records, Sale{ProductID: p.ID}).Error; err != nil {
+	if err := util.DB.Find(&records, Sale{ProductID: p.ID}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

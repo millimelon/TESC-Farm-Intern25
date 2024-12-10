@@ -32,8 +32,8 @@ func GetCropHarvests(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-    records := []Harvest{}
-    if err := util.DB.Find(&records, Harvest{CropID: crop.ID}).Error; err != nil {
+	records := []Harvest{}
+	if err := util.DB.Find(&records, Harvest{CropID: crop.ID}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -46,8 +46,8 @@ func GetCropProcessing(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-    records := []Process{}
-    if err := util.DB.Joins("Harvest").Find(&records, Process{Harvest: Harvest{CropID: crop.ID}}).Error; err != nil {
+	records := []Process{}
+	if err := util.DB.Joins("Harvest").Find(&records, Process{Harvest: Harvest{CropID: crop.ID}}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -117,8 +117,8 @@ func GetHarvestProcessing(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-    records := []Process{}
-    if err := util.DB.Find(&records, Process{HarvestID: h.ID}).Error; err != nil {
+	records := []Process{}
+	if err := util.DB.Find(&records, Process{HarvestID: h.ID}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -220,10 +220,10 @@ func DeleteProcessing(c *gin.Context) {
 }
 
 func GetBinHarvest(c *gin.Context) {
-    records := []Harvest{}
+	records := []Harvest{}
 	if err := util.DB.Order("created_at desc").First(&records, Harvest{Bin: c.Param("bin")}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-    c.JSON(http.StatusOK, records)
+	c.JSON(http.StatusOK, records)
 }

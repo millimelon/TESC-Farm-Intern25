@@ -19,9 +19,9 @@ func main() {
 	conf := util.Config{}
 	conf.Load(PRODCONFIG, DEVCONFIG)
 	util.DB = db.ConnectDB(conf.DBConn)
-    if conf.Mode == "production" {
-        gin.SetMode(gin.ReleaseMode)
-    }
+	if conf.Mode == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	r := gin.Default()
 
 	// Labor endpoints
@@ -56,7 +56,7 @@ func main() {
 	r.POST("/process/new", harvest.AddProcessing)
 	r.POST("/process/:id/update", harvest.UpdateProcessing)
 	r.POST("/process/:id/delete", harvest.DeleteProcessing)
-    r.GET("/bin/:bin/harvest", harvest.GetBinHarvest)
+	r.GET("/bin/:bin/harvest", harvest.GetBinHarvest)
 
 	// Sales Endpoints
 	r.GET("/products", sales.AllProducts)

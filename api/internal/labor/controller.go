@@ -90,13 +90,13 @@ func GetWorkerHours(c *gin.Context) {
 		return
 	}
 	records := []Hours{}
-    if err := util.DB.Find(&records, Hours{WorkerID: w.ID}).Error; err != nil {
+	if err := util.DB.Find(&records, Hours{WorkerID: w.ID}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-    for _, h := range records {
-        h.Worker = w
-    }
+	for _, h := range records {
+		h.Worker = w
+	}
 	c.JSON(http.StatusOK, records)
 }
 
