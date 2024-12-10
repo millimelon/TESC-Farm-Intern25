@@ -47,7 +47,7 @@ func GetCropProcessing(c *gin.Context) {
 		return
 	}
 	records := []Process{}
-	if err := util.DB.Joins("Harvest").Find(&records, Process{Harvest: Harvest{CropID: crop.ID}}).Error; err != nil {
+	if err := util.DB.Joins("Harvest").Find(&records, Process{Harvest: &Harvest{CropID: crop.ID}}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

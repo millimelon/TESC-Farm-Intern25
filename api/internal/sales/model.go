@@ -19,11 +19,11 @@ type Product struct {
 
 type Sale struct {
 	gorm.Model
-	Type      string  `json:"type"`
-	Quantity  int     `json:"quantity"`
-	Price     int     `json:"price"`
-	Tax       int     `json:"tax"`
-	Total     int     `json:"total"`
-	Product   Product `json:"product"`
-	ProductID uint    `json:"product_id"`
+	Type      string   `json:"type,omitempty"`
+	Quantity  int      `json:"quantity"`
+	Price     int      `json:"price"`
+	Tax       int      `json:"tax,omitempty"`
+	Total     int      `json:"total"`
+	Product   *Product `json:"product,omitempty"`
+	ProductID uint     `json:"product_id"`
 }

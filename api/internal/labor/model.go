@@ -10,19 +10,19 @@ type Worker struct {
 	gorm.Model
 	Name     string `json:"name"`
 	Barcode  string `json:"barcode"`
-	Position string `json:"position"`
+	Position string `json:"position,omitempty"`
 }
 
 type Hours struct {
 	gorm.Model
-	Start      time.Time       `json:"start"`
-	Duration   time.Duration   `json:"duration"`
-	Department string          `json:"department"`
-	Task       string          `json:"task"`
-	Worker     Worker          `json:"worker"`
-	WorkerID   uint            `json:"worker_id"`
-	Harvest    harvest.Harvest `json:"harvest"`
-	HarvestID  uint            `json:"harvest_id"`
-	Process    harvest.Process `json:"process"`
-	ProcessID  uint            `json:"process_id"`
+	Start      time.Time        `json:"start"`
+	Duration   float64          `json:"duration"`
+	Department string           `json:"department,omitempty"`
+	Task       string           `json:"task,omitempty"`
+	Worker     *Worker          `json:"worker,omitempty"`
+	WorkerID   uint             `json:"worker_id"`
+	Harvest    *harvest.Harvest `json:"harvest,omitempty"`
+	HarvestID  uint             `json:"harvest_id,omitempty"`
+	Process    *harvest.Process `json:"process,omitempty"`
+	ProcessID  uint             `json:"process_id,omitempty"`
 }

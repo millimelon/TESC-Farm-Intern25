@@ -10,7 +10,7 @@ import (
 // Hours
 func AllHours(c *gin.Context) {
 	records := []Hours{}
-    if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Process").Find(&records).Error; err != nil {
+	if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Process").Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -18,7 +18,7 @@ func AllHours(c *gin.Context) {
 }
 func HarvestingHours(c *gin.Context) {
 	records := []Hours{}
-    if err := util.DB.Preload("Worker").Preload("Harvest").Where("harvest_id NOT NULL").Find(&records).Error; err != nil {
+	if err := util.DB.Preload("Worker").Preload("Harvest").Where("harvest_id NOT NULL").Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -27,7 +27,7 @@ func HarvestingHours(c *gin.Context) {
 
 func ProcessingHours(c *gin.Context) {
 	records := []Hours{}
-    if err := util.DB.Preload("Worker").Preload("Process").Where("process_id NOT NULL").Find(&records).Error; err != nil {
+	if err := util.DB.Preload("Worker").Preload("Process").Where("process_id NOT NULL").Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -112,7 +112,7 @@ func GetWorkerHours(c *gin.Context) {
 		return
 	}
 	for _, h := range records {
-		h.Worker = w
+		h.Worker = &w
 	}
 	c.JSON(http.StatusOK, records)
 }

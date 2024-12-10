@@ -5,3 +5,5 @@ build:
 
 clean:
 	go clean
+	go mod tidy
+	gofmt -w -s cmd/ internal/
