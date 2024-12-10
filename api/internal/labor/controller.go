@@ -10,7 +10,24 @@ import (
 // Hours
 func AllHours(c *gin.Context) {
 	records := []Hours{}
-	if err := util.DB.Find(&records).Error; err != nil {
+    if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Process").Find(&records).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+func HarvestingHours(c *gin.Context) {
+	records := []Hours{}
+    if err := util.DB.Preload("Worker").Preload("Harvest").Where("harvest_id NOT NULL").Find(&records).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+
+func ProcessingHours(c *gin.Context) {
+	records := []Hours{}
+    if err := util.DB.Preload("Worker").Preload("Process").Where("process_id NOT NULL").Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

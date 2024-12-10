@@ -165,7 +165,7 @@ func DeleteHarvest(c *gin.Context) {
 // Processing
 func AllProcessing(c *gin.Context) {
 	records := []Process{}
-	if err := util.DB.Find(&records).Error; err != nil {
+	if err := util.DB.Preload("Product").Preload("Harvest").Preload("Harvest.Crop").Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

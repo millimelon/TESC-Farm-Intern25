@@ -26,6 +26,8 @@ func main() {
 
 	// Labor endpoints
 	r.GET("/hours", labor.AllHours)
+	r.GET("/hours/harvesting", labor.HarvestingHours)
+	r.GET("/hours/processing", labor.ProcessingHours)
 	r.GET("/hours/:id", labor.GetHours)
 	r.POST("/hours/new", labor.AddHours)
 	r.POST("/hours/:id/update", labor.UpdateHours)
