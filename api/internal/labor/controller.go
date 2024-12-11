@@ -10,7 +10,7 @@ import (
 // Hours
 func AllHours(c *gin.Context) {
 	records := []Hours{}
-	if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Process").Find(&records).Error; err != nil {
+	if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Harvest.Crop").Preload("Process").Preload("Process.Harvest").Preload("Process.Harvest.Crop").Preload("Process.Product").Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -18,7 +18,7 @@ func AllHours(c *gin.Context) {
 }
 func HarvestingHours(c *gin.Context) {
 	records := []Hours{}
-	if err := util.DB.Preload("Worker").Preload("Harvest").Where("harvest_id NOT NULL").Find(&records).Error; err != nil {
+	if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Harvest.Crop").Where("harvest_id NOT NULL").Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
