@@ -13,9 +13,10 @@ Subtotal: $118.84
 - 2 Industrial Bluetooth Scanners [$64.59](https://www.amazon.com/dp/B0C6JPWVNV) each
 - Rugged Tablet [$175.99](https://www.amazon.com/dp/B0CQ1KW4C6)
 - Tablet Wall Mount [$19.99](https://www.amazon.com/dp/B0CSD2X9H9)
-- RS232 Adapter [$9.59](https://www.amazon.com/dp/B0769DVQM1)
+- Waterproof Membrane Keyboard [$36.99](https://www.amazon.com/dp/B092VLN1ZW)
+- 2 RS232 Adapters [$9.59](https://www.amazon.com/dp/B0769DVQM1)
 
-Subtotal: $334.75
+Subtotal: $381.33
 
 ## Wireless Components
 - Bluetooth 5.1 Antenna [$9.99](https://www.amazon.com/dp/B09KG7QQ5V)
@@ -37,10 +38,11 @@ Subtotal: $116.51
 Subtotal: $132.51
 
 ## Sensor Components
+- 8 ESP32 Modules [$39.99](https://www.amazon.com/dp/B08MFCC4SR)
 - 5 Soil Moisture Sensors [$9.99](https://www.amazon.com/dp/B07SYBSHGX)
 - 5 Temperature Sensors [$9.99](https://www.amazon.com/dp/B0CGT4LJYK)
 - 4 Light Sensors [$6.99](https://www.amazon.com/dp/B0BXKJPV67)
 - 4 3000mAh Batteries [$19.75](https://www.amazon.com/dp/B0D5R1MTZ1)
 - 6 Channel Battery Charger [$9.99](https://www.amazon.com/dp/B074M77J5M)
 
-Subtotal: $56.71
+Subtotal: $96.70
