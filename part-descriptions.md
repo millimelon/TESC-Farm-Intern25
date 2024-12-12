@@ -39,8 +39,9 @@ A modest solar panel connected to a charge controller and battery is sufficient 
 ## Sensors
 An array of sensors monitoring growing conditions in multiple areas can be connected into a mesh network and leveraged to collect invaluable data.
 
+- **ESP32 Modules:** Low power wifi-connected micro controllers compatible with a variety of sensors and powered by a small battery.
 - **Soil Moisture Sensors:** Ground probes to detect the humidity level in soil.
 - **Temperature Sensors:** Durable waterproof temperature probes.
 - **Light Sensors:** Basic light intensity sensors.
-- **3000mAh Batteries:**
-- **6 Channel Battery Charger:**
+- **3000mAh Batteries:** Rechargable batteries for ESP32 capable of powering the devices for several days of operation.
+- **6 Channel Battery Charger:** Battery charging unit capable of recharging half a dozen batteries at a time for the ESP32s.
