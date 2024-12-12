@@ -1,8 +1,4 @@
-all: build clean
+all: build
 
 build:
-	pandoc -V geometry:margin=1in ./*.md -o farm-document.pdf
-	pdfunite farm-document.pdf Farm-Diagram.pdf Network-Diagram.pdf Data-Diagram.pdf Server-Diagram.pdf Power-Diagram.pdf farm-project.pdf
-
-clean:
-	rm farm-document.pdf
+	pandoc --toc -V geometry:margin=1in -f markdown+implicit_figures docs/*.md -o farm-project.pdf
