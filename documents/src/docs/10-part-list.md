@@ -16,9 +16,8 @@ Subtotal: $118.84
 - Tablet Wall Mount [$19.99](https://www.amazon.com/dp/B0CSD2X9H9)
 - Waterproof Membrane Keyboard [$36.99](https://www.amazon.com/dp/B092VLN1ZW)
 - 2 RS232 Adapters [$9.59](https://www.amazon.com/dp/B0769DVQM1)  each
-- RJ12 to DB9 Adapter [$7.49](https://www.amazon.com/dp/B07KVG9Z2K)
 
-Subtotal: $388.82
+Subtotal: $381.33
 
 ## Wireless Components
 - Wireless Bridge [$69.99](https://www.amazon.com/dp/B0B6B5XL9F)
@@ -36,8 +35,9 @@ Subtotal: $116.51
 - 12v to 5v DC Buck Converter [$8.99](https://www.amazon.com/dp/B07Y2V1F8V)
 - 12v DC Power Supply [$14.99](https://www.amazon.com/dp/B0BCWX2FDC)
 - 12v Waterproof Relay [$7.99](https://www.amazon.com/dp/B0D87QZV2J)
+- RJ12 to DB9 Adapter [$7.49](https://www.amazon.com/dp/B07KVG9Z2K)
 
-Subtotal: $132.51
+Subtotal: $140.00
 
 ## Sensor Components
 - 8 ESP32 Modules [$39.99](https://www.amazon.com/dp/B08MFCC4SR)
