@@ -4,7 +4,7 @@ output: pdf_document
 ---
 
 \newpage
-# Collaborative farm Proposal Cover letter
+# Collaborative Farm Proposal Cover letter
 
 We are excited to present our project proposal, which involves the
 implementation of an automated data collection system for organic farm
