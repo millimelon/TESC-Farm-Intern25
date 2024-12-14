@@ -109,7 +109,7 @@ development, and data architecture.
 STEM student Sophomore -- Data structures and Algorithms -- Leadership,
 Data science and, applied computational modeling
 
-Leif Mark George Fischer II
+### Leif Mark George Fischer II
 
 STEM student Junior -- Principals of farming -- Agricultural Ecology,
 and Indigenous land practices \*this project bloomed from your idea\*
