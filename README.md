@@ -1,6 +1,8 @@
 # TESC-Farm
 The Evergreen State College Organic Farm Project
 
+![Diagram of farm](documents/src/Farm-Diagram.png)
+
 ## Collaborative Farm Proposal
 
 We are excited to present our project proposal, which involves the
