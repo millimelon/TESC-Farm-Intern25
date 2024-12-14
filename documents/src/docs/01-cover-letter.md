@@ -62,11 +62,11 @@ etc., to help develop upper division science curriculum on the farm.
 All collected data will be open source, benefiting not only Evergreen
 State College students but also local businesses and other agricultural
 science departments. In 1975, students laid the foundation for the
-farmhouse; in the 2024-2025 school year, let students lay the foundation
-for a modern farm that will serve for the next 50 years.
+farmhouse; in 2025 let students lay the foundation for a modern farm
+that will serve for the next 50 years.
 
 Thank you for considering our proposal. We look forward to your support
-and collaboration on this trans-formativeu project.
+and collaboration on this trans-formative project.
 
 Sincerely,
 

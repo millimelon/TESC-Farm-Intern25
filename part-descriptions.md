@@ -16,6 +16,7 @@ Users will interact with the information system through barcode scanners, scales
 - **Tablet Wall Mount:** By mounting the tablet on the wall it can be visible to multiple workers at the same time.
 - **Waterproof Membrane Keyboard:** Bluetooth wireless waterproof QWERTY keyboard for use with the tablet.
 - **RS232 Adapter:** This adapter allows the Raspberry Pi to read the output from the scale, relieving the need to hand-record weights.
+- **RJ45 to DB9 Adapter:** Allows the solar charge controller to be connected to the RS232 adapter.
 
 ## Wireless
 Wireless communication is essential for the cordless operation of sensors and input devices with the server, as well as the bridge from the farm hub to the wash station.
@@ -45,3 +46,4 @@ An array of sensors monitoring growing conditions in multiple areas can be conne
 - **Light Sensors:** Basic light intensity sensors.
 - **3000mAh Batteries:** Rechargable batteries for ESP32 capable of powering the devices for several days of operation.
 - **6 Channel Battery Charger:** Battery charging unit capable of recharging half a dozen batteries at a time for the ESP32s.
+- **Solar Sensor Charger:** Miniature solar panel and charge controller made for an ESP32 to keep the battery perpetually charged.

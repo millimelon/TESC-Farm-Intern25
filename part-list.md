@@ -1,6 +1,4 @@
-\setcounter{page}{3}
-
-# Fall Quarter Part List
+# Part Price List
 Sections listed in order of necessity.
 
 ## Server Components
@@ -16,15 +14,16 @@ Subtotal: $118.84
 - Rugged Tablet [$175.99](https://www.amazon.com/dp/B0CQ1KW4C6)
 - Tablet Wall Mount [$19.99](https://www.amazon.com/dp/B0CSD2X9H9)
 - Waterproof Membrane Keyboard [$36.99](https://www.amazon.com/dp/B092VLN1ZW)
-- 2 RS232 Adapters [$9.59](https://www.amazon.com/dp/B0769DVQM1)
+- 2 RS232 Adapters [$9.59](https://www.amazon.com/dp/B0769DVQM1)  each
+- RJ45 to DB9 Adapter [$6.88](https://www.amazon.com/dp/B01N43TG3A/)
 
-Subtotal: $381.33
+Subtotal: $388.21
 
 ## Wireless Components
+- Wireless Bridge [$69.99](https://www.amazon.com/dp/B0B6B5XL9F)
 - Bluetooth 5.1 Antenna [$9.99](https://www.amazon.com/dp/B09KG7QQ5V)
 - WiFi AC600 Antenna [$27.99](https://www.amazon.com/dp/B08NPX2X4Z)
 - Antenna Extenders: [$8.54](https://www.amazon.com/dp/B0BRNN8FP3)
-- Wireless Bridge [$69.99](https://www.amazon.com/dp/B0B6B5XL9F)
 
 Subtotal: $116.51
 
@@ -46,5 +45,6 @@ Subtotal: $132.51
 - 4 Light Sensors [$6.99](https://www.amazon.com/dp/B0BXKJPV67)
 - 4 3000mAh Batteries [$19.75](https://www.amazon.com/dp/B0D5R1MTZ1)
 - 6 Channel Battery Charger [$9.99](https://www.amazon.com/dp/B074M77J5M)
+- Solar Sensor Charger [$14.95](https://www.adafruit.com/product/4755)
 
-Subtotal: $96.70
+Subtotal: $111.65
