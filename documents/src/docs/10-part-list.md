@@ -16,9 +16,9 @@ Subtotal: $118.84
 - Tablet Wall Mount [$19.99](https://www.amazon.com/dp/B0CSD2X9H9)
 - Waterproof Membrane Keyboard [$36.99](https://www.amazon.com/dp/B092VLN1ZW)
 - 2 RS232 Adapters [$9.59](https://www.amazon.com/dp/B0769DVQM1)  each
-- RJ45 to DB9 Adapter [$6.88](https://www.amazon.com/dp/B01N43TG3A/)
+- RJ12 to DB9 Adapter [$7.49](https://www.amazon.com/dp/B07KVG9Z2K)
 
-Subtotal: $388.21
+Subtotal: $388.82
 
 ## Wireless Components
 - Wireless Bridge [$69.99](https://www.amazon.com/dp/B0B6B5XL9F)
