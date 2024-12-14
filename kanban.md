@@ -7,7 +7,7 @@
 
 ## In Progress
 - [ ] Finish Proposal
-- [ ] create timeline document for proposal
+    - [ ] create timeline document for proposal
 
 ## Done
 - [X] project cover letter
