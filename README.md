@@ -289,7 +289,6 @@ scanners, scales, tablets, and web browsers.
     QWERTY keyboard for use with the tablet.
 -   **RS232 Adapter:** This adapter allows the Raspberry Pi to read the
     output from the scale, relieving the need to hand-record weights.
-    connected to the RS232 adapter.
 
 ## Wireless
 
