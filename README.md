@@ -289,7 +289,6 @@ scanners, scales, tablets, and web browsers.
     QWERTY keyboard for use with the tablet.
 -   **RS232 Adapter:** This adapter allows the Raspberry Pi to read the
     output from the scale, relieving the need to hand-record weights.
--   **RJ12 to DB9 Adapter:** Allows the solar charge controller to be
     connected to the RS232 adapter.
 
 ## Wireless
@@ -337,6 +336,8 @@ solar power sources.
     in case solar power ever falls short.
 -   **12v Waterproof Relay:** A switch to toggle the 12v power supply,
     controlled by the Raspberry Pi.
+-   **RJ12 to DB9 Adapter:** Allows the solar charge controller to be
+    connected to the RS232 adapter.
 
 ## Sensors
 

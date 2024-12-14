@@ -17,7 +17,6 @@ Users will interact with the information system through barcode scanners, scales
 - **Tablet Wall Mount:** By mounting the tablet on the wall it can be visible to multiple workers at the same time.
 - **Waterproof Membrane Keyboard:** Bluetooth wireless waterproof QWERTY keyboard for use with the tablet.
 - **RS232 Adapter:** This adapter allows the Raspberry Pi to read the output from the scale, relieving the need to hand-record weights.
-- **RJ12 to DB9 Adapter:** Allows the solar charge controller to be connected to the RS232 adapter.
 
 ## Wireless
 Wireless communication is essential for the cordless operation of sensors and input devices with the server, as well as the bridge from the farm hub to the wash station.
@@ -39,6 +38,7 @@ A modest solar panel connected to a charge controller and battery is sufficient 
 - **12v to 5v DC Buck Converter:** This device converts the 12v power from the battery and solar panel into 5v power required by the Raspberry Pi.
 - **12v DC Power Supply:** Simple power supply to charge the battery in case solar power ever falls short.
 - **12v Waterproof Relay:** A switch to toggle the 12v power supply, controlled by the Raspberry Pi.
+- **RJ12 to DB9 Adapter:** Allows the solar charge controller to be connected to the RS232 adapter.
 
 ## Sensors
 An array of sensors monitoring growing conditions in multiple areas can be connected into a mesh network and leveraged to collect invaluable data.
