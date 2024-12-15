@@ -1,5 +1,5 @@
 # Wash Station Data Foundation Timeline
-this doubles as a curriculum timeline for Student Learning contracts. 
+This doubles as a curriculum timeline for Student Learning contracts. 
 
 ## Weeks 1-2: Preparation and Initial Setup
 -   Obtain necessary approvals from school administration and relevant authorities. ##first meetings for the aproval process were in early december.
@@ -31,6 +31,5 @@ this doubles as a curriculum timeline for Student Learning contracts.
 -   Installation guidelines and user manuals.
 -   Hexapod robots will be set up as part of the upper division class on hexapod robots.  
     [See ACML curriculum for details](https://www.evergreen.edu/catalog/offering/advanced-computing-and-machine-learning-42373)
-    
 -   Sensor Clusters will be setup in spring as part of Undergraduate Research with Dr. Paul Pham  
     [See undergraduate catelogue for more details](https://www.evergreen.edu/catalog/offering/undergraduate-research-with-p-pham-46460-1)
