@@ -26,7 +26,10 @@ This doubles as a curriculum timeline for Student Learning contracts.
 -   Perform preliminary testing to ensure all components are functioning correctly.
 
 ## Weeks 7-10: System Testing and Training
--   Conduct comprehensive system testing, including data collection from scales and communication between Raspberry Pi, tablet, and wireless bridge.
+-   Conduct comprehensive system testing, including:
+    - Data collection from scales, scanners, and charge controller.
+    - Communication between Raspberry Pi, tablet, and wireless bridge.
+    - Power flow between solar panel, battery, and transformer.
 -   Train farm workers on how to use the new system.
 -   Document the entire setup process and any troubleshooting steps.
 
