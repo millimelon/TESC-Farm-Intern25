@@ -2,7 +2,8 @@
 This doubles as a curriculum timeline for Student Learning contracts. 
 
 ## Weeks 1-2: Preparation and Initial Setup
--   Obtain necessary approvals from school administration and relevant authorities. *First meetings for the aproval process were in early december.*
+-   Obtain necessary approvals from school administration and relevant authorities.  
+    *First meetings for the aproval process were in early december.*
 -   Source suppliers and place orders for required components.
 -   Prepare the installation site (cleaning, ensuring accessibility).
 -   Prepare Maintenance doc to prepare for added pictures, video, and learning experiences over the course of deployment.
