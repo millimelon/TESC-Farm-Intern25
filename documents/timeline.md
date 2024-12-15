@@ -6,7 +6,7 @@ This doubles as a curriculum timeline for Student Learning contracts.
     *First meetings for the aproval process were in early december.*
 -   Source suppliers and place orders for required components.
 -   Prepare the installation site (cleaning, ensuring accessibility).
--   Prepare Maintenance doc to prepare for added pictures, video, and learning experiences over the course of deployment.
+-   Prepare Maintenance doc to receive added pictures, video, and learning experiences over the course of deployment.
 -   Complete development and testing of software:
     - Data API
     - Farm worker UX
