@@ -2,16 +2,22 @@
 This doubles as a curriculum timeline for Student Learning contracts. 
 
 ## Weeks 1-2: Preparation and Initial Setup
--   Obtain necessary approvals from school administration and relevant authorities. ##first meetings for the aproval process were in early december.
+-   Obtain necessary approvals from school administration and relevant authorities. *First meetings for the aproval process were in early december.*
 -   Source suppliers and place orders for required components.
 -   Prepare the installation site (cleaning, ensuring accessibility).
 -   Prepare Maintenance doc to prepare for added pictures, video, and learning experiences over the course of deployment.
--   Complete development and testing of software needed to suport the PI, Data, farm worker UX and farm supervisor UX.
+-   Complete development and testing of software:
+    - Data API
+    - Farm worker UX
+    - Farm supervisor UX.
 
 ## Weeks 3-6: Component Installation and Integration
 -   Receive and inspect components once they arrive.
 -   Install solar panels and verify proper power generation.
--   Begin initial setup of Raspberry Pi (install OS, necessary software, and initial configuration).
+-   Begin initial setup of Raspberry Pi:
+    - Install OS.
+    - Deploy software.
+    - System configuration.
 -   install scales and connect them to Raspberry Pi for data collection.
 -   Set up the tablet and ensure it can interface with the Raspberry Pi.
 -   Test wireless bridge for stable internet connectivity and integrate with Raspberry Pi.
