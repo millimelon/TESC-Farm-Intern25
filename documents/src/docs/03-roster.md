@@ -7,7 +7,7 @@ the faculty who provided letters of support.
 
 ## Faculty support
 
-### Paul Pham, Ph.D., Computer Science
+**Paul Pham, Ph.D., Computer Science**
 
 I teach upper-division computer science courses, including Data
 Structures & Algorithms (DSA), \'23-\'24. In \'24-\'25, I'll also be
@@ -51,7 +51,7 @@ faculty and students at Evergreen.
 
 Paul
 
-### Melissa Nivala, Ph.D. Applied Mathematics
+**Melissa Nivala, Ph.D. Applied Mathematics**
 
 I am a core faculty member of the Food and Agriculture pathway,
 focusing on quantitative analysis.  In Fall 2024, while teaching
@@ -99,22 +99,22 @@ ambitious students. This section is dedicated to those who are embarking
 on their path to greatness, ready to learn, grow, and make their mark on
 the world.
 
-### Austin Strayer
+**Austin Strayer**
 
 STEM student Senior -- Data structures and Algorithms -- Software
 development, and data architecture.
 
-### Dani Monroe
+**Dani Monroe**
 
 STEM student Sophomore -- Data structures and Algorithms -- Leadership,
 Data science and, applied computational modeling
 
-### Leif Mark George Fischer II
+**Leif Mark George Fischer II**
 
 STEM student Junior -- Principals of farming -- Agricultural Ecology,
 and Indigenous land practices \*this project bloomed from your idea\*
 
-### Shawn Bird
+**Shawn Bird**
 
 STEM student Sophomore -- Data structures and Algorithms -- Technology
 Consulting

@@ -1,7 +1,7 @@
 \newpage
 # Project Outline
 
-### Project Overview
+## Project Overview
 
 The proposed project aims to streamline the collection of harvest
 weights across four main categories:
@@ -15,7 +15,7 @@ weights across four main categories:
 -   **Cull:** Items unfit for human consumption, returned to compost for
     enriching the next crop cycle.
 
-### Data Collection System
+## Data Collection System
 
 The automated data collection system will feature:
 
@@ -28,7 +28,7 @@ The automated data collection system will feature:
     straightforward replacement of parts as listed in the Bill of
     Materials and design document.
 
-### Future-Proof Design
+## Future-Proof Design
 
 Our system is designed to be highly adaptable, enabling future
 integrations such as:
@@ -44,7 +44,7 @@ integrations such as:
 -   **Temperature Sensors:** Allow regulation of heated greenhouse
     to save energy.
 
-### Implementation and Maintenance
+## Implementation and Maintenance
 
 Over the next quarter, we will develop a comprehensive maintenance guide
 as we deploy our Data Collection System. designed to be user-friendly

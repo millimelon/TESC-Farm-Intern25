@@ -2,7 +2,7 @@
 # Part Price List
 Sections listed in order of necessity.
 
-## Server Components
+## Server
 - Raspberry Pi 4 8gb [$75](https://www.pishop.us/product/raspberry-pi-4-model-b-8gb/)
 - 32GB SanDisk Ultra Micro SD Card [$12.86](https://www.amazon.com/dp/B08J4HJ98L)
 - Waterproof Enclosure [$22.99](https://www.amazon.com/dp/B0BZR4VPRF)
@@ -10,7 +10,7 @@ Sections listed in order of necessity.
 
 Subtotal: $118.84
 
-## User Interface Components
+## User Interface
 - 2 Industrial Bluetooth Scanners [$64.59](https://www.amazon.com/dp/B0C6JPWVNV) each
 - Rugged Tablet [$175.99](https://www.amazon.com/dp/B0CQ1KW4C6)
 - Tablet Wall Mount [$19.99](https://www.amazon.com/dp/B0CSD2X9H9)
@@ -19,7 +19,7 @@ Subtotal: $118.84
 
 Subtotal: $381.33
 
-## Wireless Components
+## Wireless
 - Wireless Bridge [$69.99](https://www.amazon.com/dp/B0B6B5XL9F)
 - Bluetooth 5.1 Antenna [$9.99](https://www.amazon.com/dp/B09KG7QQ5V)
 - WiFi AC600 Antenna [$27.99](https://www.amazon.com/dp/B08NPX2X4Z)
@@ -27,7 +27,7 @@ Subtotal: $381.33
 
 Subtotal: $116.51
 
-## Solar Components
+## Solar
 - 100W 12v Solar Panel [$39.99](https://www.amazon.com/dp/B08SWJK87H)
 - Solar Panel Extension Cable [$16.99](https://www.amazon.com/dp/B0CDZVMBP8)
 - 12v Solar Charge Controller [$18.99](https://www.amazon.com/dp/B07NPDWZJ7)
@@ -39,7 +39,7 @@ Subtotal: $116.51
 
 Subtotal: $140.00
 
-## Sensor Components
+## Sensor
 - 8 ESP32 Modules [$39.99](https://www.amazon.com/dp/B08MFCC4SR)
 - 5 Soil Moisture Sensors [$9.99](https://www.amazon.com/dp/B07SYBSHGX)
 - 5 Temperature Sensors [$9.99](https://www.amazon.com/dp/B0CGT4LJYK)
