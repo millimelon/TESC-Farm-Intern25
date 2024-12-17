@@ -39,7 +39,7 @@ Subtotal: $116.51
 
 Subtotal: $140.00
 
-## Sensor
+## Sensors
 - 8 ESP32 Modules [$39.99](https://www.amazon.com/dp/B08MFCC4SR)
 - 5 Soil Moisture Sensors [$9.99](https://www.amazon.com/dp/B07SYBSHGX)
 - 5 Temperature Sensors [$9.99](https://www.amazon.com/dp/B0CGT4LJYK)

@@ -1,7 +1,7 @@
 \newpage
 # Hardware Overview
 
-## Edge Server
+## Server
 The heart of the farm information system is a Raspberry Pi, using an SD card for system storage. It's located in the wash room within a waterproof enclosure.
 
 - **Raspberry Pi 4 8GB:** 8GB of ram for caching a robust assortment of data for rapid dissemination and manipulation. By using the Raspian OS it will be able to read data from multiple barcode scanners, scales, and other inputs; maintain an isolated wifi network and DNS service; host database, firewall, and web server systems; and facilitate IoT systems.
