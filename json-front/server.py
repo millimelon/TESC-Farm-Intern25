@@ -4,4 +4,4 @@ app = Flask(__name__)
 
 @app.route("/")
 def json_frontend():
-    return render_template('json.html')
+    return render_template("json.html")

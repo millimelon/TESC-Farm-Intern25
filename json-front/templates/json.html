@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<title>JSON Frontend</title>
+<style>
+</style>
+	</head>
+	<body>
+		<h1>Submit JSON to API</h1>
+        <label for="endpoint">Endpoint:</label>
+        <select id="endpoint" name="endpoint">
+            <option value="worker/new">Add Worker</option>
+            <option value="hours/new">Add Hours</option>
+            <option value="crop/new">Add Crop</option>
+            <option value="harvest/new">Add Harvest</option>
+            <option value="product/new">Add Product</option>
+            <option value="sale/new">Add Sale</option>
+        </select><br>
+        <label for="json">JSON Payload:</label><br>
+        <textarea id="json" name="json"></textarea><br>
+		<button id="submit" name="submit" onclick="submitapi()">Submit Request</button>
+        <br>
+		<p id="response"></p>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+	</body>
+</html>
