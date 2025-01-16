@@ -7,24 +7,42 @@
 	</head>
 	<body>
 		<h1>Submit JSON to API</h1>
+        <label for="endpoint">Endpoint:</label>
+        <select id="endpoint">
+            <option value="worker/new">Add Worker</option>
+            <option value="hours/new">Add Hours</option>
+            <option value="crop/new">Add Crop</option>
+            <option value="harvest/new">Add Harvest</option>
+            <option value="product/new">Add Product</option>
+            <option value="sale/new">Add Sale</option>
+        </select>
 		<label for="json">JSON Payload:</label>
 		<textarea id="json" name="json"></textarea>
 		<button id="submit" name="submit" onclick="submit()">Submit Request</button>
 		<p id="response"></p>
 		<script>
+            document.getElementById("endpoint").addEventListener("change", function(e) {
+                let endpoint = e.target.value;
+                console.log(endpoint);
+            });
 function submit() {
-	fetch('localhost:8078', {
+    const endpoint = document.getElementById("endpoint").value
+    if (endpoint == "") {
+		document.getElementById("response").innerText = "Invalid Endpoint";
+        return;
+    }
+	fetch('localhost:8078/'+endpoint, {
         	method: 'POST',
         	headers: { 'Content-Type': 'application/json' },
         	body: JSON.stringify(payload)
 	}).then(response => {
 		if (!response.ok) {
 			console.log(response);
-			document.getElementById("response").value = response;
+			document.getElementById("response").innerText = response;
         	}
         	return response.json();
     	}).then(data => {
-		document.getElementById("response").value = data;
+		document.getElementById("response").innerText = data;
 	}
 }
 		</script>
