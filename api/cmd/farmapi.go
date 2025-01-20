@@ -73,6 +73,6 @@ func main() {
 	r.POST("/sale/:id/update", sales.UpdateSale)
 	r.POST("/sale/:id/delete", sales.DeleteSale)
 
-	err := r.Run("127.0.0.1:" + conf.Port)
+	err := r.Run("0.0.0.0:" + conf.Port)
 	util.Check(err, "Error starting API")
 }
