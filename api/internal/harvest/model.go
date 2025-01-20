@@ -23,7 +23,7 @@ type Harvest struct {
 type Process struct {
 	gorm.Model
 	Unit       string         `json:"unit"`
-	Quantity   int            `json:"qty"`
+	Quantity   int            `json:"quantity"`
 	Weight     float64        `json:"weight"`
 	Cull       float64        `json:"cull"`
 	StudentUse float64        `json:"student_use"`

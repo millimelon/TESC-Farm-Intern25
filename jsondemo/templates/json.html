@@ -2,26 +2,47 @@
 <html lang="en-us">
 	<head>
 		<title>JSON Frontend</title>
-<style>
-</style>
+    <style>
+body {
+  font-family: sans-serif;
+  font-size: 18px;
+}
+#datalinks a.active {
+  font-weight: bold;
+}
+    </style>
 	</head>
 	<body>
 		<h1>Submit JSON to API</h1>
-        <input type="hidden" id="url" value="{{ url }}"/>
-        <label for="endpoint">Endpoint:</label>
-        <select id="endpoint" name="endpoint">
-            <option value="worker/new">Add Worker</option>
-            <option value="hours/new">Add Hours</option>
-            <option value="crop/new">Add Crop</option>
-            <option value="harvest/new">Add Harvest</option>
-            <option value="product/new">Add Product</option>
-            <option value="sale/new">Add Sale</option>
-        </select><br>
-        <label for="json">JSON Payload:</label><br>
-        <textarea id="json" name="json"></textarea><br>
-		<button id="submit" name="submit" onclick="submitapi()">Submit Request</button>
-        <br>
-		<p id="response"></p>
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <input type="hidden" id="url" value="{{ url }}"/>
+    <label for="endpoint">Endpoint:</label>
+    <select id="endpoint" name="endpoint">
+        <option value="worker/new">Add Worker</option>
+        <option value="crop/new">Add Crop</option>
+        <option value="harvest/new">Add Harvest</option>
+        <option value="process/new">Add Process</option>
+        <option value="hours/new">Add Hours</option>
+        <option value="product/new">Add Product</option>
+        <option value="sale/new">Add Sale</option>
+    </select>
+    <br>
+    <label for="json">JSON Payload:</label><br>
+    <textarea id="json" name="json" rows="12" cols="30"></textarea>
+    <br>
+    <button id="submit" name="submit" onclick="submitapi()">Submit Request</button>
+    <br>
+    <pre id="postresponse"></pre>
+    <h2>View Data</h2>
+    <ul id="datalinks">
+        <li><a href="workers">Workers</a></li>
+        <li><a href="crops">Crops</a></li>
+        <li><a href="harvests">Harvests</a></li>
+        <li><a href="processing">Processing</a></li>
+        <li><a href="hours">Hours</a></li>
+        <li><a href="products">Products</a></li>
+        <li><a href="sales">Sales</a></li>
+    </ul>
+    <pre id="getresponse"></pre>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 	</body>
 </html>

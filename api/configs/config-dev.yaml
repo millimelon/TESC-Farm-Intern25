@@ -1,2 +1,2 @@
 Internal_Port: "8078"
-Database_Connection: "$DEVDBCONN"
+Database_Connection: "assets/data-dev.db"
