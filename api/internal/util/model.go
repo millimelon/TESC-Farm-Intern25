@@ -9,7 +9,7 @@ import (
 
 type Config struct {
 	Mode   string
-	Host   string
+	Host   string `yaml:"Host"`
 	Port   string `yaml:"Internal_Port"`
 	DBConn string `yaml:"Database_Connection"`
 }
@@ -19,11 +19,15 @@ func (s *Config) Load(prodconf string, devconf string) {
 	if dev, _ := os.LookupEnv("PRODUCTION"); dev != "" {
 		configfile = prodconf
 		s.Mode = "production"
-		s.Host = "127.0.0.1"
+		if s.Host == "" {
+			s.Host = "127.0.0.1"
+		}
 		log.Println("Running in production mode.")
 	} else {
 		s.Mode = "development"
-		s.Host = "0.0.0.0"
+		if s.Host == "" {
+			s.Host = "0.0.0.0"
+		}
 		log.Println("Running in development mode.")
 	}
 	content, err := ioutil.ReadFile(configfile)

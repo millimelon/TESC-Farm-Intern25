@@ -1,2 +1,3 @@
+Host: "127.0.0.1"
 Internal_Port: "8078"
 Database_Connection: "assets/data-dev.db"
