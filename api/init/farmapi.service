@@ -5,7 +5,7 @@ After=network.target network-online.target
 
 [Service]
 WorkingDirectory=/home/shawn/code/TESC-Farm/api
-ExecStart=/usr/local/bin/sops exec-env configs/secrets.yaml ./farmapi
+ExecStart=/usr/local/bin/sops exec-env configs/secrets.yaml farmapi
 Restart=always
 RestartSec=10
 StandardOutput=journal
