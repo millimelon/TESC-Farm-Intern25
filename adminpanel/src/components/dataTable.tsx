@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { AgGridReact } from "ag-grid-react";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 
 interface Gorm {
   ID: number;
@@ -59,20 +60,24 @@ interface Hours extends Gorm {
 }
 interface ColField {
   field: string;
+  header: string;
 }
-interface dataTableProps extends Gorm {
+interface dataTableProps {
   rowData: Hours[];
   colDefs: ColField[];
 }
 
-export default function DataTable(props: dataTableProps) {
+export default function RowTable(props: dataTableProps) {
   const [rowData, setRowData] = useState(props.rowData);
-
   const [colDefs, setColDefs] = useState(props.colDefs);
 
   return (
-    <div style={{ height: 500 }}>
-      <AgGridReact rowData={rowData} columnDefs={colDefs} />
+    <div>
+      <DataTable value={rowData} tableStyle={{ minWidth: "10rem" }}>
+        {colDefs.map((col, i) => (
+          <Column key={col.field} field={col.field} header={col.header} />
+        ))}
+      </DataTable>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import DataTable from "./components/dataTable";
+import RowTable from "./components/dataTable";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -46,31 +46,18 @@ const jsondata = [
 ];
 
 const coldefs = [
-  { field: "worker_id" },
-  { field: "crop_id" },
-  { field: "start" },
-  { field: "duration" },
+  { field: "worker_id", header: "Worker ID" },
+  { field: "harvest.crop_id", header: "Crop ID" },
+  { field: "start", header: "Start" },
+  { field: "duration", header: "Duration" },
 ];
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header className="App-header"></header>
       <main id="main">
-        <DataTable rowData={jsondata} colDefs={coldefs} ID={0}></DataTable>
+        <RowTable rowData={jsondata} colDefs={coldefs}></RowTable>
       </main>
     </div>
   );
