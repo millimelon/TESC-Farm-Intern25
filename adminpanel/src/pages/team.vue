@@ -15,6 +15,12 @@
 <script setup lang="ts">
 import items from "@/assets/hours.json";
 
+definePage({
+  meta: {
+    title: "Student Hours",
+  },
+});
+
 const headers = [
   { title: "Name", key: "worker.name" },
   { title: "Hours", key: "duration" },

@@ -17,6 +17,7 @@
     "roboto-fontface": "*",
     "vit": "^0.0.1",
     "vue": "^3.4.31",
+    "vue-meta": "^3.0.0-alpha.2",
     "vuetify": "^3.6.14"
   },
   "devDependencies": {

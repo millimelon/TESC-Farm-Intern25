@@ -5,10 +5,9 @@ import { RouterLink } from "vue-router";
 
 const drawer = ref(true);
 const route = useRouter();
-
 const items = ref([
   {
-    title: "Crops",
+    title: "Dashboard",
     prependIcon: "mdi-view-dashboard-outline",
     link: true,
     to: "/",
@@ -59,9 +58,7 @@ const items = ref([
         @click="drawer = !drawer"
       />
 
-      <v-app-bar-title>
-        Organic Farm at The Evergreen State College
-      </v-app-bar-title>
+      <v-app-bar-title> {{ $route.meta.title }}</v-app-bar-title>
 
       <template #append>
         <v-btn class="text-none me-2" height="48" icon slim>

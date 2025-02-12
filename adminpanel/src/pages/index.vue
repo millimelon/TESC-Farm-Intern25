@@ -12,8 +12,14 @@
   />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import items from "@/assets/hours.json";
+definePage({
+  meta: {
+    title: "Dashboard",
+  },
+});
+
 for (const hours of items) {
   hours.crop = "N/A";
   hours.worktype = "Other";
