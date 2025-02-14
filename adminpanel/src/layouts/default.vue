@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useRoute } from "vue-router";
-import { RouterLink } from "vue-router";
-
 const drawer = ref(true);
-const route = useRouter();
 const items = ref([
   {
     title: "Dashboard",
@@ -57,8 +53,8 @@ const items = ref([
         v-if="$vuetify.display.smAndDown"
         @click="drawer = !drawer"
       />
-
-      <v-app-bar-title> {{ $route.meta.title }}</v-app-bar-title>
+      <slot name="search" />
+      <v-app-bar-title>{{ $route.meta.title }}</v-app-bar-title>
 
       <template #append>
         <v-btn class="text-none me-2" height="48" icon slim>
