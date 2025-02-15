@@ -14,7 +14,6 @@
   <v-data-table
     style="max-width: 90%; margin: auto; margin-bottom: 33px"
     :search="search"
-    :item-value="ID"
     :items="items"
     :headers="headers"
     hover
