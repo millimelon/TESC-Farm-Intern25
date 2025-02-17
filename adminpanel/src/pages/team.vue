@@ -1,5 +1,8 @@
 <template>
-  <h1 class="v-text-h1" style="text-align: center; padding: 20px">
+  <h1
+    class="v-text-h1"
+    style="text-align: center; padding: 20px"
+  >
     Student Hours
   </h1>
   <v-text-field
@@ -23,16 +26,16 @@
 </template>
 
 <script setup lang="ts">
-import hours from "@/assets/hours.json";
+import hours from '@/assets/hours.json'
 
 definePage({
   meta: {
-    title: "Student Hours",
+    title: 'Student Hours',
   },
-});
-const search = ref("");
+})
+const search = ref('')
 const headers = [
-  { title: "Name", key: "worker.name" },
-  { title: "Hours", key: "duration" },
-];
+  { title: 'Name', key: 'worker.name' },
+  { title: 'Hours', key: 'duration' },
+]
 </script>
