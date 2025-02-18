@@ -12,3 +12,5 @@ The process follows this pattern:
 5. The hashed ID is stored in an encrypted database where it can be accessed by the admin panel.
 
 ![Diagram of Data Flow](personal-data-diagram.png)
+
+![Diagram of Hashing Process](data-diagram.pdf)
