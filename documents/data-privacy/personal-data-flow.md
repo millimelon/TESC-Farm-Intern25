@@ -13,4 +13,4 @@ The process follows this pattern:
 
 ![Diagram of Data Flow](personal-data-diagram.png)
 
-![Diagram of Hashing Process](data-diagram.pdf)
+![Diagram of Hashing Process](security-diagram.png)
