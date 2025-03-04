@@ -3,13 +3,39 @@ package harvest
 import (
 	"github.com/absentbird/TESC-Farm/internal/sales"
 	"gorm.io/gorm"
+	"time"
 )
+
+type Area struct {
+	gorm.Model
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Use         string `json:"use"`
+}
+
+type Bed struct {
+	gorm.Model
+	Name   string `json:"name"`
+	Notes  string `json:"notes,omitempty"`
+	Area   *Area  `json:"area,omitempty"`
+	AreaID uint   `json:"area_id"`
+}
 
 type Crop struct {
 	gorm.Model
-	Name   string `json:"name"`
-	Season string `json:"season"`
-	Type   string `json:"type,omitempty"`
+	Name    string `json:"name"`
+	Variety string `json:"variety"`
+	Type    string `json:"type,omitempty"`
+}
+
+type Planting struct {
+	gorm.Model
+	Crop         *Crop     `json:"crop,omitempty"`
+	CropID       uint      `json:"crop_id"`
+	Bed          *Bed      `json:"bed,omitempty"`
+	BedID        uint      `json:"bed_id"`
+	PlantingDate time.Time `json:"planting_date"`
+	HarvestDate  time.Time `json:"harvest_date,omitempty"`
 }
 
 type Harvest struct {
@@ -18,6 +44,8 @@ type Harvest struct {
 	Bin    string  `json:"bin"`
 	Crop   *Crop   `json:"crop,omitempty"`
 	CropID uint    `json:"crop_id"`
+	Bed    *Bed    `json:"bed,omitempty"`
+	BedID  uint    `json:"bed_id"`
 }
 
 type Process struct {

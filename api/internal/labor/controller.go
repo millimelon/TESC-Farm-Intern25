@@ -3,18 +3,18 @@ package labor
 import (
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"strconv"
-  "golang.org/x/crypto/bcrypt"
 )
 
 func hashANum(anum string) (string, error) {
-  bytenum := []byte(anum)
-  hash, err := bcrypt.GenerateFromPassword(bytepass, bcrypt.MinCost)
-  if err != nil {
-    return "", err
-  }
-  return string(hash), err
+	bytenum := []byte(anum)
+	hash, err := bcrypt.GenerateFromPassword(bytenum, bcrypt.MinCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hash), err
 }
 
 // Hours
@@ -133,15 +133,15 @@ func AddWorker(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-  //Hashes A number
-  hashed_a_num, err := hashANum(record.Barcode)
-  //checks if A num is hashed
-  if err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error:": err.Error()})
-    return
-  }
-  record.Barcode = hashed_a_num
-  util.DB.Create(&record)
+	//Hashes A number
+	hashed_a_num, err := hashANum(record.Barcode)
+	//checks if A num is hashed
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error:": err.Error()})
+		return
+	}
+	record.Barcode = hashed_a_num
+	util.DB.Create(&record)
 	c.JSON(http.StatusOK, record)
 }
 
@@ -174,45 +174,45 @@ func DeleteWorker(c *gin.Context) {
 }
 
 func AddTask(c *gin.Context) {
-  record := Task{}
-  if err := c.ShouldBindJSON(&record); err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error:": err.Error()})
-    return
-  }
-  util.DB.Create(&record)
-  c.JSON(http.StatusOK, record)
+	record := Task{}
+	if err := c.ShouldBindJSON(&record); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error:": err.Error()})
+		return
+	}
+	util.DB.Create(&record)
+	c.JSON(http.StatusOK, record)
 }
 
 func GetTask(c *gin.Context) {
-  record := Task{}
-	if err := util.DB.First(&w, c.Param("id")).Error; err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-    return
-  }
-  c.JSON(http.StatusOK, record)
+	record := Task{}
+	if err := util.DB.First(&record, c.Param("id")).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, record)
 }
 
 func GetAllTasks(c *gin.Context) {
-  record := []Tasks{}
+	records := []Task{}
 	if err := util.DB.Find(&records).Error; err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-    return
-  }
-  c.JSON(http.StatusOK, records)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
 }
 
 func UpdateTask(c *gin.Context) {
-  record := Task{}
-  if err := c.ShouldBindJSON(&record); err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-    return
-  }
-  id, err := strconv.Atoi(c.Param("id"))
-  if err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-    return
-  }
-  record.ID = uint(id)
-  util.DB.Save(&record)
-  c.JSON(http.StatusOK, record)
+	record := Task{}
+	if err := c.ShouldBindJSON(&record); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	record.ID = uint(id)
+	util.DB.Save(&record)
+	c.JSON(http.StatusOK, record)
 }

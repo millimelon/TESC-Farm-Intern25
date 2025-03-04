@@ -8,32 +8,32 @@ import (
 
 type Worker struct {
 	gorm.Model
-	Name     string `json:"name"`
-	Barcode  string `json:"barcode"`
-	Position string `json:"position,omitempty"`
+	Barcode string `json:"barcode"`
 }
 
 type Hours struct {
 	gorm.Model
-	Start      time.Time        `json:"start"`
-	Duration   float64          `json:"duration"`
-	Department string           `json:"department,omitempty"`
-	TaskID     uint             `json:"task,omitempty"`
-	Worker     *Worker          `json:"worker,omitempty"`
-	WorkerID   uint             `json:"worker_id"`
-	Harvest    *harvest.Harvest `json:"harvest,omitempty"`
-	HarvestID  uint             `json:"harvest_id,omitempty"`
-	Process    *harvest.Process `json:"process,omitempty"`
-	ProcessID  uint             `json:"process_id,omitempty"`
+	Start      time.Time `json:"start"`
+	Duration   float64   `json:"duration"`
+	Department string    `json:"department,omitempty"`
+	Task       *Task     `json:"task,omitempty"`
+	TaskID     uint      `json:"task_id"`
+	Worker     *Worker   `json:"worker,omitempty"`
+	WorkerID   uint      `json:"worker_id"`
 }
 
 type Task struct {
-  gorm.Model
-  Name        string                 `json:"name"`
-  Description string                 `json:"description"`
-  Barcode     string                 `json:"barcode"`
-  PlantingID  uint                   `json:"planting_id"`
-  AreaID      uint                   `json:"area_id"`
-  ProcessID   uint                   `json:"process_id"`
-  HarvestID   uint                   `json:"harvest_id"`
+	gorm.Model
+	Name        string            `json:"name"`
+	Description string            `json:"description"`
+	Barcode     string            `json:"barcode"`
+	Type        string            `json:"type"`
+	Area        *harvest.Area     `json:"area,omitempty"`
+	AreaID      uint              `json:"area_id"`
+	Planting    *harvest.Planting `json:"planting,omitempty"`
+	PlantingID  uint              `json:"planting_id,omitempty"`
+	Harvest     *harvest.Harvest  `json:"harvest,omitempty"`
+	HarvestID   uint              `json:"harvest_id,omitempty"`
+	Process     *harvest.Process  `json:"process,omitempty"`
+	ProcessID   uint              `json:"process_id,omitempty"`
 }
