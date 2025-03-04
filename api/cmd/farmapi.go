@@ -28,8 +28,6 @@ func main() {
 
 	// Labor endpoints
 	r.GET("/hours", labor.AllHours)
-	r.GET("/hours/harvesting", labor.HarvestingHours)
-	r.GET("/hours/processing", labor.ProcessingHours)
 	r.GET("/hours/:id", labor.GetHours)
 	r.POST("/hours/:id/update", labor.UpdateHours)
 	r.POST("/hours/:id/delete", labor.DeleteHours)
@@ -42,8 +40,13 @@ func main() {
 	r.POST("/worker/new", labor.AddWorker)
 
 	// Harvest endpoints
+	r.GET("/areas", harvest.AllAreas)
+	r.GET("/areas/:id", harvest.GetArea)
+	r.GET("/beds", harvest.AllBeds)
+	r.GET("/beds/:id", harvest.GetBed)
 	r.GET("/crops", harvest.AllCrops)
 	r.GET("/crop/:id", harvest.GetCrop)
+	r.GET("/crop/:id/plantings", harvest.GetCropPlantings)
 	r.GET("/crop/:id/harvests", harvest.GetCropHarvests)
 	r.GET("/crop/:id/processing", harvest.GetCropProcessing)
 	r.POST("/crop/:id/update", harvest.UpdateCrop)

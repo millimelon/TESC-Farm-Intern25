@@ -20,24 +20,7 @@ func hashANum(anum string) (string, error) {
 // Hours
 func AllHours(c *gin.Context) {
 	records := []Hours{}
-	if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Harvest.Crop").Preload("Process").Preload("Process.Harvest").Preload("Process.Harvest.Crop").Preload("Process.Product").Find(&records).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, records)
-}
-func HarvestingHours(c *gin.Context) {
-	records := []Hours{}
-	if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Harvest.Crop").Where("harvest_id NOT NULL").Find(&records).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, records)
-}
-
-func ProcessingHours(c *gin.Context) {
-	records := []Hours{}
-	if err := util.DB.Preload("Worker").Preload("Process").Where("process_id NOT NULL").Find(&records).Error; err != nil {
+	if err := util.DB.Preload("Worker").Preload("Task").Preload("Task.Area").Preload("Task.Planting").Preload("Task.Planting.Crop").Preload("Task.Planting.Bed").Preload("Task.Planting.Bed.Area").Preload("Task.Harvest").Preload("Task.Harvest.Crop").Preload("Task.Harvest.Bed").Preload("Task.Harvest.Bed.Area").Preload("Task.Process").Preload("Task.Process.Harvest").Preload("Task.Process.Harvest.Crop").Preload("Task.Process.Harvest.Bed").Preload("Task.Process.Harvest.Bed.Area").Preload("Task.Process.Product").Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -185,7 +168,7 @@ func AddTask(c *gin.Context) {
 
 func GetTask(c *gin.Context) {
 	record := Task{}
-	if err := util.DB.First(&record, c.Param("id")).Error; err != nil {
+	if err := util.DB.Preload("Area").Preload("Planting").Preload("Planting.Crop").Preload("Planting.Bed").Preload("Planting.Bed.Area").Preload("Harvest").Preload("Harvest.Crop").Preload("Harvest.Bed").Preload("Harvest.Bed.Area").Preload("Process").Preload("Process.Harvest").Preload("Process.Harvest.Crop").Preload("Process.Harvest.Bed").Preload("Process.Harvest.Bed.Area").Preload("Process.Product").First(&record, c.Param("id")).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
