@@ -1,20 +1,18 @@
 package labor
 
 import (
+  "crypto/sha256"
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"strconv"
 )
 
-func hashANum(anum string) (string, error) {
+func hashANum(anum string) string {
 	bytenum := []byte(anum)
-	hash, err := bcrypt.GenerateFromPassword(bytenum, bcrypt.MinCost)
-	if err != nil {
-		return "", err
-	}
-	return string(hash), err
+  hash := sha256.New()
+  hash.Write(bytenum)
+  return string(hash.Sum(nil))
 }
 
 // Hours
@@ -64,11 +62,8 @@ func AddPunch(c *gin.Context) {
 	if err := c.ShouldBindJSON(&punch); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-	anum, err := hashANum(record.Barcode)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error:": err.Error()})
-		return
-	}
+  }
+	anum := hashANum(record.Barcode)
 	last := Hours{}
   if err := util.DB.Preload("Worker").Where("Worker.Barcode = ?", anum).Order("Start desc").First(&last); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -139,6 +134,24 @@ func GetWorker(c *gin.Context) {
 	c.JSON(http.StatusOK, record)
 }
 
+func LookupWorker(c *gin.Context) {
+  type WokerLookup struct {
+    Barcode string `json:"barcode"`
+  }
+  lookup := WorkerLookup{}
+	if err := c.ShouldBindJSON(&lookup); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+  }
+	hashed_a_num := hashANum(lookup.Barcode)
+	record := Worker{}
+	if err := util.DB.Where("Barcode = ?", hashed_a_num).First(&record).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, record)
+}
+
 func GetWorkerHours(c *gin.Context) {
 	w := Worker{}
 	if err := util.DB.First(&w, c.Param("id")).Error; err != nil {
@@ -163,12 +176,7 @@ func AddWorker(c *gin.Context) {
 		return
 	}
 	//Hashes A number
-	hashed_a_num, err := hashANum(record.Barcode)
-	//checks if A num is hashed
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error:": err.Error()})
-		return
-	}
+	hashed_a_num := hashANum(record.Barcode)
 	record.Barcode = hashed_a_num
 	util.DB.Create(&record)
 	c.JSON(http.StatusOK, record)
