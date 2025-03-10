@@ -29,9 +29,16 @@ func main() {
 	// Labor endpoints
 	r.GET("/hours", labor.AllHours)
 	r.GET("/hours/:id", labor.GetHours)
+  r.GET("/hours/working", labor.GetWorking)
 	r.POST("/hours/:id/update", labor.UpdateHours)
 	r.POST("/hours/:id/delete", labor.DeleteHours)
 	r.POST("/hours/new", labor.AddHours)
+	r.POST("/hours/punch", labor.AddPunch)
+  // TODO write tasks endpoints
+	r.GET("/tasks", labor.AllTasks)
+	r.GET("/task/:id", labor.GetTask)
+	r.POST("/task/:id/update", labor.UpdateTask)
+	r.POST("/task/:id/delete", labor.DeleteTask)
 	r.GET("/workers", labor.AllWorkers)
 	r.GET("/worker/:id", labor.GetWorker)
 	r.GET("/worker/:id/hours", labor.GetWorkerHours)

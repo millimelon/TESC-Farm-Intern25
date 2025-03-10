@@ -25,7 +25,14 @@ type Crop struct {
 	gorm.Model
 	Name    string `json:"name"`
 	Variety string `json:"variety"`
-	Type    string `json:"type,omitempty"`
+  Notes   string `json:"notes,omitempty"`
+  Tags    []*Tag `json:"tags,omitempty" gorm:"many2many:crop_tags"`
+}
+
+type Tag struct {
+  gorm.Model
+  Name string `json:"name"`
+  Type string `json:"type,omitempty"`
 }
 
 type Planting struct {

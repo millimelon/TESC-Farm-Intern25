@@ -36,6 +36,15 @@ func GetHours(c *gin.Context) {
 	c.JSON(http.StatusOK, record)
 }
 
+func GetWorking(c *gin.Context) {
+	records := []Hours{}
+	if err := util.DB.Preload("Worker").Preload("Task").Preload("Task.Area").Preload("Task.Planting").Preload("Task.Planting.Crop").Preload("Task.Planting.Bed").Preload("Task.Planting.Bed.Area").Preload("Task.Harvest").Preload("Task.Harvest.Crop").Preload("Task.Harvest.Bed").Preload("Task.Harvest.Bed.Area").Preload("Task.Process").Preload("Task.Process.Harvest").Preload("Task.Process.Harvest.Crop").Preload("Task.Process.Harvest.Bed").Preload("Task.Process.Harvest.Bed.Area").Preload("Task.Process.Product").Where("Duration = ?", 0).Find(&records).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+
 func AddHours(c *gin.Context) {
 	record := Hours{}
 	if err := c.ShouldBindJSON(&record); err != nil {
@@ -45,6 +54,43 @@ func AddHours(c *gin.Context) {
 	util.DB.Create(&record)
 	c.JSON(http.StatusOK, record)
 }
+
+func AddPunch(c *gin.Context) {
+  type ScanPunch struct {
+    Barcode string `json:"barcode"`
+    TaskID  int    `json:"task,omitempty"`
+  }
+  punch := ScanPunch{}
+	if err := c.ShouldBindJSON(&punch); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	anum, err := hashANum(record.Barcode)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error:": err.Error()})
+		return
+	}
+	last := Hours{}
+  if err := util.DB.Preload("Worker").Where("Worker.Barcode = ?", anum).Order("Start desc").First(&last); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+  }
+  if last.Duration == 0 {
+    last.Duration = time.Now().Sub(last.Start)
+    util.DB.Save(&last)
+  }
+  if taskID == 0 {
+    c.JSON(http.StatusOK, last)
+    return
+  }
+  record := Hours{}
+  record.Start = time.Now()
+  record.Duration = 0
+  record.WorkerID = last.Worker.ID
+  record.TaskID = taskID
+	util.DB.Create(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+{"barcode": "A# here", "task": "task id here"}
 
 func UpdateHours(c *gin.Context) {
 	record := Hours{}
