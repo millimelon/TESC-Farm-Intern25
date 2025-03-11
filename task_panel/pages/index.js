@@ -13,31 +13,33 @@ function Task({taskName, taskDescription, taskID}) {
   const [numWorkers, setNumWorkers] = useState(0);
   
   async function updateWorkerCount() {
-    const url = "https://json.tesc.farm/hours/working"
+    const url = "//localhost:8078/hours/working"
     console.log("update worker count")
     const response = await fetch(url, {method: "GET"})
+    const data = await response.json()
+    console.log(data)
     let count = 0
-
-    response.foreach((task)=> {
+    data.forEach((task)=> {
       //for each worker, count num of ID's
-      if (task.Task.id == taskID) {
+      if (task.ID == taskID) {
         count += 1
       }
     })
     setNumWorkers(count)
   }
 
-  async function SignIn({ANum, task}) {
-    const url = "https://json.tesc.farm/hours/punch"
-  
-    await fetch(url, {method: "POST", body:{barcode: ANum, task: task}})
+  async function SignIn(ANum, task) {
+    const url = "//localhost:8078/hours/punch"
+    const data = {barcode: ANum, task: task}
+    console.log(data)
+    await fetch(url, {method: "POST", body: JSON.stringify(data)})
     updateWorkerCount(task)
   }
 
   async function SignOut(ANum) {
-    const url = "https://json.tesc.farm/hours/punch"
-  
-    fetch(url, {method: "POST", body: {barcode: ANum}})
+    const url = "//localhost:8078/hours/punch"
+    const data = {barcode: ANum}
+    fetch(url, {method: "POST", body: JSON.stringify(data)})
     updateWorkerCount(task)
   }
 
@@ -52,6 +54,9 @@ function Task({taskName, taskDescription, taskID}) {
 
   async function handleClick() {
     let input = prompt("Enter your A#:")
+    if (input == null) {
+      return
+    }
     if (input != "") {
       SignIn(input, taskID)
     }
@@ -69,8 +74,6 @@ function Task({taskName, taskDescription, taskID}) {
       <h2>{taskName}</h2>
       <p>{taskDescription}</p>
       <p>Number of people working on task: {numWorkers}</p>
-      {/* TO DO: 3. Implement task complete button */}
-      <button>Sign Out</button>
     </div>
   );
 }
@@ -110,6 +113,7 @@ export default function Page() {
       <div className="task-panel" style={panelStyle}>
         {tasks}
       </div>
+      <button>Sign Out</button>
     </div>
   );
 }

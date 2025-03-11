@@ -67,7 +67,7 @@ func AddPunch(c *gin.Context) {
 	}
 	anum := hashANum(punch.Barcode)
 	last := Hours{}
-	if err := util.DB.Preload("Worker").Where("Worker.Barcode = ?", anum).Order("Start desc").First(&last).Error; err != nil {
+	if err := util.DB.Joins("Worker", util.DB.Where(&Worker{Barcode: anum})).Order("Start desc").First(&last).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			// TODO Remove this after the demo
 			worker := Worker{}
