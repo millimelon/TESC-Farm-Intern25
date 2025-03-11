@@ -7,6 +7,44 @@ import (
 	"strconv"
 )
 
+// Areas
+func AllAreas(c *gin.Context) {
+	records := []Area{}
+	if err := util.DB.Find(&records).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+
+func GetArea(c *gin.Context) {
+	record := Area{}
+	if err := util.DB.First(&record, c.Param("id")).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, record)
+}
+
+// Beds
+func AllBeds(c *gin.Context) {
+	records := []Bed{}
+	if err := util.DB.Find(&records).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+
+func GetBed(c *gin.Context) {
+	record := Bed{}
+	if err := util.DB.First(&record, c.Param("id")).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, record)
+}
+
 // Crops
 func AllCrops(c *gin.Context) {
 	records := []Crop{}
@@ -26,6 +64,23 @@ func GetCrop(c *gin.Context) {
 	c.JSON(http.StatusOK, record)
 }
 
+func GetCropPlantings(c *gin.Context) {
+	crop := Crop{}
+	if err := util.DB.First(&crop, c.Param("id")).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	records := []Planting{}
+	if err := util.DB.Preload("Bed").Preload("Bed.Area").Find(&records, Planting{CropID: crop.ID}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	for _, r := range records {
+		r.Crop = &crop
+	}
+	c.JSON(http.StatusOK, records)
+}
+
 func GetCropHarvests(c *gin.Context) {
 	crop := Crop{}
 	if err := util.DB.First(&crop, c.Param("id")).Error; err != nil {
@@ -33,9 +88,12 @@ func GetCropHarvests(c *gin.Context) {
 		return
 	}
 	records := []Harvest{}
-	if err := util.DB.Find(&records, Harvest{CropID: crop.ID}).Error; err != nil {
+	if err := util.DB.Preload("Bed").Preload("Bed.Area").Find(&records, Harvest{CropID: crop.ID}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
+	}
+	for _, r := range records {
+		r.Crop = &crop
 	}
 	c.JSON(http.StatusOK, records)
 }
@@ -50,6 +108,9 @@ func GetCropProcessing(c *gin.Context) {
 	if err := util.DB.Joins("Harvest").Find(&records, Process{Harvest: &Harvest{CropID: crop.ID}}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
+	}
+	for _, r := range records {
+		r.Harvest.Crop = &crop
 	}
 	c.JSON(http.StatusOK, records)
 }

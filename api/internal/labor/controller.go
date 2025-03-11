@@ -1,33 +1,25 @@
 package labor
 
 import (
+	"crypto/sha256"
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"time"
 )
+
+func hashANum(anum string) string {
+	bytenum := []byte(anum)
+	hash := sha256.New()
+	hash.Write(bytenum)
+	return string(hash.Sum(nil))
+}
 
 // Hours
 func AllHours(c *gin.Context) {
 	records := []Hours{}
-	if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Harvest.Crop").Preload("Process").Preload("Process.Harvest").Preload("Process.Harvest.Crop").Preload("Process.Product").Find(&records).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, records)
-}
-func HarvestingHours(c *gin.Context) {
-	records := []Hours{}
-	if err := util.DB.Preload("Worker").Preload("Harvest").Preload("Harvest.Crop").Where("harvest_id NOT NULL").Find(&records).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, records)
-}
-
-func ProcessingHours(c *gin.Context) {
-	records := []Hours{}
-	if err := util.DB.Preload("Worker").Preload("Process").Where("process_id NOT NULL").Find(&records).Error; err != nil {
+	if err := util.DB.Preload("Worker").Preload("Task").Preload("Task.Area").Preload("Task.Planting").Preload("Task.Planting.Crop").Preload("Task.Planting.Bed").Preload("Task.Planting.Bed.Area").Preload("Task.Harvest").Preload("Task.Harvest.Crop").Preload("Task.Harvest.Bed").Preload("Task.Harvest.Bed.Area").Preload("Task.Process").Preload("Task.Process.Harvest").Preload("Task.Process.Harvest.Crop").Preload("Task.Process.Harvest.Bed").Preload("Task.Process.Harvest.Bed.Area").Preload("Task.Process.Product").Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -43,12 +35,54 @@ func GetHours(c *gin.Context) {
 	c.JSON(http.StatusOK, record)
 }
 
+func GetWorking(c *gin.Context) {
+	records := []Hours{}
+	if err := util.DB.Preload("Worker").Preload("Task").Preload("Task.Area").Preload("Task.Planting").Preload("Task.Planting.Crop").Preload("Task.Planting.Bed").Preload("Task.Planting.Bed.Area").Preload("Task.Harvest").Preload("Task.Harvest.Crop").Preload("Task.Harvest.Bed").Preload("Task.Harvest.Bed.Area").Preload("Task.Process").Preload("Task.Process.Harvest").Preload("Task.Process.Harvest.Crop").Preload("Task.Process.Harvest.Bed").Preload("Task.Process.Harvest.Bed.Area").Preload("Task.Process.Product").Where("Duration = ?", 0).Find(&records).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+
 func AddHours(c *gin.Context) {
 	record := Hours{}
 	if err := c.ShouldBindJSON(&record); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	util.DB.Create(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+func AddPunch(c *gin.Context) {
+	type ScanPunch struct {
+		Barcode string `json:"barcode"`
+		TaskID  int    `json:"task,omitempty"`
+	}
+	punch := ScanPunch{}
+	if err := c.ShouldBindJSON(&punch); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	anum := hashANum(punch.Barcode)
+	last := Hours{}
+	if err := util.DB.Preload("Worker").Where("Worker.Barcode = ?", anum).Order("Start desc").First(&last).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if last.Duration == 0 {
+		last.Duration = time.Now().Sub(last.Start).Hours()
+		util.DB.Save(&last)
+	}
+	if punch.TaskID == 0 {
+		c.JSON(http.StatusOK, last)
+		return
+	}
+	record := Hours{}
+	record.Start = time.Now()
+	record.Duration = 0
+	record.WorkerID = last.Worker.ID
+	record.TaskID = uint(punch.TaskID)
 	util.DB.Create(&record)
 	c.JSON(http.StatusOK, record)
 }
@@ -100,6 +134,24 @@ func GetWorker(c *gin.Context) {
 	c.JSON(http.StatusOK, record)
 }
 
+func LookupWorker(c *gin.Context) {
+	type WorkerLookup struct {
+		Barcode string `json:"barcode"`
+	}
+	lookup := WorkerLookup{}
+	if err := c.ShouldBindJSON(&lookup); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	hashed_a_num := hashANum(lookup.Barcode)
+	record := Worker{}
+	if err := util.DB.Where("Barcode = ?", hashed_a_num).First(&record).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, record)
+}
+
 func GetWorkerHours(c *gin.Context) {
 	w := Worker{}
 	if err := util.DB.First(&w, c.Param("id")).Error; err != nil {
@@ -123,6 +175,9 @@ func AddWorker(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	//Hashes A number
+	hashed_a_num := hashANum(record.Barcode)
+	record.Barcode = hashed_a_num
 	util.DB.Create(&record)
 	c.JSON(http.StatusOK, record)
 }
@@ -145,6 +200,62 @@ func UpdateWorker(c *gin.Context) {
 
 func DeleteWorker(c *gin.Context) {
 	record := Worker{}
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	record.ID = uint(id)
+	util.DB.Delete(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+func AddTask(c *gin.Context) {
+	record := Task{}
+	if err := c.ShouldBindJSON(&record); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error:": err.Error()})
+		return
+	}
+	util.DB.Create(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+func GetTask(c *gin.Context) {
+	record := Task{}
+	if err := util.DB.Preload("Area").Preload("Planting").Preload("Planting.Crop").Preload("Planting.Bed").Preload("Planting.Bed.Area").Preload("Harvest").Preload("Harvest.Crop").Preload("Harvest.Bed").Preload("Harvest.Bed.Area").Preload("Process").Preload("Process.Harvest").Preload("Process.Harvest.Crop").Preload("Process.Harvest.Bed").Preload("Process.Harvest.Bed.Area").Preload("Process.Product").First(&record, c.Param("id")).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, record)
+}
+
+func AllTasks(c *gin.Context) {
+	records := []Task{}
+	if err := util.DB.Find(&records).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+
+func UpdateTask(c *gin.Context) {
+	record := Task{}
+	if err := c.ShouldBindJSON(&record); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	record.ID = uint(id)
+	util.DB.Save(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+func DeleteTask(c *gin.Context) {
+	record := Task{}
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
