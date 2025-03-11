@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 	"time"
@@ -67,8 +68,18 @@ func AddPunch(c *gin.Context) {
 	anum := hashANum(punch.Barcode)
 	last := Hours{}
 	if err := util.DB.Preload("Worker").Where("Worker.Barcode = ?", anum).Order("Start desc").First(&last).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+		if err == gorm.ErrRecordNotFound {
+			// TODO Remove this after the demo
+			worker := Worker{}
+			worker.Barcode = anum
+			util.DB.Create(&worker)
+			last.Worker = &worker
+			// Keep this part
+			last.Duration = -1 // Prevent duration update below
+		} else {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
 	if last.Duration == 0 {
 		last.Duration = time.Now().Sub(last.Start).Hours()
