@@ -38,6 +38,7 @@ func main() {
 	r.GET("/task/:id", labor.GetTask)
 	r.POST("/task/:id/update", labor.UpdateTask)
 	r.POST("/task/:id/delete", labor.DeleteTask)
+	r.POST("/task/new", labor.AddTask)
 	r.GET("/workers", labor.AllWorkers)
 	r.GET("/worker/:id", labor.GetWorker)
 	r.GET("/worker/:id/hours", labor.GetWorkerHours)
