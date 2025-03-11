@@ -11,7 +11,6 @@ import {useState} from 'react';
 
 function Task({taskName, taskDescription, taskID}) {  
   const [numWorkers, setNumWorkers] = useState(0);
-  
   async function updateWorkerCount() {
     const url = "//localhost:8078/hours/working"
     console.log("update worker count")
@@ -21,7 +20,7 @@ function Task({taskName, taskDescription, taskID}) {
     let count = 0
     data.forEach((task)=> {
       //for each worker, count num of ID's
-      if (task.ID == taskID) {
+      if (task.task_id == taskID) {
         count += 1
       }
     })
@@ -72,7 +71,7 @@ function Task({taskName, taskDescription, taskID}) {
   return (
     <div className="task" style={taskStyle} onClick={handleClick} >
       <h2>{taskName}</h2>
-      <p>{taskDescription}</p>
+      <p>{taskDescription}</p><br/>
       <p>Number of people working on task: {numWorkers}</p>
     </div>
   );
