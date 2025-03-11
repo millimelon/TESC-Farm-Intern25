@@ -102,26 +102,29 @@ function submitapi() {
     }).then(data => {
         console.log(data);
         const result = "RESPONSE:\n"+JSON.stringify(data, null, 2);
-		    document.getElementById("postresponse").innerText = result;    
+		    document.getElementById("postresponse").innerText = result;
+        
 	  });
+}
+function getdata(endpoint) {
+  fetch(endpoint), {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+  }).then(response => {
+      if (!response.ok) {
+          console.log(response);
+      }
+      return response.json();
+  }).then(data => {
+      console.log(data);
+      const result = "DATA:\n"+JSON.stringify(data, null, 2);
+      document.getElementById("getresponse").innerText = result;    
+  });
 }
 document.querySelectorAll('#datalinks li a').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log(e.target.getAttribute('href'));
-    fetch(url+join+e.target.getAttribute('href'), {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-	  }).then(response => {
-		    if (!response.ok) {
-		        console.log(response);
-        }
-        return response.json();
-    }).then(data => {
-        console.log(data);
-        const result = "DATA:\n"+JSON.stringify(data, null, 2);
-		    document.getElementById("getresponse").innerText = result;    
-	  });
+    getdata(url+join+e.target.getAttribute('href'));
     document.querySelectorAll('#datalinks li a').forEach(l => {
       l.classList.remove('active');
     });
