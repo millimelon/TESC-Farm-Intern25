@@ -9,15 +9,15 @@ import (
 
 type Config struct {
 	Mode   string
-  Salt   []byte
+	Salt   []byte
 	Host   string `yaml:"Host"`
 	Port   string `yaml:"Internal_Port"`
 	DBConn string `yaml:"Database_Connection"`
 }
 
 func (s *Config) Load(prodconf string, devconf string) {
-	s.salt = []byte("sea-salt")
-  configfile := devconf
+	s.Salt = []byte("sea-salt")
+	configfile := devconf
 	if dev, _ := os.LookupEnv("PRODUCTION"); dev != "" {
 		configfile = prodconf
 		s.Mode = "production"

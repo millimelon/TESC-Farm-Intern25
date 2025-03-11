@@ -29,7 +29,7 @@ func main() {
 	// Labor endpoints
 	r.GET("/hours", labor.AllHours)
 	r.GET("/hours/:id", labor.GetHours)
-  r.GET("/hours/working", labor.GetWorking)
+	r.GET("/hours/working", labor.GetWorking)
 	r.POST("/hours/:id/update", labor.UpdateHours)
 	r.POST("/hours/:id/delete", labor.DeleteHours)
 	r.POST("/hours/new", labor.AddHours)
@@ -41,7 +41,7 @@ func main() {
 	r.GET("/workers", labor.AllWorkers)
 	r.GET("/worker/:id", labor.GetWorker)
 	r.GET("/worker/:id/hours", labor.GetWorkerHours)
-  r.POST("/worker/lookup", labor.LookupWorker)
+	r.POST("/worker/lookup", labor.LookupWorker)
 	r.POST("/worker/:id/update", labor.UpdateWorker)
 	r.POST("/worker/:id/delete", labor.DeleteWorker)
 	r.POST("/worker/new", labor.AddWorker)
