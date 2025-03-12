@@ -35,7 +35,7 @@
   const getTasks = async () => {
     loading.value = true
     try {
-      const response = await fetch('//localhost:8078/tasks');
+      const response = await fetch('//tasks');
       if (!response.ok) {
         console.log(response.status)
       }
@@ -52,7 +52,7 @@
   const updateWorking = async () => {
     loading.value = true
     try {
-      const response = await fetch('//localhost:8078/hours/working');
+      const response = await fetch('//hours/working');
       if (!response.ok) {
         console.log(response.status)
       }
@@ -72,14 +72,14 @@
   const clockOn = async (taskID) => {
     let anum = prompt("Enter your A#:")
     const data = {barcode: anum, task: taskID}
-    const response = await fetch("//localhost:8078/hours/punch", {method: "POST", body: JSON.stringify(data)})
+    const response = await fetch("//hours/punch", {method: "POST", body: JSON.stringify(data)})
     const jsondata = await response.json();
     updateWorking()
   }
   const clockOff = async () => {
     let anum = prompt("Enter your A#:")
     const data = {barcode: anum}
-    const response = await fetch("//localhost:8078/hours/punch", {method: "POST", body: JSON.stringify(data)})
+    const response = await fetch("//hours/punch", {method: "POST", body: JSON.stringify(data)})
     const jsondata = await response.json();
     updateWorking()
   }
