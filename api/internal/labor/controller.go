@@ -2,6 +2,7 @@ package labor
 
 import (
 	"crypto/sha256"
+	"encoding/base64"
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -14,7 +15,7 @@ func hashANum(anum string) string {
 	bytenum := []byte(anum)
 	hash := sha256.New()
 	hash.Write(bytenum)
-	return string(hash.Sum(nil))
+	return base64.StdEncoding.EncodeToString(hash.Sum(nil))
 }
 
 // Hours
