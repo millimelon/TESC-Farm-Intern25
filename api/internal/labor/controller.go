@@ -68,21 +68,20 @@ func AddPunch(c *gin.Context) {
 	}
 	anum := hashANum(punch.Barcode)
 	last := Hours{}
+	newWorker := false
 	if err := util.DB.Joins("Worker", util.DB.Where(&Worker{Barcode: anum})).Order("Start desc").First(&last).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			// TODO Remove this after the demo
 			worker := Worker{}
 			worker.Barcode = anum
 			util.DB.Create(&worker)
 			last.Worker = &worker
-			// Keep this part
-			last.Duration = -1 // Prevent duration update below
+			newWorker = true
 		} else {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 	}
-	if last.Duration == 0 {
+	if last.Duration == 0 && !newWorker {
 		last.Duration = time.Now().Sub(last.Start).Hours()
 		util.DB.Save(&last)
 	}
