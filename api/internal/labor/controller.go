@@ -74,7 +74,7 @@ func AddPunch(c *gin.Context) {
 			worker := Worker{}
 			worker.Barcode = anum
 			util.DB.Create(&worker)
-			last.Worker = &worker
+			last.WorkerID = worker.ID
 			newWorker = true
 		} else {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -92,7 +92,7 @@ func AddPunch(c *gin.Context) {
 	record := Hours{}
 	record.Start = time.Now()
 	record.Duration = 0
-	record.WorkerID = last.Worker.ID
+	record.WorkerID = last.WorkerID
 	record.TaskID = uint(punch.TaskID)
 	util.DB.Create(&record)
 	c.JSON(http.StatusOK, record)
