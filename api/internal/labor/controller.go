@@ -6,6 +6,7 @@ import (
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -69,7 +70,7 @@ func AddPunch(c *gin.Context) {
 	anum := hashANum(punch.Barcode)
 	last := Hours{}
 	newWorker := false
-	if err := util.DB.Joins("Worker", util.DB.Where(&Worker{Barcode: anum})).Order("Start desc").First(&last).Error; err != nil {
+	if err := util.DB.InnerJoins("Worker", util.DB.Where(&Worker{Barcode: anum})).Order("Start desc").First(&last).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			worker := Worker{}
 			worker.Barcode = anum
@@ -81,6 +82,7 @@ func AddPunch(c *gin.Context) {
 			return
 		}
 	}
+	log.Println(last.Duration, last.WorkerID, anum, punch.Barcode)
 	if last.Duration == 0 && !newWorker {
 		last.Duration = time.Now().Sub(last.Start).Hours()
 		util.DB.Save(&last)
