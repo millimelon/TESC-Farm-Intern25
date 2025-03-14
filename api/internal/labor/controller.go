@@ -6,7 +6,6 @@ import (
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -82,7 +81,6 @@ func AddPunch(c *gin.Context) {
 			return
 		}
 	}
-	log.Println(last.Duration, last.WorkerID, anum, punch.Barcode)
 	if last.Duration == 0 && !newWorker {
 		last.Duration = time.Now().Sub(last.Start).Hours()
 		util.DB.Save(&last)
