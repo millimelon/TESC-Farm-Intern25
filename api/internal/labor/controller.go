@@ -66,6 +66,9 @@ func AddPunch(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	if punch.TaskID < 0 {
+		punch.TaskID = 0
+	}
 	anum := hashANum(punch.Barcode)
 	last := Hours{}
 	newWorker := false
