@@ -2,6 +2,7 @@ package util
 
 import (
 	"gopkg.in/yaml.v3"
+	"gorm.io/gorm"
 	"io/ioutil"
 	"log"
 	"os"
@@ -37,4 +38,10 @@ func (s *Config) Load(prodconf string, devconf string) {
 	content = []byte(os.ExpandEnv(string(content)))
 	err = yaml.Unmarshal(content, &s)
 	Check(err, "Error parsing configuration")
+}
+
+type Tag struct {
+	gorm.Model
+	Name string `json:"name"`
+	Type string `json:"type,omitempty"`
 }

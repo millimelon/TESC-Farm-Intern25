@@ -2,6 +2,7 @@ package harvest
 
 import (
 	"github.com/absentbird/TESC-Farm/internal/sales"
+	"github.com/absentbird/TESC-Farm/internal/util"
 	"gorm.io/gorm"
 )
 
@@ -22,16 +23,10 @@ type Bed struct {
 
 type Crop struct {
 	gorm.Model
-	Name    string `json:"name"`
-	Variety string `json:"variety"`
-	Notes   string `json:"notes,omitempty"`
-	Tags    []*Tag `json:"tags,omitempty" gorm:"many2many:crop_tags"`
-}
-
-type Tag struct {
-	gorm.Model
-	Name string `json:"name"`
-	Type string `json:"type,omitempty"`
+	Name    string      `json:"name"`
+	Variety string      `json:"variety"`
+	Notes   string      `json:"notes,omitempty"`
+	Tags    []*util.Tag `json:"tags,omitempty" gorm:"many2many:crop_tags"`
 }
 
 type Preharvest struct {

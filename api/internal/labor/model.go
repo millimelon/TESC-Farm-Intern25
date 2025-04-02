@@ -2,6 +2,7 @@ package labor
 
 import (
 	"github.com/absentbird/TESC-Farm/internal/harvest"
+	"github.com/absentbird/TESC-Farm/internal/util"
 	"gorm.io/gorm"
 	"time"
 )
@@ -36,4 +37,5 @@ type Task struct {
 	HarvestID    uint                `json:"harvest_id,omitempty"`
 	Process      *harvest.Process    `json:"process,omitempty"`
 	ProcessID    uint                `json:"process_id,omitempty"`
+	Tags         []*util.Tag         `json:"tags,omitempty" gorm:"many2many:task_tags"`
 }
