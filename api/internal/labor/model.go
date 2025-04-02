@@ -27,8 +27,8 @@ type Task struct {
 	gorm.Model
 	Name         string              `json:"name"`
 	Description  string              `json:"description"`
-	Barcode      string              `json:"barcode"`
 	Type         string              `json:"type"`
+	Barcode      string              `json:"barcode"`
 	Area         *harvest.Area       `json:"area,omitempty"`
 	AreaID       uint                `json:"area_id"`
 	Preharvest   *harvest.Preharvest `json:"preharvest,omitempty"`

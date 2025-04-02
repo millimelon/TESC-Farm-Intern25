@@ -43,5 +43,4 @@ func (s *Config) Load(prodconf string, devconf string) {
 type Tag struct {
 	gorm.Model
 	Name string `json:"name"`
-	Type string `json:"type,omitempty"`
 }

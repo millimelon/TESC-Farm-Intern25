@@ -121,6 +121,12 @@ func AddCrop(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	for _, tag := range record.Tags {
+		if err := util.DB.FirstOrCreate(&tag, util.Tag{Name: tag.Name}).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error:": err.Error()})
+			return
+		}
+	}
 	util.DB.Create(&record)
 	c.JSON(http.StatusOK, record)
 }

@@ -16,9 +16,9 @@ type Area struct {
 type Bed struct {
 	gorm.Model
 	Name   string `json:"name"`
-	Notes  string `json:"notes,omitempty"`
 	Area   *Area  `json:"area,omitempty"`
 	AreaID uint   `json:"area_id"`
+	Notes  string `json:"notes,omitempty"`
 }
 
 type Crop struct {
