@@ -9,6 +9,31 @@
 //   $color-pack: false
 // );
 
+body {
+  font-family: serif;
+}
+
+#taskpanel {
+  margin-bottom: 100px;
+}
+
+#anumfloat {
+  width: 100%;
+  min-height: 98px;
+  padding: 10px;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  z-index: 10;
+  background-color: rgb(var(--v-theme-background));
+}
+
+#anumfloat .v-input {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .v-btn.bigbutton {
   width: 100%;
   height: 60px;
@@ -18,4 +43,10 @@
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
+  font-family: sans-serif;
+}
+
+.v-btn.bigbutton.selected, .task-card.selected {
+  color: #eee;
+  background-color: #466860;
 }
