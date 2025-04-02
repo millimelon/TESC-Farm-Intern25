@@ -64,14 +64,14 @@ func GetCrop(c *gin.Context) {
 	c.JSON(http.StatusOK, record)
 }
 
-func GetCropPlantings(c *gin.Context) {
+func GetCropPreharvests(c *gin.Context) {
 	crop := Crop{}
 	if err := util.DB.First(&crop, c.Param("id")).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	records := []Planting{}
-	if err := util.DB.Preload("Bed").Preload("Bed.Area").Find(&records, Planting{CropID: crop.ID}).Error; err != nil {
+	records := []Preharvest{}
+	if err := util.DB.Preload("Bed").Preload("Bed.Area").Find(&records, Preharvest{CropID: crop.ID}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

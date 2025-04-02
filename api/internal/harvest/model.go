@@ -3,7 +3,6 @@ package harvest
 import (
 	"github.com/absentbird/TESC-Farm/internal/sales"
 	"gorm.io/gorm"
-	"time"
 )
 
 type Area struct {
@@ -35,14 +34,13 @@ type Tag struct {
 	Type string `json:"type,omitempty"`
 }
 
-type Planting struct {
+type Preharvest struct {
 	gorm.Model
-	Crop         *Crop     `json:"crop,omitempty"`
-	CropID       uint      `json:"crop_id"`
-	Bed          *Bed      `json:"bed,omitempty"`
-	BedID        uint      `json:"bed_id"`
-	PlantingDate time.Time `json:"planting_date"`
-	HarvestDate  time.Time `json:"harvest_date,omitempty"`
+	Crop   *Crop  `json:"crop,omitempty"`
+	CropID uint   `json:"crop_id"`
+	Bed    *Bed   `json:"bed,omitempty"`
+	BedID  uint   `json:"bed_id"`
+	Notes  string `json:"notes"`
 }
 
 type Harvest struct {
