@@ -29,7 +29,7 @@ type Crop struct {
 	Tags    []*util.Tag `json:"tags,omitempty" gorm:"many2many:crop_tags"`
 }
 
-type Preharvest struct {
+type Planting struct {
 	gorm.Model
 	Crop   *Crop  `json:"crop,omitempty"`
 	CropID uint   `json:"crop_id"`

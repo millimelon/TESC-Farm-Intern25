@@ -64,14 +64,14 @@ func GetCrop(c *gin.Context) {
 	c.JSON(http.StatusOK, record)
 }
 
-func GetCropPreharvests(c *gin.Context) {
+func GetCropPlantings(c *gin.Context) {
 	crop := Crop{}
 	if err := util.DB.First(&crop, c.Param("id")).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	records := []Preharvest{}
-	if err := util.DB.Preload("Bed").Preload("Bed.Area").Find(&records, Preharvest{CropID: crop.ID}).Error; err != nil {
+	records := []Planting{}
+	if err := util.DB.Preload("Bed").Preload("Bed.Area").Find(&records, Planting{CropID: crop.ID}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -149,6 +149,63 @@ func UpdateCrop(c *gin.Context) {
 
 func DeleteCrop(c *gin.Context) {
 	record := Crop{}
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	record.ID = uint(id)
+	util.DB.Delete(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+// Plantings
+func AllPlantings(c *gin.Context) {
+	records := []Planting{}
+	if err := util.DB.Find(&records).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, records)
+}
+
+func GetPlanting(c *gin.Context) {
+	record := Planting{}
+	if err := util.DB.First(&record, c.Param("id")).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, record)
+}
+
+func AddPlanting(c *gin.Context) {
+	record := Planting{}
+	if err := c.ShouldBindJSON(&record); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	util.DB.Create(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+func UpdatePlanting(c *gin.Context) {
+	record := Planting{}
+	if err := c.ShouldBindJSON(&record); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	record.ID = uint(id)
+	util.DB.Save(&record)
+	c.JSON(http.StatusOK, record)
+}
+
+func DeletePlanting(c *gin.Context) {
+	record := Planting{}
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

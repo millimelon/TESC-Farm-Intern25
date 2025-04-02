@@ -25,17 +25,17 @@ type Hours struct {
 
 type Task struct {
 	gorm.Model
-	Name         string              `json:"name"`
-	Description  string              `json:"description"`
-	Type         string              `json:"type"`
-	Barcode      string              `json:"barcode"`
-	Area         *harvest.Area       `json:"area,omitempty"`
-	AreaID       uint                `json:"area_id"`
-	Preharvest   *harvest.Preharvest `json:"preharvest,omitempty"`
-	PreharvestID uint                `json:"preharvest_id,omitempty"`
-	Harvest      *harvest.Harvest    `json:"harvest,omitempty"`
-	HarvestID    uint                `json:"harvest_id,omitempty"`
-	Process      *harvest.Process    `json:"process,omitempty"`
-	ProcessID    uint                `json:"process_id,omitempty"`
-	Tags         []*util.Tag         `json:"tags,omitempty" gorm:"many2many:task_tags"`
+	Name        string            `json:"name"`
+	Description string            `json:"description"`
+	Type        string            `json:"type"`
+	Barcode     string            `json:"barcode"`
+	Area        *harvest.Area     `json:"area,omitempty"`
+	AreaID      uint              `json:"area_id"`
+	Planting    *harvest.Planting `json:"planting,omitempty"`
+	PlantingID  uint              `json:"planting_id,omitempty"`
+	Harvest     *harvest.Harvest  `json:"harvest,omitempty"`
+	HarvestID   uint              `json:"harvest_id,omitempty"`
+	Process     *harvest.Process  `json:"process,omitempty"`
+	ProcessID   uint              `json:"process_id,omitempty"`
+	Tags        []*util.Tag       `json:"tags,omitempty" gorm:"many2many:task_tags"`
 }
