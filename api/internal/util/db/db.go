@@ -16,11 +16,23 @@ func ConnectDB(dbconn string) *gorm.DB {
 	err = database.AutoMigrate(&labor.Hours{})
 	util.Check(err, "Hours migration error")
 
+	err = database.AutoMigrate(&labor.Task{})
+	util.Check(err, "Task migration error")
+
 	err = database.AutoMigrate(&labor.Worker{})
 	util.Check(err, "Worker migration error")
 
+	err = database.AutoMigrate(&harvest.Area{})
+	util.Check(err, "Area migration error")
+
+	err = database.AutoMigrate(&harvest.Bed{})
+	util.Check(err, "Area migration error")
+
 	err = database.AutoMigrate(&harvest.Crop{})
 	util.Check(err, "Crop migration error")
+
+	err = database.AutoMigrate(&harvest.Planting{})
+	util.Check(err, "Planting migration error")
 
 	err = database.AutoMigrate(&harvest.Harvest{})
 	util.Check(err, "Harvest migration error")

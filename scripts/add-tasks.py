@@ -2,7 +2,8 @@ import csv
 import requests
 
 csvinput = "tasks.csv"
-apiurl = "https://json.tesc.farm"
+#apiurl = "https://json.tesc.farm"
+apiurl = "http://127.0.0.1:8078"
 
 with open(csvinput, 'r') as file:
     csv_reader = csv.reader(file)
@@ -51,4 +52,3 @@ with open(csvinput, 'r') as file:
         else:
             print("Error:", response.text)
             quit()
-        break # Remove after testing
