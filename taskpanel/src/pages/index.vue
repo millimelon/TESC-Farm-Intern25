@@ -83,7 +83,6 @@
   const selectTask = (taskID:number) => {
     selected.value = taskID
     if (taskID == 0) {
-      console.log('DESELECT')
       return
     }
     nextTick(() => {
@@ -98,7 +97,6 @@
         console.log(response.status)
       }
       taskdata.value = await response.json()
-      console.log(taskdata.value)
       taskdata.value.forEach(task => {
         workingdata.value[task.ID] = 0
       })
