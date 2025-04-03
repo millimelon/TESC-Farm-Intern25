@@ -8,9 +8,9 @@
         <v-btn v-if="filters" @click="resetfilters">Reset</v-btn>
       </v-col>
     </v-row>
-    <v-row align="center" justify="center" class="d-flex flex-column w-100">
-      <v-col v-for="task in taskdata" class="d-flex flex-column" cols="12" sm="6" md="4" lg="3" xl="2">
-        <v-card class="task-card d-flex flex-column flex-grow-1" :class="{ 'selected' : selected == task.ID }" variant="tonal" @click="selectTask(task.ID)">
+    <v-row align="center" justify="center" class="d-flex flex-row w-100">
+      <v-col v-for="task in taskdata" class="d-flex flex-column" cols="12" sm="4" md="3" lg="2">
+        <v-card class="task-card d-flex flex-column text-center" :class="{ 'selected' : selected == task.ID }" variant="tonal" @click="selectTask(task.ID)">
           <template v-slot:prepend>
             <v-img src="@/assets/placeholder.png" class="taskicon"></v-img>
           </template>
@@ -32,8 +32,8 @@
       </v-col>
     </v-row>
   </v-container>
-  <div id="anumfloat" v-if="selected">
-    <v-text-field id="anum" ref="anum" v-model="anumber" @input="anumCheck" @keyup.enter="submitAnum" @keydown.esc="selectTask(0)" hint="Enter the A# from your student ID" label="A#"></v-text-field>
+  <div id="anumfloat" class="align-self-end" v-if="selected">
+    <v-text-field id="anum" ref="anum" v-model="anumber" @input="anumCheck" @keyup.enter="submitAnum" @keydown.esc="selectTask(0)" hint="Enter the A# from your student ID" :label="selectedName"></v-text-field>
   </div>
 </template>
 
@@ -42,9 +42,19 @@
   const selected = ref(0)
   const anumber = ref('')
   const search = ref('')
+  const response = ref('')
   const taskdata = ref({})
   const workingdata = ref({})
   const anum = useTemplateRef('anum')
+  const selectedName = computed(() => {
+    if (selected.value == 0) {
+      return "None"
+    }
+    if (selected.value < 0) {
+      return "Clock Off"
+    }
+    return taskdata.value.find(task => task.ID === selected.value).name
+  })
   const selectTask = (taskID:number) => {
     selected.value = taskID
     if (taskID == 0) {
