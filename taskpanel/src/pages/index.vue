@@ -1,23 +1,23 @@
 <template>
   <v-container fluid id="taskpanel" class="fill-height d-flex flex-column">
-    <v-row id="filters" class="align-self-start d-flex flex-column w-100">
-      <v-col cols="12">
-        <v-text-field id="search" v-model="search" label="Search" hint="Search for tasks by name, tag, or description"></v-text-field>
-        <v-btn v-for="tag in tags">{{ tag.name }}</v-btn>
-        <v-btn v-if="hidden" @click="showall">Show All</v-btn>
-        <v-btn v-if="filters" @click="resetfilters">Reset</v-btn>
+    <v-row id="filters" class="align-self-start d-flex w-100">
+      <v-col cols="12" sm="4" md="8">
+        <v-text-field id="search" v-model="search" clearable label="Search" hint="Search for tasks by name or description"></v-text-field>
+      </v-col>
+      <v-col cols="6" sm="4" md="2">
+        <v-combobox clearable chips multiple label="Tags" v-model="selectedTags" :items="tasktags"></v-combobox>
+      </v-col>
+      <v-col cols="6" sm="4" md="2" class="d-flex align-self-start">
+        <v-switch label="Show All" inset color="secondary" v-model="showall"></v-switch>
       </v-col>
     </v-row>
     <v-row align="center" justify="center" class="d-flex flex-row w-100">
-      <v-col v-for="task in taskdata" class="d-flex flex-column" cols="12" sm="4" md="3" lg="2">
+      <v-col v-for="task in tasklist" class="d-flex flex-column" cols="12" sm="4" md="3" lg="2">
         <v-card class="task-card d-flex flex-column text-center" :class="{ 'selected' : selected == task.ID }" variant="tonal" @click="selectTask(task.ID)">
-          <template v-slot:prepend>
-            <v-img src="@/assets/placeholder.png" class="taskicon"></v-img>
-          </template>
           <v-card-item>
             <v-card-title>{{ task.name }}</v-card-title>
             <v-card-subtitle v-if="workingdata[task.ID]">
-              {{ workingdata[task.ID] }} People working
+              {{ workingdata[task.ID] }} {{ workingdata[task.ID] > 1 ? 'People' : 'Person' }} working
             </v-card-subtitle>
           </v-card-item>
           <v-card-text>
@@ -33,19 +33,44 @@
     </v-row>
   </v-container>
   <div id="anumfloat" class="align-self-end" v-if="selected">
-    <v-text-field id="anum" ref="anum" v-model="anumber" @input="anumCheck" @keyup.enter="submitAnum" @keydown.esc="selectTask(0)" hint="Enter the A# from your student ID" :label="selectedName"></v-text-field>
+    <v-text-field id="anum" ref="anum" :prepend-icon="result" v-model="anumber" @input="anumCheck" @keyup.enter="submitAnum" @keydown.esc="selectTask(0)" hint="Enter the A# from your student ID" :label="selectedName"></v-text-field>
   </div>
 </template>
 
 <script lang="ts" setup>
+  const focusFilter = [12, 13, 15, 19, 20, 23, 27, 28, 31, 33, 35, 39, 42, 43, 46, 48, 49, 57]
   const loading = ref(false)
-  const selected = ref(0)
-  const anumber = ref('')
+  const showall = ref(false)
+  const selectedTags = ref([])
   const search = ref('')
-  const response = ref('')
+  const anumber = ref('')
+  const selected = ref(0)
+  const result = ref('mdi-form-textbox')
   const taskdata = ref({})
   const workingdata = ref({})
   const anum = useTemplateRef('anum')
+  const tasktags = computed(() => {
+    const tags = new Set()
+    for (const task of Array.from(taskdata.value)) {
+      for (const tag of task.tags) {
+        tags.add(tag.name)
+      }
+    }
+    return Array.from(tags)
+  })
+  const tasklist = computed(() => {
+    let tasks = Array.from(taskdata.value)
+    if (!showall.value) {
+      tasks = tasks.filter(task => focusFilter.includes(task.ID))
+    }
+    if (selectedTags.value.length > 0) {
+      tasks = tasks.filter(task => task.tags.some(tag => selectedTags.value.includes(tag.name)))
+    }
+    if (search.value) {
+      tasks = tasks.filter(task => (task.name + task.description).toUpperCase().includes(search.value.toUpperCase()))
+    }
+    return tasks
+  })
   const selectedName = computed(() => {
     if (selected.value == 0) {
       return "None"
@@ -68,11 +93,12 @@
   const getTasks = async () => {
     loading.value = true
     try {
-      const response = await fetch('https://json.tesc.farm/tasks');
+      const response = await fetch('https://json.tesc.farm/tasks')
       if (!response.ok) {
         console.log(response.status)
       }
-      taskdata.value = await response.json();
+      taskdata.value = await response.json()
+      console.log(taskdata.value)
       taskdata.value.forEach(task => {
         workingdata.value[task.ID] = 0
       })
@@ -85,21 +111,21 @@
   const updateWorking = async () => {
     loading.value = true
     try {
-      const response = await fetch('https://json.tesc.farm/hours/working');
+      const response = await fetch('https://json.tesc.farm/hours/working')
       if (!response.ok) {
         console.log(response.status)
       }
       taskdata.value.forEach(task => {
         workingdata.value[task.ID] = 0
       })
-      const jsondata = await response.json();
+      const jsondata = await response.json()
       jsondata.forEach(punch => {
         workingdata.value[punch.task_id]++
       })
     } catch (e) {
       console.log(e)
     } finally {
-      loading.value = false;
+      loading.value = false
     }
   }
   const submitAnum = () => {
@@ -122,14 +148,35 @@
   const clockOn = async (anum:string, taskID:number) => {
     const data = {barcode: anum, task: taskID}
     const response = await fetch('https://json.tesc.farm/hours/punch', {method: 'POST', body: JSON.stringify(data)})
-    const jsondata = await response.json();
+    if (response.ok) {
+      result.value = 'mdi-check-circle'
+    } else {
+      result.value = 'mdi-alert-circle'
+    }
+    setTimeout(() => {
+      result.value = 'mdi-form-textbox'
+    }, 3000)
     updateWorking()
   }
   const clockOff = async (anum:string) => {
     const data = {barcode: anum}
     const response = await fetch('https://json.tesc.farm/hours/punch', {method: 'POST', body: JSON.stringify(data)})
-    const jsondata = await response.json();
+    if (response.ok) {
+      result.value = 'mdi-check-circle'
+    } else {
+      result.value = 'mdi-alert-circle'
+    }
+    setTimeout(() => {
+      result.value = 'mdi-form-textbox'
+    }, 3000)
     updateWorking()
   }
-  onMounted(getTasks);
+  let intervalID
+  onMounted(() => {
+    getTasks()
+    intervalID = setInterval(updateWorking, 60000)
+  })
+  onBeforeUnmount(() => {
+    clearInterval(intervalID);
+  });
 </script>

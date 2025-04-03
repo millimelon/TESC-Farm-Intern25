@@ -11,14 +11,18 @@
 
 body {
   font-family: serif;
-  margin-bottom: 98px;
   background-color: rgb(var(--v-theme-background));
+}
+
+#taskpanel {
+  padding-bottom: 112px;
 }
 
 #anumfloat {
   width: 100%;
   min-height: 98px;
   padding: 10px;
+  padding-bottom: 25px;
   position: fixed;
   bottom: 0px;
   left: 0px;
@@ -52,4 +56,9 @@ body {
 .v-btn.bigbutton.selected, .task-card.selected {
   color: #eee;
   background-color: #466860;
+}
+
+.v-list-item__content{
+  font-family: sans-serif;
+  color: rgb(var(--v-theme-on-background));
 }
