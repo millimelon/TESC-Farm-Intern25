@@ -27,7 +27,7 @@
       </v-col>
       <v-col cols="12">
         <v-btn class="bigbutton" :class="{ 'selected' : selected == -1 }" variant="tonal" @click="selectTask(-1)">
-          Clock Off
+          Stop Tracking Time
         </v-btn>
       </v-col>
     </v-row>
