@@ -76,7 +76,7 @@
       return "None"
     }
     if (selected.value < 0) {
-      return "Clock Off"
+      return "Stop Tracking Time"
     }
     return taskdata.value.find(task => task.ID === selected.value).name
   })
