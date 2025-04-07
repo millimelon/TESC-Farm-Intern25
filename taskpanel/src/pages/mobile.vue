@@ -14,7 +14,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-row id="filters" class="align-self-start d-flex w-100">
+    <v-row id="filters" class="align-self-start d-flex w-100 flex-grow-0">
       <v-col cols="10" sm="4" md="7">
         <v-text-field id="search" v-model="search" clearable label="Search" hint="Search for tasks by name or description"></v-text-field>
       </v-col>
