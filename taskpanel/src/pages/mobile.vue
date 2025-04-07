@@ -56,8 +56,6 @@
       </v-col>
     </v-row>
   </v-container>
-  <div id="anumfloat" class="align-self-end" v-if="selected">
-  </div>
 </template>
 
 <script lang="ts" setup>
@@ -190,7 +188,6 @@
   let intervalID
   onMounted(() => {
     anumber.value = localStorage.getItem('anumber')
-    console.log(anumber.value)
     if (!anumber.value) {
       settings.value = true
     } else {

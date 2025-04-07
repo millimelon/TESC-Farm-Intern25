@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid id="taskpanel" class="fill-height d-flex flex-column">
+  <v-container fluid id="taskpanel" class="fill-height d-flex flex-column withfloat">
     <v-row id="filters" class="align-self-start d-flex w-100">
       <v-col cols="12" sm="4" md="8">
         <v-text-field id="search" v-model="search" clearable label="Search" hint="Search for tasks by name or description"></v-text-field>
