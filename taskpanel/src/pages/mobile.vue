@@ -153,7 +153,7 @@
     settings.value = false
     setHash()
   }
-  const anumCheck = (e:event) => {
+  const anumCheck = () => {
     if (anumber.value.length == 9 && anumber.value[0] == 'A' && !isNaN(Number(anumber.value.substring(1)))) {
       result.value = 'mdi-check-circle'
     } else {
@@ -191,6 +191,7 @@
     if (!anumber.value) {
       settings.value = true
     } else {
+      anumCheck()
       setHash()
     }
     getTasks()
