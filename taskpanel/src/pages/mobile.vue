@@ -15,10 +15,10 @@
       </v-card>
     </v-dialog>
     <v-row id="filters" class="align-self-start d-flex w-100 flex-grow-0">
-      <v-col cols="10" sm="4" md="7">
+      <v-col cols="9" sm="4" md="7">
         <v-text-field id="search" v-model="search" clearable label="Search" hint="Search for tasks by name or description"></v-text-field>
       </v-col>
-      <v-col cols="1" class="mt-2 d-flex d-sm-none">
+      <v-col cols="3" class="mt-2 d-flex d-sm-none">
         <v-btn @click="settings = true" variant="tonal">
           <v-icon>mdi-cog</v-icon>
         </v-btn>
