@@ -176,5 +176,5 @@
   })
   onBeforeUnmount(() => {
     clearInterval(intervalID);
-  });
+  })
 </script>

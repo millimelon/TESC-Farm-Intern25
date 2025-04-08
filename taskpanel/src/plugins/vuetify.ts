@@ -19,9 +19,9 @@ const farmTheme = {
     primary: '#285f8f',
     secondary: '#466860',
     accent: '#c45172',
-    error: '#3f51b5',
+    error: '#c45172',
     warning: '#673ab7',
-    info: '#e91e63',
+    info: '#285f8f',
     success: '#466860'
   }
 }

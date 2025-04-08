@@ -14,6 +14,12 @@ body {
   background-color: rgb(var(--v-theme-background));
 }
 
+.error {
+  color: rgb(var(--v-theme-error));
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
 #taskpanel.withfloat {
   padding-bottom: 142px;
 }
