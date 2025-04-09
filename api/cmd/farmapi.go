@@ -6,7 +6,6 @@ import (
 	"github.com/absentbird/TESC-Farm/internal/sales"
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/absentbird/TESC-Farm/internal/util/db"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,7 +25,6 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.Default()
-	r.Use(cors.Default())
 
 	// Session endpoints
 	r.POST("/login", util.Login)
