@@ -2,6 +2,7 @@ package util
 
 import (
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
 )
 
@@ -27,7 +28,24 @@ func AuthMiddleware() gin.HandlerFunc {
 }
 
 func Login(c *gin.Context) {
-	c.SetCookie("token", WorkerToken, 3600, "/", "", true, true)
+	type Creds struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	input := Creds{}
+	if err := c.ShouldBindJSON(input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if input.Username != "worker" {
+		c.JSON(http.StatusBadRequest, gin.H{"result": "Invalid credentials"})
+		return
+	}
+	if err := bcrypt.CompareHashAndPassword([]byte(WorkerHash), []byte(input.Password)); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"result": "Invalid credentials"})
+		return
+	}
+	c.SetCookie("token", WorkerToken, 6652800, "/", "", true, true)
 	c.JSON(http.StatusOK, gin.H{"token": WorkerToken})
 }
 

@@ -15,6 +15,7 @@ type Config struct {
 	Port   string `yaml:"Internal_Port"`
 	DBConn string `yaml:"Database_Connection"`
 	WToken string `yaml:"Worker_Token"`
+	WHash  string `yaml:"Worker_Hash"`
 }
 
 func (s *Config) Load(prodconf string, devconf string) {
