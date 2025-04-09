@@ -21,6 +21,7 @@ type Hours struct {
 	TaskID     uint      `json:"task_id"`
 	Worker     *Worker   `json:"worker,omitempty"`
 	WorkerID   uint      `json:"worker_id"`
+	Notes      string    `json:"notes"`
 }
 
 type Task struct {
