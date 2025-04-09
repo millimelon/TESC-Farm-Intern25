@@ -59,7 +59,8 @@
 </template>
 
 <script lang="ts" setup>
-  const focusFilter = [12, 13, 15, 19, 20, 23, 27, 28, 31, 33, 35, 39, 42, 43, 46, 48, 49, 57]
+  import focusFilter from '@/assets/tasklist.js'
+
   const settings = ref(false)
   const loading = ref(false)
   const showall = ref(false)
