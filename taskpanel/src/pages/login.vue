@@ -32,8 +32,7 @@
       return
     }
     const data = {username: username.value, password: password.value}
-    //const response = await fetch('http://json.tesc.farm/login', {method: 'POST', credentials: 'include', body: JSON.stringify(data)})
-    const response = {'ok': true} // TODO remove and replace with above line
+    const response = await fetch('http://api.tesc.farm/login', {method: 'POST', body: JSON.stringify(data)})
     if (!response.ok) {
       console.log(response)
       error.value = "Login rejected"

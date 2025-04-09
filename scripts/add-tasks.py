@@ -2,7 +2,7 @@ import csv
 import requests
 
 csvinput = "tasks.csv"
-#apiurl = "https://json.tesc.farm"
+#apiurl = "https://api.tesc.farm"
 apiurl = "http://127.0.0.1:8078"
 
 with open(csvinput, 'r') as file:

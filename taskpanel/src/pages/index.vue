@@ -92,7 +92,7 @@
   const getTasks = async () => {
     loading.value = true
     try {
-      const response = await fetch('https://json.tesc.farm/tasks')
+      const response = await fetch('https://api.tesc.farm/tasks')
       if (!response.ok) {
         console.log(response.status)
       }
@@ -109,7 +109,7 @@
   const updateWorking = async () => {
     loading.value = true
     try {
-      const response = await fetch('https://json.tesc.farm/hours/working')
+      const response = await fetch('https://api.tesc.farm/hours/working')
       if (!response.ok) {
         console.log(response.status)
       }
@@ -145,7 +145,7 @@
   }
   const clockOn = async (anum:string, taskID:number) => {
     const data = {barcode: anum, task: taskID}
-    const response = await fetch('https://json.tesc.farm/hours/punch', {method: 'POST', body: JSON.stringify(data)})
+    const response = await fetch('https://api.tesc.farm/hours/punch', {method: 'POST', body: JSON.stringify(data)})
     if (response.ok) {
       result.value = 'mdi-check-circle'
     } else {
@@ -158,7 +158,7 @@
   }
   const clockOff = async (anum:string) => {
     const data = {barcode: anum}
-    const response = await fetch('https://json.tesc.farm/hours/punch', {method: 'POST', body: JSON.stringify(data)})
+    const response = await fetch('https://api.tesc.farm/hours/punch', {method: 'POST', body: JSON.stringify(data)})
     if (response.ok) {
       result.value = 'mdi-check-circle'
     } else {
