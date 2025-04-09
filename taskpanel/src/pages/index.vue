@@ -69,6 +69,7 @@
     if (search.value) {
       tasks = tasks.filter(task => (task.name + task.description).toUpperCase().includes(search.value.toUpperCase()))
     }
+    tasks.sort((a, b) => a.name.localeCompare(b.name))
     return tasks
   })
   const selectedName = computed(() => {
