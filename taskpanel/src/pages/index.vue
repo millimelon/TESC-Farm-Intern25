@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-  const focusFilter = [12, 13, 15, 19, 20, 23, 27, 28, 31, 33, 35, 39, 42, 43, 46, 48, 49, 57]
+  const focusFilter = [12, 13, 15, 19, 20, 23, 27, 28, 31, 33, 35, 59, 42, 43, 46, 48, 49, 57]
   const loading = ref(false)
   const showall = ref(false)
   const selectedTags = ref([])
@@ -62,6 +62,9 @@
     let tasks = Array.from(taskdata.value)
     if (!showall.value) {
       tasks = tasks.filter(task => focusFilter.includes(task.ID))
+      tasks.sort((a, b) => focusFilter.indexOf(a.ID) - focusFilter.indexOf(b.ID))
+    } else {
+      tasks.sort((a, b) => a.name.localeCompare(b.name))
     }
     if (selectedTags.value.length > 0) {
       tasks = tasks.filter(task => task.tags.some(tag => selectedTags.value.includes(tag.name)))
@@ -69,7 +72,6 @@
     if (search.value) {
       tasks = tasks.filter(task => (task.name + task.description).toUpperCase().includes(search.value.toUpperCase()))
     }
-    tasks.sort((a, b) => a.name.localeCompare(b.name))
     return tasks
   })
   const selectedName = computed(() => {
