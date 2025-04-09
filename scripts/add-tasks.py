@@ -1,9 +1,14 @@
 import csv
 import requests
+import sys
 
 csvinput = "tasks.csv"
-#apiurl = "https://api.tesc.farm"
-apiurl = "http://127.0.0.1:8078"
+apiurl = "https://api.tesc.farm"
+#apiurl = "http://127.0.0.1:8078"
+
+headers = {"Content-Type": "application/json"}
+if len(sys.argv) > 1:
+    headers['Authorization'] = sys.argv[1]
 
 with open(csvinput, 'r') as file:
     csv_reader = csv.reader(file)
@@ -22,7 +27,7 @@ with open(csvinput, 'r') as file:
                 newcrop['variety'] = parts[1]
             newcrop['tags'] = [{'name': parts[0]}]
             planting = {}
-            response = requests.post(apiurl + "/crop/new", json=newcrop)
+            response = requests.post(apiurl + "/crop/new", headers=headers, json=newcrop)
             if response.status_code == 200:
                 data = response.json()
                 print("Response:", data)
@@ -30,7 +35,7 @@ with open(csvinput, 'r') as file:
             else:
                 print("Error:", response.text)
                 quit()
-            response = requests.post(apiurl + "/planting/new", json=planting)
+            response = requests.post(apiurl + "/planting/new", headers=headers, json=planting)
             if response.status_code == 200:
                 data = response.json()
                 print("Response:", data)
@@ -45,7 +50,7 @@ with open(csvinput, 'r') as file:
         else:
             payload['tags'].append({'name': 'Maintenance'})
         print(payload)
-        response = requests.post(apiurl + "/task/new", json=payload)
+        response = requests.post(apiurl + "/task/new", headers=headers, json=payload)
         if response.status_code == 200:
             data = response.json()
             print("Response:", response.json())
