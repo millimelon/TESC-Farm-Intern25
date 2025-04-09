@@ -162,7 +162,7 @@
   }
   const clockOn = async (taskID:number) => {
     const data = {barcode: anumber.value, task: taskID}
-    const response = await fetch('https://api.tesc.farm/hours/punch', {method: 'POST', body: JSON.stringify(data)})
+    const response = await fetch('https://api.tesc.farm/hours/punch', {method: 'POST', credentials: 'include', body: JSON.stringify(data)})
     if (!response.ok) {
       console.log(response)
     }
@@ -170,7 +170,7 @@
   }
   const clockOff = async () => {
     const data = {barcode: anumber.value}
-    const response = await fetch('https://api.tesc.farm/hours/punch', {method: 'POST', body: JSON.stringify(data)})
+    const response = await fetch('https://api.tesc.farm/hours/punch', {method: 'POST', credentials: 'include', body: JSON.stringify(data)})
     if (!response.ok) {
       console.log(response)
     }
@@ -178,7 +178,7 @@
   }
   const setHash = async () => {
     const data = {barcode: anumber.value}
-    const response = await fetch('https://api.tesc.farm/worker/lookup', {method: 'POST', body: JSON.stringify(data)})
+    const response = await fetch('https://api.tesc.farm/worker/lookup', {method: 'POST', credentials: 'include', body: JSON.stringify(data)})
     if (!response.ok) {
       console.log(response)
     }
