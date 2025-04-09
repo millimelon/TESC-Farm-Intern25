@@ -32,7 +32,7 @@
       return
     }
     const data = {username: username.value, password: password.value}
-    const response = await fetch('http://api.tesc.farm/login', {method: 'POST', body: JSON.stringify(data)})
+    const response = await fetch('https://api.tesc.farm/login', {method: 'POST', body: JSON.stringify(data)})
     if (!response.ok) {
       console.log(response)
       error.value = "Login rejected"
