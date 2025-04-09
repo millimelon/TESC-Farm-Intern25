@@ -33,7 +33,7 @@
     </v-row>
   </v-container>
   <div id="anumfloat" class="align-self-end" v-if="selected">
-    <v-text-field id="anum" ref="anum" :prepend-icon="result" v-model="anumber" @input="anumCheck" @keyup.enter="submitAnum" @keydown.esc="selectTask(0)" hint="Enter the A# from your student ID" :label="selectedName"></v-text-field>
+    <v-text-field id="anum" ref="anum" :prepend-icon="result" v-model="anumber" @input="anumCheck" @keyup.enter="submitAnum" @keydown.esc="selectTask(0)" hint="Enter the A# from your student ID" :label="selectedName" autocomplete="off"></v-text-field>
   </div>
 </template>
 
