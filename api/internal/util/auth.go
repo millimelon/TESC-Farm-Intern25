@@ -33,8 +33,8 @@ func Login(c *gin.Context) {
 		Password string `json:"password"`
 	}
 	input := Creds{}
-	if err := c.ShouldBindJSON(input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Error parsing JSON"})
 		return
 	}
 	if input.Username != "worker" {
