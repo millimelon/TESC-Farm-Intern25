@@ -99,6 +99,8 @@ func main() {
 	auth.POST("/sale/:id/delete", sales.DeleteSale)
 	auth.POST("/sale/new", sales.AddSale)
 
+    r.POST("/sus-survey", util.SusSurvey)
+
 	err := r.Run(conf.Host + ":" + conf.Port)
 	util.Check(err, "Error starting API")
 }
