@@ -55,7 +55,8 @@ const getHours = async (e: Event) => {
     errormsg.value = response.statusText
   }
   const csvdata = await response.json().then(data => {
-    return data.map(r => {
+    const minuteplus = data.filter(r => r.duration > 0.017)
+    return minuteplus.map(r => {
       return {
         'id': r.ID,
         'date': new Date(r.start).toLocaleDateString(),
