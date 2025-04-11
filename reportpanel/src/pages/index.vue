@@ -1,19 +1,18 @@
 <template>
   <section id="content">
     <v-container id="reportGenerator">
-      <v-btn @click="getExcel">Download Excel(.xlsx)</v-btn>
+      <h1>Report Panel</h1>
+      <p>Download reports in CSV format from live data</p>
+      <!-- <v-btn @click="getExcel">Download Excel(.xlsx)</v-btn> -->
       <ul id="csvreportlist">
         <li>
-          <a href="hours.csv" class="csvlink" @click="getHours">Hours.csv</a>
-          <download-csv class="hidden" :data="hoursdata" name="hours.csv"></download-csv>
+          <a href="hours.csv" @click="getHours">Hours.csv</a>
         </li>
         <li>
-          <a href="tasks.csv" class="csvlink" @click="getTasks">Tasks.csv</a>
-          <download-csv class="hidden" :data="tasksdata" name="hours.csv"></download-csv>
+          <a href="tasks.csv" @click="getTasks">Tasks.csv</a>
         </li>
         <li>
-          <a href="crops.csv" class="csvlink" @click="getCrops">Crops.csv</a>
-          <download-csv class="hidden" :data="cropsdata" name="hours.csv"></download-csv>
+          <a href="crops.csv" @click="getCrops">Crops.csv</a>
         </li>
       </ul>
       <p>{{ errormsg }}</p>
@@ -23,7 +22,6 @@
 </template>
 
 <script lang="ts" setup>
-import JsonCSV from "vue-json-csv"
 const loading = ref(false)
 const formType = ref('')
 const dateStart = ref('')
@@ -36,6 +34,19 @@ const cropsdata = ref({})
 const getExcel = (e: Event) => {
 
 }
+const csvDownload = (csvData: any, filename: string) => {
+  const headers = Object.keys(csvData[0]).join(',')
+  const rows = csvData.map(obj => Object.values(obj).join(','))
+  const csvString = `${headers}\n${rows.join('\n')}`
+  const url = URL.createObjectURL(new Blob([csvString], { type: 'text/csv' }))
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename
+  link.style.display = 'none'
+  document.body.appendChild(link)
+  link.click();
+  document.body.removeChild(link)
+}
 const getHours = async (e: Event) => {
   e.preventDefault()
   loading.value = true
@@ -43,21 +54,63 @@ const getHours = async (e: Event) => {
   if (!response.ok) {
     errormsg.value = response.statusText
   }
-  console.log(response)
-  const data = await response.json()
-  hoursdata.value = data.map(r => {
-    return {
-      'id': r.ID,
-      'start': new Date(r.start).toLocaleString(),
-      'hours': r.duration,
-      'task_id': r.task_id,
-      'worker_id': r.worker_id,
-      'notes': r.notes
-    }
+  const csvdata = await response.json().then(data => {
+    return data.map(r => {
+      return {
+        'id': r.ID,
+        'date': new Date(r.start).toLocaleDateString(),
+        'start': new Date(r.start).toLocaleTimeString(),
+        'hours': r.duration,
+        'task': r.task.name,
+        'description': r.task.description,
+        'task_id': r.task_id,
+        'crop_id': r.task.planting_id ? r.task.planting.crop.ID : 'N/A',
+        'worker_id': r.worker_id,
+        'notes': r.notes
+      }
+    })
   })
+  csvDownload(csvdata, 'hours.csv')
   loading.value = false
 }
+const getTasks = async (e: Event) => {
+  e.preventDefault()
+  loading.value = true
+  const response = await fetch('https://api.tesc.farm/tasks')
+  if (!response.ok) {
+    errormsg.value = response.statusText
+  }
+  const csvdata = await response.json().then(data => {
+    return data.map(r => {
+      return {
+        'id': r.ID,
+        'name': r.name,
+        'description': r.description,
+      }
+    })
+  })
+  csvDownload(csvdata, 'tasks.csv')
+  loading.value = false
 
-const getTasks = (e: Event) => { }
-const getCrops = (e: Event) => { }
+}
+const getCrops = async (e: Event) => {
+  e.preventDefault()
+  loading.value = true
+  const response = await fetch('https://api.tesc.farm/crops')
+  if (!response.ok) {
+    errormsg.value = response.statusText
+  }
+  const csvdata = await response.json().then(data => {
+    return data.map(r => {
+      return {
+        'id': r.ID,
+        'name': r.name,
+        'variety': r.variety,
+      }
+    })
+  })
+  csvDownload(csvdata, 'crops.csv')
+  loading.value = false
+
+}
 </script>
