@@ -13,8 +13,10 @@
   },
   "dependencies": {
     "@mdi/font": "7.4.47",
+    "json-to-csv-vue-3-typescript": "^0.4.0",
     "roboto-fontface": "*",
     "vue": "^3.5.13",
+    "vue-json-csv": "^2.1.0",
     "vuetify": "^3.8.1"
   },
   "devDependencies": {
