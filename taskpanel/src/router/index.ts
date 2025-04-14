@@ -32,6 +32,7 @@ router.onError((err, to) => {
 router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
+
 router.beforeResolve(async to => {
   if (to.meta.requiresAuth) {
     try {

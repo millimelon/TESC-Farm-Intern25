@@ -174,13 +174,11 @@ const clockOn = async (anum: string, taskID: number) => {
       snackcolor.value = 'success'
       snackbar.value = true
       result.value = 'mdi-check-circle'
-      //snackbar good
     } else {
       flash.value = response.statusText
       snackcolor.value = 'error'
       snackbar.value = true
       result.value = 'mdi-alert-circle'
-      //snackbar bad
     }
   } catch (e: Error | any) {
     flash.value = e
