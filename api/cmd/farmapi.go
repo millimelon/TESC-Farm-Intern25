@@ -29,6 +29,7 @@ func main() {
 	// Session endpoints
 	r.POST("/login", util.Login)
 	r.GET("/logout", util.Logout)
+	r.GET("/auth", util.AuthTest)
 
 	// Group for authorized endpoints
 	auth := r.Group("/")

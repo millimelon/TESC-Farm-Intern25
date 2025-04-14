@@ -53,3 +53,7 @@ func Logout(c *gin.Context) {
 	c.SetCookie("token", "", -1, "/", "", true, true)
 	c.JSON(http.StatusOK, gin.H{"result": "Logged Out"})
 }
+
+func AuthTest(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"status": "Authorized"}
+}
