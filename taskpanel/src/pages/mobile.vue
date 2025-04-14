@@ -5,7 +5,8 @@
         <v-card-title>Settings</v-card-title>
         <v-card-subtitle>Set your A# to track tasks</v-card-subtitle>
         <v-card-item>
-          <v-text-field id="anum" ref="anum" :prepend-icon="result" v-model="anumber" @input="anumCheck" @keyup.enter="submitAnum" hint="Enter the A# from your student ID" label="A#"></v-text-field>
+          <v-text-field id="anum" ref="anum" :prepend-icon="result" v-model="anumber" @input="anumCheck"
+            @keyup.enter="submitAnum" hint="Enter the A# from your student ID" label="A#"></v-text-field>
         </v-card-item>
         <v-card-actions>
           <v-btn class="ms-auto" text="Close" v-if="anumber" @click="settings = false"></v-btn>
@@ -16,7 +17,8 @@
     </v-dialog>
     <v-row id="filters" class="align-self-start d-flex w-100 flex-grow-0">
       <v-col cols="9" sm="4" md="7">
-        <v-text-field id="search" v-model="search" clearable label="Search" hint="Search for tasks by name or description"></v-text-field>
+        <v-text-field id="search" v-model="search" clearable label="Search"
+          hint="Search for tasks by name or description"></v-text-field>
       </v-col>
       <v-col cols="3" class="mt-2 d-flex d-sm-none">
         <v-btn @click="settings = true" variant="tonal">
@@ -37,7 +39,8 @@
     </v-row>
     <v-row align="center" justify="center" class="d-flex flex-row w-100">
       <v-col v-for="task in tasklist" class="d-flex flex-column" cols="12" sm="4" md="3" lg="2">
-        <v-card class="task-card d-flex flex-column text-center" :class="{ 'selected' : selected == task.ID }" variant="tonal" @click="selectTask(task.ID)">
+        <v-card class="task-card d-flex flex-column text-center" :class="{ 'selected': selected == task.ID }"
+          variant="tonal" @click="selectTask(task.ID)">
           <v-card-item>
             <v-card-title>{{ task.name }}</v-card-title>
             <v-card-subtitle v-if="workingdata[task.ID]">
@@ -50,155 +53,167 @@
         </v-card>
       </v-col>
       <v-col cols="12">
-        <v-btn class="bigbutton" :class="{ 'selected' : selected == 0 }" variant="tonal" @click="selectTask(0)">
+        <v-btn class="bigbutton" :class="{ 'selected': selected == 0 }" variant="tonal" @click="selectTask(0)">
           Not Tracking Time
         </v-btn>
       </v-col>
     </v-row>
   </v-container>
+  <v-snackbar v-model="snackbar" timeout="2000" location="top" :color="snackcolor">
+    {{ flash }}
+  </v-snackbar>
+
 </template>
 
 <script lang="ts" setup>
-  import focusFilter from '@/assets/tasklist.js'
+import focusFilter from '@/assets/tasklist.js'
+definePage({
+  meta: {
+    requiresAuth: 'true'
+  },
+})
 
-  const settings = ref(false)
-  const loading = ref(false)
-  const showall = ref(false)
-  const selectedTags = ref([])
-  const search = ref('')
-  const anumber = ref('')
-  const hash = ref('')
-  const selected = ref(0)
-  const result = ref('mdi-form-textbox')
-  const taskdata = ref({})
-  const workingdata = ref({})
-  const anum = useTemplateRef('anum')
-  const tasktags = computed(() => {
-    const tags = new Set()
-    for (const task of Array.from(taskdata.value)) {
-      for (const tag of task.tags) {
-        tags.add(tag.name)
-      }
-    }
-    return Array.from(tags)
-  })
-  const tasklist = computed(() => {
-    let tasks = Array.from(taskdata.value)
-    if (!showall.value) {
-      tasks = tasks.filter(task => focusFilter.includes(task.ID))
-    }
-    if (selectedTags.value.length > 0) {
-      tasks = tasks.filter(task => task.tags.some(tag => selectedTags.value.includes(tag.name)))
-    }
-    if (search.value) {
-      tasks = tasks.filter(task => (task.name + task.description).toUpperCase().includes(search.value.toUpperCase()))
-    }
-    return tasks
-  })
-  const selectTask = (taskID:number) => {
-    if (selected.value == taskID) {
-      return
-    }
-    selected.value = taskID
-    if (selected.value > 0) {
-      clockOn(selected.value)
-    } else {
-      clockOff()
+const settings: Ref<boolean> = ref(false)
+const loading: Ref<boolean> = ref(false)
+const showall: Ref<boolean> = ref(false)
+const selectedTags: Ref<Array<string>> = ref([])
+const search: Ref<string> = ref('')
+const anumber: Ref<string> = ref('')
+const hash: Ref<string> = ref('')
+const selected: Ref<number> = ref(0)
+const result: Ref<string> = ref('mdi-form-textbox')
+const snackbar: Ref<boolean> = ref(false)
+const snackcolor: Ref<string> = ref('error')
+const taskdata = ref({})
+const workingdata = ref({})
+const tasktags = computed(() => {
+  const tags: Set<string> = new Set()
+  for (const task of Array.from(taskdata.value)) {
+    for (const tag of task.tags) {
+      tags.add(tag.name)
     }
   }
-  const getTasks = async () => {
-    loading.value = true
-    try {
-      const response = await fetch('https://api.tesc.farm/tasks')
-      if (!response.ok) {
-        console.log(response.status)
-      }
-      taskdata.value = await response.json()
-      taskdata.value.forEach(task => {
-        workingdata.value[task.ID] = 0
-      })
-    } catch (e) {
-      console.log(e)
-    } finally {
-      updateWorking()
-    }
+  return Array.from(tags)
+})
+const tasklist = computed(() => {
+  let tasks = Array.from(taskdata.value)
+  if (!showall.value) {
+    tasks = tasks.filter(task => focusFilter.includes(task.ID))
   }
-  const updateWorking = async () => {
-    loading.value = true
-    try {
-      const response = await fetch('https://api.tesc.farm/hours/working')
-      if (!response.ok) {
-        console.log(response.status)
-      }
-      taskdata.value.forEach(task => {
-        workingdata.value[task.ID] = 0
-      })
-      const jsondata = await response.json()
-      jsondata.forEach(punch => {
-        workingdata.value[punch.task_id]++
-        if (punch.worker.barcode == hash.value) {
-          selected.value = punch.task_id
-        }
-      })
-    } catch (e) {
-      console.log(e)
-    } finally {
-      loading.value = false
-    }
+  if (selectedTags.value.length > 0) {
+    tasks = tasks.filter(task => task.tags.some(tag => selectedTags.value.includes(tag.name)))
   }
-  const submitAnum = () => {
-    if (anumber.value == '') {
-      return
+  if (search.value) {
+    tasks = tasks.filter(task => (task.name + task.description).toUpperCase().includes(search.value.toUpperCase()))
+  }
+  return tasks
+})
+const selectTask = (taskID: number) => {
+  if (selected.value == taskID) {
+    return
+  }
+  selected.value = taskID
+  if (selected.value > 0) {
+    clockOn(selected.value)
+  } else {
+    clockOff()
+  }
+}
+const getTasks = async () => {
+  loading.value = true
+  try {
+    const response = await fetch('https://api.tesc.farm/tasks')
+    if (!response.ok) {
+      console.log(response.status)
     }
-    localStorage.setItem('anumber', anumber.value)
-    settings.value = false
+    taskdata.value = await response.json()
+    taskdata.value.forEach(task => {
+      workingdata.value[task.ID] = 0
+    })
+  } catch (e) {
+    console.log(e)
+  } finally {
+    updateWorking()
+  }
+}
+const updateWorking = async () => {
+  loading.value = true
+  try {
+    const response = await fetch('https://api.tesc.farm/hours/working')
+    if (!response.ok) {
+      console.log(response.status)
+    }
+    taskdata.value.forEach(task => {
+      workingdata.value[task.ID] = 0
+    })
+    const jsondata = await response.json()
+    jsondata.forEach(punch => {
+      workingdata.value[punch.task_id]++
+      if (punch.worker.barcode == hash.value) {
+        selected.value = punch.task_id
+      }
+    })
+  } catch (e) {
+    console.log(e)
+  } finally {
+    loading.value = false
+  }
+}
+const submitAnum = () => {
+  if (anumber.value == '') {
+    return
+  }
+  localStorage.setItem('anumber', anumber.value)
+  settings.value = false
+  setHash()
+}
+const anumCheck = () => {
+  if (anumber.value.length == 9 && anumber.value[0] == 'A' && !isNaN(Number(anumber.value.substring(1)))) {
+    result.value = 'mdi-check-circle'
+  } else {
+    result.value = 'mdi-form-textbox'
+  }
+}
+const clockOn = async (taskID: number) => {
+  const data = { barcode: anumber.value, task: taskID }
+  const response = await fetch('https://api.tesc.farm/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
+  if (!response.ok) {
+    snackbar.value = true
+    console.log(response)
+  }
+  updateWorking()
+}
+const clockOff = async () => {
+  const data = { barcode: anumber.value }
+  const response = await fetch('https://api.tesc.farm/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
+  if (!response.ok) {
+    snackbar.value = true
+    console.log(response)
+  }
+  updateWorking()
+}
+const setHash = async () => {
+  const data = { barcode: anumber.value }
+  const response = await fetch('https://api.tesc.farm/worker/lookup', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
+  if (!response.ok) {
+    console.log(response)
+  }
+  const jsondata = await response.json()
+  hash.value = jsondata.barcode
+}
+let intervalID
+onMounted(() => {
+  anumber.value = localStorage.getItem('anumber')
+  if (!anumber.value) {
+    settings.value = true
+  } else {
+    anumCheck()
     setHash()
   }
-  const anumCheck = () => {
-    if (anumber.value.length == 9 && anumber.value[0] == 'A' && !isNaN(Number(anumber.value.substring(1)))) {
-      result.value = 'mdi-check-circle'
-    } else {
-      result.value = 'mdi-form-textbox'
-    }
-  }
-  const clockOn = async (taskID:number) => {
-    const data = {barcode: anumber.value, task: taskID}
-    const response = await fetch('https://api.tesc.farm/hours/punch', {method: 'POST', credentials: 'include', body: JSON.stringify(data)})
-    if (!response.ok) {
-      console.log(response)
-    }
-    updateWorking()
-  }
-  const clockOff = async () => {
-    const data = {barcode: anumber.value}
-    const response = await fetch('https://api.tesc.farm/hours/punch', {method: 'POST', credentials: 'include', body: JSON.stringify(data)})
-    if (!response.ok) {
-      console.log(response)
-    }
-    updateWorking()
-  }
-  const setHash = async () => {
-    const data = {barcode: anumber.value}
-    const response = await fetch('https://api.tesc.farm/worker/lookup', {method: 'POST', credentials: 'include', body: JSON.stringify(data)})
-    if (!response.ok) {
-      console.log(response)
-    }
-    const jsondata = await response.json()
-    hash.value = jsondata.barcode
-  }
-  let intervalID
-  onMounted(() => {
-    anumber.value = localStorage.getItem('anumber')
-    if (!anumber.value) {
-      settings.value = true
-    } else {
-      anumCheck()
-      setHash()
-    }
-    getTasks()
-    intervalID = setInterval(updateWorking, 60000)
-  })
-  onBeforeUnmount(() => {
-    clearInterval(intervalID);
-  });
+  getTasks()
+  intervalID = setInterval(updateWorking, 60000)
+})
+onBeforeUnmount(() => {
+  clearInterval(intervalID);
+});
 </script>
