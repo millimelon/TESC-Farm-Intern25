@@ -26,14 +26,14 @@ func main() {
 	}
 	r := gin.Default()
 
-	// Session endpoints
-	r.POST("/login", util.Login)
-	r.GET("/logout", util.Logout)
-	r.GET("/auth", util.AuthTest)
-
 	// Group for authorized endpoints
 	auth := r.Group("/")
 	auth.Use(util.AuthMiddleware())
+
+	// Session endpoints
+	r.POST("/login", util.Login)
+	r.GET("/logout", util.Logout)
+	auth.GET("/auth", util.AuthTest)
 
 	// Labor endpoints
 	r.GET("/hours", labor.AllHours)

@@ -55,5 +55,5 @@ func Logout(c *gin.Context) {
 }
 
 func AuthTest(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": "Authorized"}
+	c.JSON(http.StatusOK, gin.H{"status": "Authorized"})
 }
