@@ -32,5 +32,17 @@ router.onError((err, to) => {
 router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
+router.beforeResolve(async to => {
+  if (to.meta.requiresAuth) {
+    try {
+      const response = await fetch('https://api.tesc.farm/worker/lookup', { method: 'POST', credentials: 'include', body: JSON.stringify({ barcode: '' }) })
+      if (!response.ok) {
+        throw response.statusText
+      }
+    } catch (e: Error | any) {
+      return { path: '/login' }
+    }
+  }
+})
 
 export default router
