@@ -35,7 +35,7 @@ router.isReady().then(() => {
 router.beforeResolve(async to => {
   if (to.meta.requiresAuth) {
     try {
-      const response = await fetch('https://api.tesc.farm/worker/lookup', { method: 'POST', credentials: 'include', body: JSON.stringify({ barcode: '' }) })
+      const response = await fetch('https://api.tesc.farm/auth', { credentials: 'include' })
       if (!response.ok) {
         throw response.statusText
       }
