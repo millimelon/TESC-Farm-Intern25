@@ -84,6 +84,7 @@ const selected: Ref<number> = ref(0)
 const result: Ref<string> = ref('mdi-form-textbox')
 const snackbar: Ref<boolean> = ref(false)
 const snackcolor: Ref<string> = ref('error')
+const flash: Ref<string> = ref('')
 const taskdata = ref({})
 const workingdata = ref({})
 const tasktags = computed(() => {
@@ -178,6 +179,7 @@ const clockOn = async (taskID: number) => {
   const data = { barcode: anumber.value, task: taskID }
   const response = await fetch('https://api.tesc.farm/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
   if (!response.ok) {
+    flash.value = response.statusText
     snackbar.value = true
     console.log(response)
   }
@@ -187,6 +189,7 @@ const clockOff = async () => {
   const data = { barcode: anumber.value }
   const response = await fetch('https://api.tesc.farm/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
   if (!response.ok) {
+    flash.value = response.statusText
     snackbar.value = true
     console.log(response)
   }
