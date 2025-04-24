@@ -4,7 +4,7 @@ Wants=network-online.target
 After=network.target network-online.target
 
 [Service]
-WorkingDirectory=/home/shawn/code/TESC-Farm/api
+WorkingDirectory=/srv/git/TESC-Farm/api
 ExecStart=/usr/local/bin/sops exec-env configs/secrets.yaml ./farmapi
 Restart=always
 RestartSec=10
