@@ -18,15 +18,13 @@ Use the terminal to install
 ### Windows
 It's technically possible to use the `cmd` application in Windows, but the amount of extra work needed to make it work is simply not worth it, especially when it's become so easy to get a genuine BASH shell on Windows.
 
-
-
 ### Cloud
 
 ## Dev Environment
 
 ### API
 
-### Vite
+### Yarn
 
 ### Database
 
@@ -35,3 +33,15 @@ It's technically possible to use the `cmd` application in Windows, but the amoun
 ### Testing
 
 ### Launching
+
+## Tools
+
+### Scripts
+
+### Vite
+
+### Compiling
+
+## Advanced Tools
+
+### SOPS
