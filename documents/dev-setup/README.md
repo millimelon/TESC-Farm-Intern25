@@ -31,19 +31,26 @@ Use the terminal to install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.gi
 
 Once Homebrew is installed you can use it to install git, golang, and nodejs: `brew install git golang nodejs`
 
-### iOS
-
 ### Android
 The `termux` app is perfectly suitable for running the development environment. Simply install it from the Play Store (or the F-Droid app if you're cool)
 
 Once Termux is installed, open the app and use the terminal to install git, golang, and nodejs: `pkg install git golang nodejs`
 
 ### Windows
-It's technically possible to use the `cmd` application in Windows, but the amount of extra work needed to make it work is simply not worth it, especially when it's become so easy to get a genuine BASH shell on Windows.
+It's technically possible to use the `cmd` application in Windows as a terminal, but the amount of extra effort needed to make it work is simply not worth it. Instead you should use WSL, the Windows Subsystem for Linux. WSL is an option from Microsoft that allows you to run a complete Linux terminal from within Windows.
 
+Follow these steps to set up WSL, [you can find the official documentation here](https://learn.microsoft.com/en-us/windows/wsl/setup/environment):
 
-
-### Cloud
+1. Open a PowerShell window as administrator:
+    - Open the Start menu
+    - Search for `powershell`
+    - Right-click on Windows PowerShell and select 'Run as administrator'
+2. Run this command in PowerShell: `wsl --install`
+3. Complete the installation and restart your machine
+4. Open `Ubuntu` from the start menu to start setting up Linux
+5. Pick a username and password for WSL
+6. Update WSL: `sudo apt update && sudo apt upgrade`
+7. Install git, golang, and nodejs: `sudo apt install git golang nodejs`
 
 ## Dev Environment
 
@@ -55,10 +62,19 @@ Next, copy the repository from GitHub: `git clone git@github.com:absentbird/TESC
 Now change directory into the project: `cd TESC-Farm` and look at the files: `ls` (**l**i**s**t, or as I think of it **l**ook at **s**tuff), you should see all the same files as the main branch on GitHub.
 
 ### API
+API files are located in the api directory, to enter the directory from TESC-Farm simply run `cd api`. The API is written in Go and is compiled into a binary to run on the server.
+
+When running in development mode you can launch the API from the api directory with: `go run cmd/farmapi.go`
 
 ### Yarn
+Yarn is used to manage modules for the frontend environments. Before using yarn it must be installed via NodeJS: `npm install yarn`
+
+Once it's installed it can be used to get any necessary files by running `yarn install` in any one of the frontend directories, e.g. taskpanel.
+
+To set up a new frontend directory you can run `yarn create vuetify` from the TESC-Farm directory.
 
 ### Database
+The development database is stored in api/assets/data-dev.db in SQLite3 format. You should not need to access the database directly, but it can be done. To use the most recent data you can run `cp api/assets/data.db api/assets/data-dev.db` this turns the development database into a copy of the production database.
 
 ### Configuration
 
