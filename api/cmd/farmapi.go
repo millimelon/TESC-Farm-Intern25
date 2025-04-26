@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/absentbird/TESC-Farm/internal/harvest"
 	"github.com/absentbird/TESC-Farm/internal/labor"
 	"github.com/absentbird/TESC-Farm/internal/sales"
@@ -28,7 +27,6 @@ func main() {
 	}
 	r := gin.Default()
 	if conf.Mode == "development" {
-		fmt.Println(conf.WHash)
 		r.Use(cors.New(cors.Config{
 			AllowOrigins:     []string{"http://localhost:3000"},
 			AllowMethods:     []string{"GET", "PUSH"},
