@@ -1,11 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"github.com/absentbird/TESC-Farm/internal/harvest"
 	"github.com/absentbird/TESC-Farm/internal/labor"
 	"github.com/absentbird/TESC-Farm/internal/sales"
 	"github.com/absentbird/TESC-Farm/internal/util"
 	"github.com/absentbird/TESC-Farm/internal/util/db"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,6 +27,15 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.Default()
+	if conf.Mode == "development" {
+		fmt.Println(conf.WHash)
+		r.Use(cors.New(cors.Config{
+			AllowOrigins:     []string{"http://localhost:3000"},
+			AllowMethods:     []string{"GET", "PUSH"},
+			AllowHeaders:     []string{"Origin"},
+			AllowCredentials: true,
+		}))
+	}
 
 	// Group for authorized endpoints
 	auth := r.Group("/")

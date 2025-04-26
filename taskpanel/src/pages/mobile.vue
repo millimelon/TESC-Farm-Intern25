@@ -123,7 +123,7 @@ const selectTask = (taskID: number) => {
 const getTasks = async () => {
   loading.value = true
   try {
-    const response = await fetch('https://api.tesc.farm/tasks')
+    const response = await fetch(import.meta.env.VITE_API + '/tasks')
     if (!response.ok) {
       console.log(response.status)
     }
@@ -140,7 +140,7 @@ const getTasks = async () => {
 const updateWorking = async () => {
   loading.value = true
   try {
-    const response = await fetch('https://api.tesc.farm/hours/working')
+    const response = await fetch(import.meta.env.VITE_API + '/hours/working')
     if (!response.ok) {
       console.log(response.status)
     }
@@ -177,7 +177,7 @@ const anumCheck = () => {
 }
 const clockOn = async (taskID: number) => {
   const data = { barcode: anumber.value, task: taskID }
-  const response = await fetch('https://api.tesc.farm/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
+  const response = await fetch(import.meta.env.VITE_API + '/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
   if (!response.ok) {
     flash.value = response.statusText
     snackbar.value = true
@@ -187,7 +187,7 @@ const clockOn = async (taskID: number) => {
 }
 const clockOff = async () => {
   const data = { barcode: anumber.value }
-  const response = await fetch('https://api.tesc.farm/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
+  const response = await fetch(import.meta.env.VITE_API + '/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
   if (!response.ok) {
     flash.value = response.statusText
     snackbar.value = true
@@ -197,7 +197,7 @@ const clockOff = async () => {
 }
 const setHash = async () => {
   const data = { barcode: anumber.value }
-  const response = await fetch('https://api.tesc.farm/worker/lookup', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
+  const response = await fetch(import.meta.env.VITE_API + '/worker/lookup', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
   if (!response.ok) {
     console.log(response)
   }
