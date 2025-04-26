@@ -1,0 +1,7 @@
+A11y testing of the webpage.
+results summary
+aria integration is great
+missing lables on sections
+contrast is failed on certain sections
+minor issues compared to lack of tab access discovered in main task panel once the user logs in enter does not reveal hidden tasks when selected with tab and enter. worse yet
+ the contrast is small potatoes compared to the tasks not being tab accesible so time tracking is completely inaccessible to screen reader users. and the show hidden item buttons suffers the same issue but at least you can tab to it even if enter does noting. you cant even tab to the tasks. 
