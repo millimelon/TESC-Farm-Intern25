@@ -4,8 +4,8 @@ Wants=network-online.target
 After=network.target network-online.target
 
 [Service]
-WorkingDirectory=/home/shawn/code/TESC-Farm/datadashboard/flask-crop-visualization
-ExecStart=/home/shawn/code/TESC-Farm/datadashboard/flask-crop-visualization/.venv/bin/python -m gunicorn -b 127.0.0.1:8076 -w 1 app:app
+WorkingDirectory=/srv/git/TESC-Farm/datadashboard/flask-crop-visualization
+ExecStart=/srv/git/TESC-Farm/datadashboard/flask-crop-visualization/.venv/bin/python -m gunicorn -b 127.0.0.1:8076 -w 1 app:app
 Restart=always
 RestartSec=10
 StandardOutput=journal

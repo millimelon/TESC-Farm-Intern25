@@ -4,12 +4,12 @@ import requests
 import sys
 
 csvinput = "tasks.csv"
-env_var = "FARMAPITOKEN"
+env_var = "WORKERTOKEN"
 apiurl = "https://api.tesc.farm"
 #apiurl = "http://127.0.0.1:8078"
 
 headers = {"Content-Type": "application/json"}
-if os.environ[env_var]:
+if os.getenv(env_var):
     headers['Authorization'] = os.environ[env_var]
 if len(sys.argv) > 1:
     csvinput = sys.argv[1]
