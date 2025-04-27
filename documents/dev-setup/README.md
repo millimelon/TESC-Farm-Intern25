@@ -1,6 +1,23 @@
 # Development Environment Setup
 It helps to have a local environment to test your code. This document is meant to assist in getting a copy of the codebase running on your own computer for testing and development.
 
+- [Initial Setup](#initial-setup)
+    - [Linux](#linux)
+    - [MacOS](#macos)
+    - [Android](#android)
+    - [Windows](#windows)
+- [Dev Environment](#dev-environment)
+    - [Git](#git)
+    - [API](#api)
+    - [Yarn](#yarn)
+    - [Database](#database)
+    - [Configuration](#configuration)
+- [Launching](#launching)
+    - [Vite](#vite)
+    - [Compiling](#compiling)
+- [Advanced](#advanced)
+    - [SOPS](#sops)
+
 ## Initial Setup
 Before we can execute the code we need a shell to run it in. Essentially we need a terminal to run commands in. If you aren't familiar with the command line or text interfaces don't worry. Everything you need will need to type into the terminal will be listed on this page to be easily copied and pasted.
 
@@ -15,7 +32,7 @@ Once you have a terminal you can use it to install the required software:
 ### Linux
 Congratulations, Linux makes this simple. If you don't know how to open the terminal you can probably find it in your launcher menu by searching for `terminal`, there's usually also a hotkey to open the terminal: `Ctrl + Alt + t` works on many systems, including Ubuntu and Fedora.
 
-Use the terminal to install git, golang, and nodejs:
+Use the terminal to install **git**, **golang**, and **nodejs**:
 
 - Debian/Ubuntu: `sudo apt install git golang nodejs`
 - CentOS/RHEL: `sudo yum install git golang nodejs`
@@ -23,73 +40,91 @@ Use the terminal to install git, golang, and nodejs:
 - Arch: `sudo pacman -S git go nodejs`
 
 ### Mac OS
-Macs come with a great terminal, first use it to install Homebrew, which you'll use to get the packages required to run the development environment.
+Macs come with a great terminal, first use it to install **Homebrew**, which you'll use to get the packages required to run the development environment.
 
-Open the terminal by searching for `terminal` in Spotlight (you can open Spotlight Search with `command + space`
+Open the terminal by searching for `terminal` in Spotlight (you can open **Spotlight Search** with `command + space`
 
-Use the terminal to install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` (This uses the bash shell to download and run the install script)
+Use the terminal to install **Homebrew**: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` (This uses the bash shell to download and run the install script)
 
-Once Homebrew is installed you can use it to install git, golang, and nodejs: `brew install git golang nodejs`
+Once **Homebrew** is installed you can use it to install **git**, **golang**, and **nodejs**: `brew install git golang nodejs`
 
 ### Android
-The `termux` app is perfectly suitable for running the development environment. Simply install it from the Play Store (or the F-Droid app if you're cool)
+The **termux** app is perfectly suitable for running the development environment. Simply install it from the **Play Store** (or the **F-Droid** app if you're cool)
 
-Once Termux is installed, open the app and use the terminal to install git, golang, and nodejs: `pkg install git golang nodejs`
+Once **Termux** is installed, open the app and use the terminal to install **git**, **golang**, and **nodejs**: `pkg install git golang nodejs`
 
 ### Windows
-It's technically possible to use the `cmd` application in Windows as a terminal, but the amount of extra effort needed to make it work is simply not worth it. Instead you should use WSL, the Windows Subsystem for Linux. WSL is an option from Microsoft that allows you to run a complete Linux terminal from within Windows.
+It's technically possible to use the **cmd** application in Windows as a terminal, but the amount of extra effort needed to make it work is simply not worth it. Instead you should use WSL, the Windows Subsystem for Linux. WSL is an option from Microsoft that allows you to run a complete Linux terminal from within Windows.
 
 Follow these steps to set up WSL, [you can find the official documentation here](https://learn.microsoft.com/en-us/windows/wsl/setup/environment):
 
-1. Open a PowerShell window as administrator:
-    - Open the Start menu
+1. Open a **PowerShell** window as administrator:
+    - Open the start menu
     - Search for `powershell`
-    - Right-click on Windows PowerShell and select 'Run as administrator'
-2. Run this command in PowerShell: `wsl --install`
+    - Right-click on **Windows PowerShell** and select **Run as administrator**
+2. Run this command in **PowerShell**: `wsl --install`
 3. Complete the installation and restart your machine
-4. Open `Ubuntu` from the start menu to start setting up Linux
+4. Open **Ubuntu** from the start menu to start setting up Linux
 5. Pick a username and password for WSL
 6. Update WSL: `sudo apt update && sudo apt upgrade`
-7. Install git, golang, and nodejs: `sudo apt install git golang nodejs`
+7. Install **git**, **golang**, and **nodejs**: `sudo apt install git golang nodejs`
 
 ## Dev Environment
 
 ### Git
-Navigate to your home directory (or wherever you want to put the code for the project): `cd ~` (**c**hange **d**irectory to ~, which means 'home')
+Navigate to your **home directory** (or wherever you want to put the code for the project): `cd ~` (**c**hange **d**irectory to ~, which means **home**)
 
 Next, copy the repository from GitHub: `git clone git@github.com:absentbird/TESC-Farm.git`
 
 Now change directory into the project: `cd TESC-Farm` and look at the files: `ls` (**l**i**s**t, or as I think of it **l**ook at **s**tuff), you should see all the same files as the main branch on GitHub.
 
-### API
-API files are located in the api directory, to enter the directory from TESC-Farm simply run `cd api`. The API is written in Go and is compiled into a binary to run on the server.
+You can see the other branches of the project by running `git branch -r` (-r to include remote branches on GitHub), and switch to them by running `git checkout name` where 'name' is the name of the branch you'd like to move to.
 
-When running in development mode you can launch the API from the api directory with: `go run cmd/farmapi.go`
+### API
+API files are located in the **api** directory, to enter the directory from **TESC-Farm** simply run `cd api`. The API is written in Go and is compiled into a binary to run on the server.
+
+To run in development mode you can launch the API with: `go run cmd/farmapi.go` (you must be in the **api** directory to use this command)
 
 ### Yarn
-Yarn is used to manage modules for the frontend environments. Before using yarn it must be installed via NodeJS: `npm install yarn`
+Important for frontend environments. Before using **yarn** it must be installed via NodeJS: `sudo npm install --global yarn`
 
-Once it's installed it can be used to get any necessary files by running `yarn install` in any one of the frontend directories, e.g. taskpanel.
+Once **yarn**'s installed it can be used to get all required files by running `yarn install` in any one of the frontend directories, e.g. **taskpanel**.
 
-To set up a new frontend directory you can run `yarn create vuetify` from the TESC-Farm directory.
+To set up a new frontend directory you can run `yarn create vuetify` from the **TESC-Farm** directory. Name the new directory, follow the recommended options, and use TypeScript.
 
 ### Database
-The development database is stored in api/assets/data-dev.db in SQLite3 format. You should not need to access the database directly, but it can be done. To use the most recent data you can run `cp api/assets/data.db api/assets/data-dev.db` this turns the development database into a copy of the production database.
+You should not need to access the database directly.
+
+The development database is stored in **api/assets/data-dev.db** in SQLite3 format.
+
+To update the dev database you can run `cp api/assets/data.db api/assets/data-dev.db` (you must be in the **TESC-Farm** directory to run this command) this turns the development database into a copy of the production database.
 
 ### Configuration
+You should not need to change the configuration settings.
 
-### Testing
+The development config file for the api is located at **api/configs/config-dev.yaml**. For frontend sites the dev variables are locates in **directory/.env.development** where **directory** is the directory name of the site.
 
-### Launching
+## Launching
+To launch the development environment you can run `scripts/launch.sh` from the **TESC-Farm** directory.
 
-## Tools
+Select which systems to launch and hit **Launch Development Environment**.
 
-### Scripts
+Changes made to frontend sites should load automatically, but changes to backend files will require the api to be recompiled. To do so hit **Recompile**.
 
 ### Vite
+Vite is used to host the development version of frontend sites by running `vite` in the site's directory. It's also used to build a static version of the site, which is then stored in **dist**, you can do so by running `vite build`
 
 ### Compiling
+Once the code is stable you can compile it by running `make` in the directory you want to compile. The **make** command executes commands from a file named **makefile** in the same directory.
 
-## Advanced Tools
+## Advanced
 
 ### SOPS
+To modify secret values used in the production system you can use **sops**. To install **sops** follow the instructions here: https://github.com/getsops/sops/releases
+
+Next you'll need to generate an **age** keypair and have your public key added to the **api/.sops.yaml** file and then update the keys in the **secrets.yaml** file. This must be done by someone who already has permission to view the secrets.
+
+Once you have sops configured you can edit the secret values by running `sops api/configs/secrets.yaml` from the **TESC-Farm** directory.
+
+### Nginx
+Nginx is the webserver which manages requests in production. The configuration files can be found in **api/configs** and every site directory, always named **nginx.conf**. You can learn more about Nginx configurations here: https://nginx.org/en/docs/beginners\_guide.html
