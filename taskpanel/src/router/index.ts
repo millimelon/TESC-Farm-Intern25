@@ -36,7 +36,7 @@ router.isReady().then(() => {
 router.beforeResolve(async to => {
   if (to.meta.requiresAuth) {
     try {
-      const response = await fetch('https://api.tesc.farm/auth', { credentials: 'include' })
+      const response = await fetch(import.meta.env.VITE_API + '/auth', { credentials: 'include' })
       if (!response.ok) {
         throw response.statusText
       }

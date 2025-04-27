@@ -37,7 +37,9 @@ func (s *Config) Load(prodconf string, devconf string) {
 	}
 	content, err := ioutil.ReadFile(configfile)
 	Check(err, "Error reading config file")
-	content = []byte(os.ExpandEnv(string(content)))
+	if s.Mode == "production" {
+		content = []byte(os.ExpandEnv(string(content)))
+	}
 	err = yaml.Unmarshal(content, &s)
 	Check(err, "Error parsing configuration")
 }

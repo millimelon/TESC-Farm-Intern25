@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts" setup>
+console.log(import.meta.env.VITE_API)
 import focusFilter from '@/assets/tasklist.ts'
 definePage({
   meta: {
@@ -114,7 +115,7 @@ const selectTask = (taskID: number) => {
 const getTasks = async () => {
   loading.value = true
   try {
-    const response = await fetch('https://api.tesc.farm/tasks')
+    const response = await fetch(import.meta.env.VITE_API + '/tasks')
     if (!response.ok) {
       console.log(response.status)
     }
@@ -131,7 +132,7 @@ const getTasks = async () => {
 const updateWorking = async () => {
   loading.value = true
   try {
-    const response = await fetch('https://api.tesc.farm/hours/working')
+    const response = await fetch(import.meta.env.VITE_API + '/hours/working')
     if (!response.ok) {
       console.log(response.status)
     }
@@ -168,7 +169,7 @@ const anumCheck = (e: event) => {
 const clockOn = async (anum: string, taskID: number) => {
   const data = { barcode: anum, task: taskID }
   try {
-    const response = await fetch('https://api.tesc.farm/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
+    const response = await fetch(import.meta.env.VITE_API + '/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
     if (response.ok) {
       flash.value = "Tracking Time!"
       snackcolor.value = 'success'
@@ -195,7 +196,7 @@ const clockOn = async (anum: string, taskID: number) => {
 const clockOff = async (anum: string) => {
   const data = { barcode: anum }
   try {
-    const response = await fetch('https://api.tesc.farm/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
+    const response = await fetch(import.meta.env.VITE_API + '/hours/punch', { method: 'POST', credentials: 'include', body: JSON.stringify(data) })
     if (response.ok) {
       flash.value = "Stopped Tracking Time!"
       snackcolor.value = 'success'
