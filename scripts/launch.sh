@@ -2,8 +2,30 @@
 
 cd api
 go run cmd/farmapi.go &
-cd ../taskpanel
+sleep 2
+cd ..
+
+echo 'Please select from the site list:'
+nl ./scripts/data/site.list
+count=$(wc -l ./scripts/data/site.list | cut -d '.' -f1)
+count="${count//[$'\t\r\n ']}"
+n=""
+while true; do
+    read -p 'Select option: ' n
+    # If $n is an integer between one and $count...
+    n="${n//[$'\t\r\n ']}"
+    echo $n
+    if [ "$n" -gt 0 ] && [ "$n" -le "$count" ]; then
+        break
+    fi
+done
+value="$(sed -n "${n}p" ./scripts/data/site.list)"
+echo "Selected site $n: '$value'"
+
+cd $value
 vite &
+sleep 1
+cd ..
 
 close() {
   echo "Exiting on Ctrl+C"
