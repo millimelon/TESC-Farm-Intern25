@@ -17,6 +17,7 @@ It helps to have a local environment to test your code. This document is meant t
     - [Compiling](#compiling)
 - [Advanced](#advanced)
     - [SOPS](#sops)
+    - [Nginx](#nginx)
 
 ## Initial Setup
 Before we can execute the code we need a shell to run it in. Essentially we need a terminal to run commands in. If you aren't familiar with the command line or text interfaces don't worry. Everything you need will need to type into the terminal will be listed on this page to be easily copied and pasted.
@@ -34,24 +35,24 @@ Congratulations, Linux makes this simple. If you don't know how to open the term
 
 Use the terminal to install **git**, **golang**, and **nodejs**:
 
-- Debian/Ubuntu: `sudo apt install git golang nodejs`
-- CentOS/RHEL: `sudo yum install git golang nodejs`
-- Fedora: `sudo dnf -y install git go nodejs`
-- Arch: `sudo pacman -S git go nodejs`
+- Debian/Ubuntu: ```sudo apt install git golang nodejs```
+- CentOS/RHEL: ```sudo yum install git golang nodejs```
+- Fedora: ```sudo dnf -y install git go nodejs```
+- Arch: ```sudo pacman -S git go nodejs```
 
 ### Mac OS
 Macs come with a great terminal, first use it to install **Homebrew**, which you'll use to get the packages required to run the development environment.
 
 Open the terminal by searching for `terminal` in Spotlight (you can open **Spotlight Search** with `command + space`
 
-Use the terminal to install **Homebrew**: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` (This uses the bash shell to download and run the install script)
+Use the terminal to install **Homebrew**: ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"``` (This uses the bash shell to download and run the install script)
 
-Once **Homebrew** is installed you can use it to install **git**, **golang**, and **nodejs**: `brew install git golang nodejs`
+Once **Homebrew** is installed you can use it to install **git**, **golang**, and **nodejs**: ```brew install git golang nodejs```
 
 ### Android
 The **termux** app is perfectly suitable for running the development environment. Simply install it from the **Play Store** (or the **F-Droid** app if you're cool)
 
-Once **Termux** is installed, open the app and use the terminal to install **git**, **golang**, and **nodejs**: `pkg install git golang nodejs`
+Once **Termux** is installed, open the app and use the terminal to install **git**, **golang**, and **nodejs**: ```pkg install git golang nodejs```
 
 ### Windows
 It's technically possible to use the **cmd** application in Windows as a terminal, but the amount of extra effort needed to make it work is simply not worth it. Instead you should use WSL, the Windows Subsystem for Linux. WSL is an option from Microsoft that allows you to run a complete Linux terminal from within Windows.
@@ -62,12 +63,12 @@ Follow these steps to set up WSL, [you can find the official documentation here]
     - Open the start menu
     - Search for `powershell`
     - Right-click on **Windows PowerShell** and select **Run as administrator**
-2. Run this command in **PowerShell**: `wsl --install`
+2. Run this command in **PowerShell**: ```wsl --install```
 3. Complete the installation and restart your machine
 4. Open **Ubuntu** from the start menu to start setting up Linux
 5. Pick a username and password for WSL
-6. Update WSL: `sudo apt update && sudo apt upgrade`
-7. Install **git**, **golang**, and **nodejs**: `sudo apt install git golang nodejs`
+6. Update WSL: ```sudo apt update && sudo apt upgrade```
+7. Install **git**, **golang**, and **nodejs**: ```sudo apt install git golang nodejs```
 
 ## Dev Environment
 
