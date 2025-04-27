@@ -13,6 +13,8 @@ It helps to have a local environment to test your code. This document is meant t
     - [Database](#database)
     - [Configuration](#configuration)
 - [Launching](#launching)
+    - [Viewing](#viewing)
+    - [Closing](#closing)
     - [Vite](#vite)
     - [Compiling](#compiling)
 - [Advanced](#advanced)
@@ -217,9 +219,17 @@ To launch the development environment you can run:
 
 (you must be in the **TESC-Farm** directory to run this command)
 
-Select which systems to launch and hit **Launch Development Environment**.
+Select which frontend to launch and hit **return**.
 
-Changes made to frontend sites should load automatically, but changes to backend files will require the api to be recompiled. To do so hit **Recompile**.
+Changes made to frontend sites should load automatically, but changes to backend files will require the api to be recompiled. To do so quit and relaunch.
+
+### Viewing
+The frontend of the local dev environment is hosted at http://localhost:3000 while the backend is hosted at http://localhost:8000
+
+Keep in mind that the local dev environment is only visible on your computer, no other devices on the network can see it or interact with it.
+
+### Closing
+To close the development environment simple press `Ctrl + c`
 
 ### Vite
 Vite is used to host the development version of frontend sites by running:
