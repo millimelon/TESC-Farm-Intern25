@@ -22,6 +22,9 @@ func main() {
 	util.DB = db.ConnectDB(conf.DBConn)
 	util.WorkerToken = conf.WToken
 	util.WorkerHash = conf.WHash
+	util.AdminToken = conf.AToken
+	util.AdminHash = conf.AHash
+
 	if conf.Mode == "production" {
 		gin.SetMode(gin.ReleaseMode)
 	}

@@ -36,9 +36,9 @@
           <v-icon>mdi-cog</v-icon>
           <v-menu activator="parent">
             <v-list>
-              <v-list-item v-for="setting in settings" :title="setting.title" @click="setting.action"></v-list-item>
-          </v-list>
-        </v-menu>
+              <v-list-item v-for="setting in userSettings" :title="setting.title" @click="setting.action"></v-list-item>
+            </v-list>
+          </v-menu>
         </v-btn>
       </v-col>
       <v-col cols="6" sm="3" md="2">
@@ -52,9 +52,9 @@
           <v-icon>mdi-cog</v-icon>
           <v-menu activator="parent">
             <v-list>
-              <v-list-item v-for="setting in settings" :title="setting.title" @click="setting.action"></v-list-item>
-          </v-list>
-        </v-menu>
+              <v-list-item v-for="setting in userSettings" :title="setting.title" @click="setting.action"></v-list-item>
+            </v-list>
+          </v-menu>
         </v-btn>
       </v-col>
     </v-row>
@@ -89,12 +89,13 @@
 <script lang="ts" setup>
 import focusFilter from '@/assets/tasklist.js'
 import router from '@/router'
+
 definePage({
   meta: {
     requiresAuth: 'true'
   },
 })
-
+const route = useRoute()
 const editanum: Ref<boolean> = ref(false)
 const confirmPunchOut: Ref<boolean> = ref(false)
 const loading: Ref<boolean> = ref(false)
@@ -131,9 +132,15 @@ const punchOutAll = async () => {
   selected.value = 0
 }
 const settings = ref([
-  { title: 'Edit A#', action: () => { editanum.value = true } },
-  { title: 'Stop Tracking All', action: () => { confirmPunchOut.value = true } },
-  { title: 'Logout', action: logout}])
+  { title: 'Edit A#', action: () => { editanum.value = true }, users: ['worker', 'admin'] },
+  { title: 'Stop Tracking All', action: () => { confirmPunchOut.value = true }, users: ['admin'] },
+  { title: 'Logout', action: logout, users: ['worker', 'admin'] },
+])
+
+const userSettings = computed(() => {
+  const userStatus: string = route.meta.userstatus
+  return settings.value.filter(setting => setting.users.includes(userStatus))
+})
 
 const tasktags = computed(() => {
   const tags: Set<string> = new Set()
@@ -256,7 +263,7 @@ let intervalID
 onMounted(() => {
   anumber.value = localStorage.getItem('anumber')
   if (!anumber.value) {
-    settings.value = true
+    editanum.value = true
   } else {
     anumCheck()
     setHash()
