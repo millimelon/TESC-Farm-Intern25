@@ -1,17 +1,28 @@
 <template>
   <v-container fluid id="taskpanel" class="fill-height d-flex flex-column">
-    <v-dialog v-model="settings" :persistent="!anumber">
+    <v-dialog v-model="editanum" :persistent="!anumber">
       <v-card class="ma-auto w-100" max-width="400" prepend-icon="mdi-settings">
-        <v-card-title>Settings</v-card-title>
+        <v-card-title>Edit A#</v-card-title>
         <v-card-subtitle>Set your A# to track tasks</v-card-subtitle>
         <v-card-item>
           <v-text-field id="anum" ref="anum" :prepend-icon="result" v-model="anumber" @input="anumCheck"
             @keyup.enter="submitAnum" hint="Enter the A# from your student ID" label="A#"></v-text-field>
         </v-card-item>
         <v-card-actions>
-          <v-btn class="ms-auto" text="Close" v-if="anumber" @click="settings = false"></v-btn>
+          <v-btn class="ms-auto" text="Close" v-if="anumber" @click="editanum = false"></v-btn>
           <v-spacer></v-spacer>
           <v-btn class="ms-auto" text="Save" @click="submitAnum"></v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="confirmPunchOut">
+      <v-card class="ma-auto w-100" max-width="400" prepend-icon="mdi-settings">
+        <v-card-title>Punch Out All Active Workers?</v-card-title>
+        <v-card-subtitle>Are you Sure?</v-card-subtitle>
+        <v-card-actions>
+          <v-btn class="ms-auto" text="Cancel" @click="confirmPunchOut = false"></v-btn>
+          <v-spacer></v-spacer>
+          <v-btn class="ms-auto" text="Confirm" @click="punchOutAll"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -21,8 +32,13 @@
           hint="Search for tasks by name or description"></v-text-field>
       </v-col>
       <v-col cols="3" class="mt-2 d-flex d-sm-none">
-        <v-btn @click="settings = true" variant="tonal">
+        <v-btn variant="tonal">
           <v-icon>mdi-cog</v-icon>
+          <v-menu activator="parent">
+            <v-list>
+              <v-list-item v-for="setting in userSettings" :title="setting.title" @click="setting.action"></v-list-item>
+            </v-list>
+          </v-menu>
         </v-btn>
       </v-col>
       <v-col cols="6" sm="3" md="2">
@@ -32,8 +48,13 @@
         <v-switch label="Show All" inset color="secondary" v-model="showall"></v-switch>
       </v-col>
       <v-col cols="1" class="mt-2 d-none d-sm-flex">
-        <v-btn @click="settings = true" variant="tonal">
+        <v-btn variant="tonal">
           <v-icon>mdi-cog</v-icon>
+          <v-menu activator="parent">
+            <v-list>
+              <v-list-item v-for="setting in userSettings" :title="setting.title" @click="setting.action"></v-list-item>
+            </v-list>
+          </v-menu>
         </v-btn>
       </v-col>
     </v-row>
@@ -67,13 +88,16 @@
 
 <script lang="ts" setup>
 import focusFilter from '@/assets/tasklist.js'
+import router from '@/router'
+
 definePage({
   meta: {
     requiresAuth: 'true'
   },
 })
-
-const settings: Ref<boolean> = ref(false)
+const route = useRoute()
+const editanum: Ref<boolean> = ref(false)
+const confirmPunchOut: Ref<boolean> = ref(false)
 const loading: Ref<boolean> = ref(false)
 const showall: Ref<boolean> = ref(false)
 const selectedTags: Ref<Array<string>> = ref([])
@@ -87,6 +111,37 @@ const snackcolor: Ref<string> = ref('error')
 const flash: Ref<string> = ref('')
 const taskdata = ref({})
 const workingdata = ref({})
+const logout = async () => {
+  const response = await fetch(import.meta.env.VITE_API + '/logout', { credentials: 'include' })
+  if (!response.ok) {
+    flash.value = response.statusText
+    snackbar.value = true
+  }
+  else {
+    router.push('/login')
+  }
+}
+const punchOutAll = async () => {
+  const response = await fetch(import.meta.env.VITE_API + '/hours/punchoutall', { credentials: 'include' })
+  if (!response.ok) {
+    flash.value = response.statusText
+    snackbar.value = true
+  }
+  updateWorking()
+  confirmPunchOut.value = false
+  selected.value = 0
+}
+const settings = ref([
+  { title: 'Edit A#', action: () => { editanum.value = true }, users: ['worker', 'admin'] },
+  { title: 'Stop Tracking All', action: () => { confirmPunchOut.value = true }, users: ['admin'] },
+  { title: 'Logout', action: logout, users: ['worker', 'admin'] },
+])
+
+const userSettings = computed(() => {
+  const userStatus: string = route.meta.userstatus
+  return settings.value.filter(setting => setting.users.includes(userStatus))
+})
+
 const tasktags = computed(() => {
   const tags: Set<string> = new Set()
   for (const task of Array.from(taskdata.value)) {
@@ -165,7 +220,7 @@ const submitAnum = () => {
     return
   }
   localStorage.setItem('anumber', anumber.value)
-  settings.value = false
+  editanum.value = false
   setHash()
 }
 const anumCheck = () => {
@@ -208,7 +263,7 @@ let intervalID
 onMounted(() => {
   anumber.value = localStorage.getItem('anumber')
   if (!anumber.value) {
-    settings.value = true
+    editanum.value = true
   } else {
     anumCheck()
     setHash()
