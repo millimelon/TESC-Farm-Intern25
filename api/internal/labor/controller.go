@@ -103,6 +103,11 @@ func AddPunch(c *gin.Context) {
 }
 
 func PunchOutAll(c *gin.Context) {
+	status, _ := c.Get("username")
+	if status != "admin" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Insufficient permissions"})
+		return
+	}
 	records := []Hours{}
 	if err := util.DB.Preload("Worker").Preload("Task").Preload("Task.Area").Preload("Task.Tags").Preload("Task.Planting").Preload("Task.Planting.Crop").Preload("Task.Planting.Bed").Preload("Task.Planting.Bed.Area").Preload("Task.Harvest").Preload("Task.Harvest.Crop").Preload("Task.Harvest.Bed").Preload("Task.Harvest.Bed.Area").Preload("Task.Process").Preload("Task.Process.Harvest").Preload("Task.Process.Harvest.Crop").Preload("Task.Process.Harvest.Bed").Preload("Task.Process.Harvest.Bed.Area").Preload("Task.Process.Product").Where("Duration = ?", 0).Find(&records).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
