@@ -1,6 +1,7 @@
 <template>
   <v-container fluid id="taskpanel" class="fill-height d-flex flex-column">
-    <v-dialog v-model="settings" :persistent="!anumber">
+
+    <v-dialog v-model="editanum" :persistent="!anumber">
       <v-card class="ma-auto w-100" max-width="400" prepend-icon="mdi-settings">
         <v-card-title>Settings</v-card-title>
         <v-card-subtitle>Set your A# to track tasks</v-card-subtitle>
@@ -9,7 +10,7 @@
             @keyup.enter="submitAnum" hint="Enter the A# from your student ID" label="A#"></v-text-field>
         </v-card-item>
         <v-card-actions>
-          <v-btn class="ms-auto" text="Close" v-if="anumber" @click="settings = false"></v-btn>
+          <v-btn class="ms-auto" text="Close" v-if="anumber" @click="editanum = false"></v-btn>
           <v-spacer></v-spacer>
           <v-btn class="ms-auto" text="Save" @click="submitAnum"></v-btn>
         </v-card-actions>
@@ -21,8 +22,13 @@
           hint="Search for tasks by name or description"></v-text-field>
       </v-col>
       <v-col cols="3" class="mt-2 d-flex d-sm-none">
-        <v-btn @click="settings = true" variant="tonal">
+        <v-btn variant="tonal">
           <v-icon>mdi-cog</v-icon>
+          <v-menu activator="parent">
+            <v-list>
+              <v-list-item v-for="setting in settings" :title="setting.title" @click="setting.action"></v-list-item>
+          </v-list>
+        </v-menu>
         </v-btn>
       </v-col>
       <v-col cols="6" sm="3" md="2">
@@ -32,8 +38,13 @@
         <v-switch label="Show All" inset color="secondary" v-model="showall"></v-switch>
       </v-col>
       <v-col cols="1" class="mt-2 d-none d-sm-flex">
-        <v-btn @click="settings = true" variant="tonal">
+        <v-btn variant="tonal">
           <v-icon>mdi-cog</v-icon>
+          <v-menu activator="parent">
+            <v-list>
+              <v-list-item v-for="setting in settings" :title="setting.title" @click="setting.action"></v-list-item>
+          </v-list>
+        </v-menu>
         </v-btn>
       </v-col>
     </v-row>
@@ -73,7 +84,7 @@ definePage({
   },
 })
 
-const settings: Ref<boolean> = ref(false)
+const editanum: Ref<boolean> = ref(false)
 const loading: Ref<boolean> = ref(false)
 const showall: Ref<boolean> = ref(false)
 const selectedTags: Ref<Array<string>> = ref([])
@@ -87,6 +98,11 @@ const snackcolor: Ref<string> = ref('error')
 const flash: Ref<string> = ref('')
 const taskdata = ref({})
 const workingdata = ref({})
+const settings = ref([
+  { title: 'Edit A#', action: () => { editanum.value = true } },
+  { title: 'Stop Tracking All', action: () => { } },
+  { title: 'Logout', action: () => { } },])
+
 const tasktags = computed(() => {
   const tags: Set<string> = new Set()
   for (const task of Array.from(taskdata.value)) {
@@ -165,7 +181,7 @@ const submitAnum = () => {
     return
   }
   localStorage.setItem('anumber', anumber.value)
-  settings.value = false
+  editanum.value = false
   setHash()
 }
 const anumCheck = () => {
