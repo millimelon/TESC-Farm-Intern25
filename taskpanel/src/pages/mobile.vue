@@ -1,9 +1,8 @@
 <template>
   <v-container fluid id="taskpanel" class="fill-height d-flex flex-column">
-
     <v-dialog v-model="editanum" :persistent="!anumber">
       <v-card class="ma-auto w-100" max-width="400" prepend-icon="mdi-settings">
-        <v-card-title>Settings</v-card-title>
+        <v-card-title>Edit A#</v-card-title>
         <v-card-subtitle>Set your A# to track tasks</v-card-subtitle>
         <v-card-item>
           <v-text-field id="anum" ref="anum" :prepend-icon="result" v-model="anumber" @input="anumCheck"
@@ -13,6 +12,17 @@
           <v-btn class="ms-auto" text="Close" v-if="anumber" @click="editanum = false"></v-btn>
           <v-spacer></v-spacer>
           <v-btn class="ms-auto" text="Save" @click="submitAnum"></v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="confirmPunchOut">
+      <v-card class="ma-auto w-100" max-width="400" prepend-icon="mdi-settings">
+        <v-card-title>Punch Out All Active Workers?</v-card-title>
+        <v-card-subtitle>Are you Sure?</v-card-subtitle>
+        <v-card-actions>
+          <v-btn class="ms-auto" text="Cancel" @click="confirmPunchOut = false"></v-btn>
+          <v-spacer></v-spacer>
+          <v-btn class="ms-auto" text="Confirm" @click="punchOutAll"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -78,6 +88,7 @@
 
 <script lang="ts" setup>
 import focusFilter from '@/assets/tasklist.js'
+import router from '@/router'
 definePage({
   meta: {
     requiresAuth: 'true'
@@ -85,6 +96,7 @@ definePage({
 })
 
 const editanum: Ref<boolean> = ref(false)
+const confirmPunchOut: Ref<boolean> = ref(false)
 const loading: Ref<boolean> = ref(false)
 const showall: Ref<boolean> = ref(false)
 const selectedTags: Ref<Array<string>> = ref([])
@@ -98,10 +110,30 @@ const snackcolor: Ref<string> = ref('error')
 const flash: Ref<string> = ref('')
 const taskdata = ref({})
 const workingdata = ref({})
+const logout = async () => {
+  const response = await fetch(import.meta.env.VITE_API + '/logout', { credentials: 'include' })
+  if (!response.ok) {
+    flash.value = response.statusText
+    snackbar.value = true
+  }
+  else {
+    router.push('/login')
+  }
+}
+const punchOutAll = async () => {
+  const response = await fetch(import.meta.env.VITE_API + '/hours/punchoutall', { credentials: 'include' })
+  if (!response.ok) {
+    flash.value = response.statusText
+    snackbar.value = true
+  }
+  updateWorking()
+  confirmPunchOut.value = false
+  selected.value = 0
+}
 const settings = ref([
   { title: 'Edit A#', action: () => { editanum.value = true } },
-  { title: 'Stop Tracking All', action: () => { } },
-  { title: 'Logout', action: () => { } },])
+  { title: 'Stop Tracking All', action: () => { confirmPunchOut.value = true } },
+  { title: 'Logout', action: logout}])
 
 const tasktags = computed(() => {
   const tags: Set<string> = new Set()

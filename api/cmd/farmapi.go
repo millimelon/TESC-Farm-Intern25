@@ -52,6 +52,7 @@ func main() {
 	auth.POST("/hours/:id/delete", labor.DeleteHours)
 	auth.POST("/hours/new", labor.AddHours)
 	auth.POST("/hours/punch", labor.AddPunch)
+	auth.GET("/hours/punchoutall", labor.PunchOutAll)
 	r.GET("/tasks", labor.AllTasks)
 	r.GET("/task/:id", labor.GetTask)
 	auth.POST("/task/:id/update", labor.UpdateTask)

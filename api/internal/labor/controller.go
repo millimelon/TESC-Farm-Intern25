@@ -3,12 +3,13 @@ package labor
 import (
 	"crypto/sha256"
 	"encoding/base64"
-	"github.com/absentbird/TESC-Farm/internal/util"
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/absentbird/TESC-Farm/internal/util"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func hashANum(anum string) string {
@@ -99,6 +100,19 @@ func AddPunch(c *gin.Context) {
 	record.TaskID = uint(punch.TaskID)
 	util.DB.Create(&record)
 	c.JSON(http.StatusOK, record)
+}
+
+func PunchOutAll(c *gin.Context) {
+	records := []Hours{}
+	if err := util.DB.Preload("Worker").Preload("Task").Preload("Task.Area").Preload("Task.Tags").Preload("Task.Planting").Preload("Task.Planting.Crop").Preload("Task.Planting.Bed").Preload("Task.Planting.Bed.Area").Preload("Task.Harvest").Preload("Task.Harvest.Crop").Preload("Task.Harvest.Bed").Preload("Task.Harvest.Bed.Area").Preload("Task.Process").Preload("Task.Process.Harvest").Preload("Task.Process.Harvest.Crop").Preload("Task.Process.Harvest.Bed").Preload("Task.Process.Harvest.Bed.Area").Preload("Task.Process.Product").Where("Duration = ?", 0).Find(&records).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	for _, w := range records {
+		w.Duration = time.Now().Sub(w.Start).Hours()
+		util.DB.Save(&w)
+	}
+	c.JSON(http.StatusOK, records)
 }
 
 func UpdateHours(c *gin.Context) {
