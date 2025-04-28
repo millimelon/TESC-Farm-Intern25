@@ -30,28 +30,28 @@ Once you have a terminal you can use it to install the required software:
 
 - Git: used for tracking and merging changes to the project files. It allows us to work collaboratively, combining our edits together and keeping a history of changes, like a shared folder with an undo feature.
 - Go (golang): Go is the programming language used to write the API that powers the backend. You need go installed in order to compile the api after making changes.
-- NodeJS: Node is used to generate the files that compose the frontend. It's needed run a test version of frontend sites locally.
+- NodeJS (npm): Node is used to generate the files that compose the frontend. It's needed run a test version of frontend sites locally.
 
 ### Linux
 Congratulations, Linux makes this simple. If you don't know how to open the terminal you can probably find it in your launcher menu by searching for `terminal`, there's usually also a hotkey to open the terminal: `Ctrl + Alt + t` works on many systems, including Ubuntu and Fedora.
 
-Use the terminal to install **git**, **golang**, and **nodejs**:
+Use the terminal to install **git**, **golang**, and **npm**:
 
 - Debian/Ubuntu: 
     ```
-    sudo apt install git golang nodejs
+    sudo apt install git golang npm
     ```
 - CentOS/RHEL:
     ```
-    sudo yum install git golang nodejs
+    sudo yum install git golang npm
     ```
 - Fedora:
     ```
-    sudo dnf -y install git go nodejs
+    sudo dnf -y install git go npm
     ```
 - Arch:
     ```
-    sudo pacman -S git go nodejs
+    sudo pacman -S git go npm
     ```
 
 ### Mac OS
@@ -67,19 +67,19 @@ Use the terminal to install **Homebrew**:
 
 (This uses the bash shell to download and run the install script)
 
-Once **Homebrew** is installed you can use it to install **git**, **golang**, and **nodejs**:
+Once **Homebrew** is installed you can use it to install **git**, **golang**, and **npm**:
 
 ```
-brew install git golang nodejs
+brew install git golang npm
 ```
 
 ### Android
 The **termux** app is perfectly suitable for running the development environment. Simply install it from the **Play Store** (or the **F-Droid** app if you're cool)
 
-Once **Termux** is installed, open the app and use the terminal to install **git**, **golang**, and **nodejs**:
+Once **Termux** is installed, open the app and use the terminal to install **git**, **golang**, and **npm**:
 
 ```
-pkg install git golang nodejs
+pkg install git golang npm
 ```
 
 ### Windows
@@ -102,14 +102,15 @@ Follow these steps to set up WSL, [you can find the official documentation here]
     ```
     sudo apt update && sudo apt upgrade
     ```
-7. Install **git**, **golang**, and **nodejs**:
+7. Install **git**, **golang**, and **npm**:
     ```
-    sudo apt install git golang nodejs
+    sudo apt install git golang npm
     ```
 
 ## Dev Environment
 
 ### Git
+<!-- TODO add SSH key help -->
 Navigate to your **home directory** (or wherever you want to put the code for the project): 
 
 ```
@@ -170,7 +171,7 @@ go run cmd/farmapi.go
 (you must be in the **api** directory to use this command)
 
 ### Yarn
-Important for frontend environments. Before using **yarn** it must be installed via NodeJS:
+[Important](Important) for frontend environments. Before using **yarn** it must be installed via **npm**:
 
 ```
 sudo npm install --global yarn
@@ -235,7 +236,7 @@ To close the development environment simple press `Ctrl + c`
 Vite is used to host the development version of frontend sites by running:
 
 ```
-vite
+yarn vite
 ```
 
 (you must be in the site's directory)
@@ -243,7 +244,7 @@ vite
 It's also used to build a static version of the site, which is then stored in **dist**, you can do so by running: 
 
 ```
-vite build
+yarn vite build
 ```
 
 ### Compiling

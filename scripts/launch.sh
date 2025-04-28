@@ -12,7 +12,6 @@ count="${count//[$'\t\r\n ']}"
 n=""
 while true; do
     read -p 'Select option: ' n
-    # If $n is an integer between one and $count...
     n="${n//[$'\t\r\n ']}"
     echo $n
     if [ "$n" -gt 0 ] && [ "$n" -le "$count" ]; then
@@ -23,7 +22,7 @@ value="$(sed -n "${n}p" ./scripts/data/site.list)"
 echo "Selected site $n: '$value'"
 
 cd $value
-vite &
+yarn vite &
 sleep 1
 cd ..
 
