@@ -10,14 +10,15 @@ It helps to have a local environment to test your code. This document is meant t
     - [Git](#git)
     - [API](#api)
     - [Yarn](#yarn)
-    - [Database](#database)
-    - [Configuration](#configuration)
 - [Launching](#launching)
     - [Viewing](#viewing)
     - [Closing](#closing)
+- [Compiling](#compiling)
+    - [Go](#go)
     - [Vite](#vite)
-    - [Compiling](#compiling)
 - [Advanced](#advanced)
+    - [Database](#database)
+    - [Configuration](#configuration)
     - [SOPS](#sops)
     - [Nginx](#nginx)
 
@@ -110,7 +111,22 @@ Follow these steps to set up WSL, [you can find the official documentation here]
 ## Dev Environment
 
 ### Git
-<!-- TODO add SSH key help -->
+To use git with GitHub we must first be authorized:
+
+1. Create an SSH keypair (if you don't already have one) by running:
+    ```
+    ssh-keygen -t ed25519
+    ```
+2. Follow the system defaults, you can leave the password blank.
+3. View your public key by running:
+    ```
+    cat ~/.ssh/id_ed25519.pub
+    ```
+4. Go to your [Keys page on GitHub](https://github.com/settings/keys) and click **New SSH Key**
+5. Paste your public key into the **Key** field, leave **Key Type** as "Authentication Key", and give it a descriptive **Title** like 'Laptop'
+
+If you run into any issues try consulting [GitHub's official documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
 Navigate to your **home directory** (or wherever you want to put the code for the project): 
 
 ```
@@ -175,7 +191,7 @@ go run cmd/farmapi.go
 (you must be in the **api** directory to use this command)
 
 ### Yarn
-[Important](Important) for frontend environments. Before using **yarn** it must be installed via **npm**:
+Used for frontend environments. Before running **yarn** it must be installed via **npm**:
 
 ```
 sudo npm install --global yarn
@@ -197,23 +213,13 @@ yarn create vuetify
 
 From the **TESC-Farm** directory. Name the new directory, follow the recommended options, and use TypeScript.
 
-### Database
-You should not need to access the database directly.
-
-The development database is stored in **api/assets/data-dev.db** in SQLite3 format.
-
-To update the dev database you can run:
+Yarn is used in conjunction with vite to host the development version of frontend sites by running:
 
 ```
-cp api/assets/data.db api/assets/data-dev.db
+yarn vite
 ```
 
-(you must be in the **TESC-Farm** directory to run this command) this turns the development database into a copy of the production database.
-
-### Configuration
-You should not need to change the configuration settings.
-
-The development config file for the api is located at **api/configs/config-dev.yaml**. For frontend sites the dev variables are locates in **directory/.env.development** where **directory** is the directory name of the site.
+(you must be in the site's directory)
 
 ## Launching
 To launch the development environment you can run:
@@ -234,24 +240,9 @@ The frontend of the local dev environment is hosted at http://localhost:3000 whi
 Keep in mind that the local dev environment is only visible on your computer, no other devices on the network can see it or interact with it.
 
 ### Closing
-To close the development environment simple press `Ctrl + c`
+To close the development environment simply press `Ctrl + C`
 
-### Vite
-Vite is used to host the development version of frontend sites by running:
-
-```
-yarn vite
-```
-
-(you must be in the site's directory)
-
-It's also used to build a static version of the site, which is then stored in **dist**, you can do so by running: 
-
-```
-yarn vite build
-```
-
-### Compiling
+## Compiling
 Once the code is stable you can compile it by running:
 
 ```
@@ -260,9 +251,43 @@ make
 
 (you must be in the directory you want to compile)
 
-The **make** command executes commands from a file named **makefile** in the same directory.
+The **make** command executes commands from a file named **makefile** in the same directory. Code must be compiled before it will take effect on the production server.
+
+### Go
+To compile the API with go run the following command from the **api** directory:
+
+```
+go build -o farmapi cmd/farmapi.go
+```
+
+### Vite
+To compile a frontend site into static files, which are then stored in **dist**, you can run: 
+
+```
+yarn vite build
+```
+
+(you must be in the directory of the site you want to compile)
 
 ## Advanced
+
+### Database
+You should not need to access the database directly.
+
+The development database is stored in **api/assets/data-dev.db** in SQLite3 format.
+
+To update the dev database you can run:
+
+```
+cp api/assets/data.db api/assets/data-dev.db
+```
+
+(you must be in the **TESC-Farm** directory to run this command) this turns the development database into a copy of the production database.
+
+### Configuration
+You should not need to change the configuration settings.
+
+The development config file for the api is located at **api/configs/config-dev.yaml**. For frontend sites the dev variables are locates in **directory/.env.development** where **directory** is the directory name of the site.
 
 ### SOPS
 To modify secret values used in the production system you can use **sops**. To install **sops** follow the instructions here: https://github.com/getsops/sops/releases
