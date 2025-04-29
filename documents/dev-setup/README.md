@@ -122,7 +122,7 @@ To use git with GitHub we must first be authorized:
     ```
     cat ~/.ssh/id_ed25519.pub
     ```
-4. Go to your [Keys page on GitHub](https://github.com/settings/keys) and click **New SSH Key**
+4. Go to [your Keys page on GitHub](https://github.com/settings/keys) and click **New SSH Key**
 5. Paste your public key into the **Key** field, leave **Key Type** as "Authentication Key", and give it a descriptive **Title** like 'Laptop'
 
 If you run into any issues try consulting [GitHub's official documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
