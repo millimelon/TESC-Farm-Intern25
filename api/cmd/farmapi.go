@@ -22,6 +22,9 @@ func main() {
 	util.DB = db.ConnectDB(conf.DBConn)
 	util.WorkerToken = conf.WToken
 	util.WorkerHash = conf.WHash
+	util.AdminToken = conf.AToken
+	util.AdminHash = conf.AHash
+
 	if conf.Mode == "production" {
 		gin.SetMode(gin.ReleaseMode)
 	}
@@ -52,6 +55,7 @@ func main() {
 	auth.POST("/hours/:id/delete", labor.DeleteHours)
 	auth.POST("/hours/new", labor.AddHours)
 	auth.POST("/hours/punch", labor.AddPunch)
+	auth.GET("/hours/punchoutall", labor.PunchOutAll)
 	r.GET("/tasks", labor.AllTasks)
 	r.GET("/task/:id", labor.GetTask)
 	auth.POST("/task/:id/update", labor.UpdateTask)
