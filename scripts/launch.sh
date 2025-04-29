@@ -37,6 +37,7 @@ echo ""
 
 # Launch the webserver
 cd $value
+yarn install
 yarn vite &
 sleep 1
 cd ..
@@ -52,6 +53,7 @@ close() {
 }
 trap close SIGINT
 
+sleep 2
 echo "Development environment launched. Press Ctrl+C to exit."
 
 while true; do
