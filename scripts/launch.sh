@@ -26,7 +26,6 @@ count="${count//[$'\t\r\n ']}"
 n=""
 while true; do
     read -p 'Select option: ' n
-    # If $n is an integer between one and $count...
     n="${n//[$'\t\r\n ']}"
     if [ "$n" -gt 0 ] && [ "$n" -le "$count" ]; then
         break
