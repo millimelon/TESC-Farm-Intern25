@@ -116,7 +116,7 @@ Navigate to your **home directory** (or wherever you want to put the code for th
 cd ~
 ```
 
-(**c**hange **d**irectory to ~, which means **home**)
+(**c**hange **d**irectory to **~**, which means **home**)
 
 Next, copy the repository from GitHub:
 
@@ -150,16 +150,20 @@ git branch -r
 git checkout name
 ```
 
-Where 'name' is the name of the branch you'd like to move to.
+Where 'name' is the name of the branch you'd like to switch to.
 
 ### API
-API files are located in the **api** directory, to enter the directory from **TESC-Farm** simply run:
+The API is written in Go and is compiled into a binary to run on the server. Before you launch the API, make sure you have a recent version of the Go programming language installed by running this command from the **TESC-Farm** directory:
+
+```
+sudo ./scripts/install_go.sh
+```
+
+Source files for the API are located in the **api** directory, to enter the directory from **TESC-Farm** simply run:
 
 ```
 cd api
 ```
-
-The API is written in Go and is compiled into a binary to run on the server.
 
 To run in development mode you can launch the API with:
 
@@ -235,7 +239,7 @@ To close the development environment simple press `Ctrl + c`
 Vite is used to host the development version of frontend sites by running:
 
 ```
-vite
+yarn vite
 ```
 
 (you must be in the site's directory)
@@ -243,7 +247,7 @@ vite
 It's also used to build a static version of the site, which is then stored in **dist**, you can do so by running: 
 
 ```
-vite build
+yarn vite build
 ```
 
 ### Compiling
