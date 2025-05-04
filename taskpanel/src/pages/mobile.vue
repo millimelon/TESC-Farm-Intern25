@@ -58,21 +58,8 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row align="center" justify="center" class="d-flex flex-row w-100">
-      <v-col v-for="task in tasklist" class="d-flex flex-column" cols="12" sm="4" md="3" lg="2">
-        <v-card class="task-card d-flex flex-column text-center" :class="{ 'selected': selected == task.ID }"
-          variant="tonal" @click="selectTask(task.ID)">
-          <v-card-item>
-            <v-card-title>{{ task.name }}</v-card-title>
-            <v-card-subtitle v-if="workingdata[task.ID]">
-              {{ workingdata[task.ID] }} {{ workingdata[task.ID] > 1 ? 'People' : 'Person' }} working
-            </v-card-subtitle>
-          </v-card-item>
-          <v-card-text>
-            {{ task.description }}
-          </v-card-text>
-        </v-card>
-      </v-col>
+    <v-row id="main-content" align="center" justify="center" class="d-flex flex-row w-100">
+      <TaskCard v-for="task in tasklist" :task="task" :anumber="anumber" :working="workingdata[task.ID]" :selected="selected == task.ID" @select="selectTask"></TaskCard>
       <v-col cols="12">
         <v-btn class="bigbutton" :class="{ 'selected': selected == 0 }" variant="tonal" @click="selectTask(0)">
           Not Tracking Time
