@@ -242,6 +242,9 @@ const tasklist = computed(() => {
   let tasks = Array.from(taskdata.value);
   if (!showall.value) {
     tasks = tasks.filter((task) => focusFilter.includes(task.ID));
+    tasks.sort((a, b) => focusFilter.indexOf(a.ID) - focusFilter.indexOf(b.ID));
+  } else {
+    tasks.sort((a, b) => a.name.localeCompare(b.name));
   }
   if (selectedTags.value.length > 0) {
     tasks = tasks.filter((task) =>
