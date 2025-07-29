@@ -10,6 +10,7 @@
           <th>Students</th>
           <th>Value Added</th>
           <th>Cull</th>
+          <th>Timestamp</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +21,7 @@
           <td>{{ item.sold_to_students }}</td>
           <td>{{ item.value_added }}</td>
           <td>{{ item.cull }}</td>
+          <td>{{ new Date(item.timestamp).toLocaleString() }}</td>
         </tr>
       </tbody>
     </table>
@@ -36,7 +38,8 @@ export default {
   mounted() {
     fetch("http://localhost:8080/weigh-ins")
       .then(res => res.json())
-      .then(data => this.weighIns = data);
-  }
-};
+      .then(response => {
+      this.weighIns = response.data;
+    });
+}
 </script>
