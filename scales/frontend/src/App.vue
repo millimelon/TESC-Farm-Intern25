@@ -1,30 +1,72 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <h2>Scale Records</h2>
+    <div v-if="weighIns.length === 0">
+    No weigh-in data yet.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Produce ID</th>
+          <th>Gross</th>
+          <th>To Market</th>
+          <th>Students</th>
+          <th>Value Added</th>
+          <th>Cull</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in weighIns" :key="item.timestamp">
+          <td>{{ item.produce_id }}</td>
+          <td>{{ item.gross_weight }}</td>
+          <td>{{ item.to_market_weight }}</td>
+          <td>{{ item.sold_to_students }}</td>
+          <td>{{ item.value_added }}</td>
+          <td>{{ item.cull }}</td>
+          <td>{{ new Date(item.timestamp).toLocaleString() }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div>
+    Development of this sofware was sponsered by Climate Change, thank you for your support!
+  </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      weighIns: []
+    };
+  },
+  mounted() {
+  fetch("http://localhost:8080/weigh-ins")
+    .then(res => res.json())
+    .then(response => {
+      // response is the array directly
+      this.weighIns = response; 
+    })
+    .catch(err => {
+      console.error('Failed to fetch weigh-ins:', err);
+    });
+  }
+}
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+table {
+  border-collapse: collapse;
+  width: 100%;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+th {
+  background-color: #f2f2f2;
 }
 </style>
+
+

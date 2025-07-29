@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,9 +19,12 @@ type WeighIn struct {
 }
 
 func main() {
-	r := gin.Default()
 
 	var storedWeighIns []WeighIn // testing
+
+	r := gin.Default()
+
+	r.Use(cors.Default())
 
 	r.POST("/weigh-in", func(c *gin.Context) {
 		var w WeighIn
